@@ -1,10 +1,10 @@
-﻿using System;
-using System.Data;
-using System.Data.Common;
-using System.Linq;
-
-namespace Mst.Dexter.Extensions
+﻿namespace Mst.Dexter.Extensions
 {
+    using System;
+    using System.Data;
+    using System.Data.Common;
+    using System.Linq;
+
     public static class DxConnectionExtension
     {
         public static string GetServerVersion(this IDbConnection dbConnection)

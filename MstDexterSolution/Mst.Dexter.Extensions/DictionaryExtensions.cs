@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Mst.Dexter.Extensions
+﻿namespace Mst.Dexter.Extensions
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public static class DictionaryExtensions
     {
         public static T GetValueOrDefault<T>(this IDictionary<string, T> dictionary, string key, T defaultValue)

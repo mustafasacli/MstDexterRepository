@@ -40,8 +40,8 @@
                 new Type[] {
             typeof(byte[]),
             typeof(Enum),
-            typeof(String),
-            typeof(Decimal),
+            typeof(string),
+            typeof(decimal),
             typeof(DateTime),
             typeof(DateTimeOffset),
             typeof(TimeSpan),
@@ -54,114 +54,114 @@
                 ;
         }
 
-        public static DbType ToDbType(this Type myType)
+        public static DbType ToDbType(this Type type)
         {
-            Type t = Nullable.GetUnderlyingType(myType) ?? myType;
+            Type realType = Nullable.GetUnderlyingType(type) ?? type;
             DbType dbt = DbType.Object;
 
-            if (t.IsEnum)
+            if (realType.IsEnum)
             {
                 dbt = DbType.Int16;
                 return dbt;
             }
 
-            if (t == typeof(bool))
+            if (realType == typeof(bool))
             {
                 dbt = DbType.Boolean;
                 return dbt;
             }
 
-            if (t == typeof(byte[]))
+            if (realType == typeof(byte[]))
             {
                 dbt = DbType.Binary;
                 return dbt;
             }
 
-            if (t == typeof(byte))
+            if (realType == typeof(byte))
             {
                 dbt = DbType.Byte;
                 return dbt;
             }
 
-            if (t == typeof(sbyte))
+            if (realType == typeof(sbyte))
             {
                 dbt = DbType.SByte;
                 return dbt;
             }
 
-            if (t == typeof(DateTime))
+            if (realType == typeof(DateTime))
             {
                 dbt = DbType.DateTime;
                 return dbt;
             }
 
-            if (t == typeof(decimal))
+            if (realType == typeof(decimal))
             {
                 dbt = DbType.Decimal;
                 return dbt;
             }
 
-            if (t == typeof(double))
+            if (realType == typeof(double))
             {
                 dbt = DbType.Double;
                 return dbt;
             }
 
-            if (t == typeof(float))
+            if (realType == typeof(float))
             {
                 dbt = DbType.Single;
                 return dbt;
             }
 
-            if (t == typeof(Guid))
+            if (realType == typeof(Guid))
             {
                 dbt = DbType.Guid;
                 return dbt;
             }
 
-            if (t == typeof(Int16))
+            if (realType == typeof(Int16))
             {
                 dbt = DbType.Int16;
                 return dbt;
             }
 
-            if (t == typeof(Int32))
+            if (realType == typeof(Int32))
             {
                 dbt = DbType.Int32;
                 return dbt;
             }
 
-            if (t == typeof(Int64))
+            if (realType == typeof(Int64))
             {
                 dbt = DbType.Int64;
                 return dbt;
             }
 
-            if (t == typeof(string))
+            if (realType == typeof(string))
             {
                 dbt = DbType.String;
                 return dbt;
             }
 
-            if (t == typeof(UInt16))
+            if (realType == typeof(UInt16))
             {
                 dbt = DbType.UInt16;
                 return dbt;
             }
 
-            if (t == typeof(UInt32))
+            if (realType == typeof(UInt32))
             {
                 dbt = DbType.UInt32;
                 return dbt;
             }
 
-            if (t == typeof(UInt64))
+            if (realType == typeof(UInt64))
             {
                 dbt = DbType.UInt64;
                 return dbt;
             }
 
-            if (t == typeof(XmlDocument) || t == typeof(XmlNode))
+            if (realType == typeof(XmlDocument) || realType == typeof(XmlNode))
             {
                 dbt = DbType.Xml;
                 return dbt;
@@ -170,206 +170,237 @@
             return dbt;
         }
 
-        public static IDictionary<string, string> GetColumnsOfTypeAsReverse(this Type t)
+        public static IDictionary<string, string> GetColumnsOfTypeAsReverse(this Type type)
         {
-            IDictionary<string, string> dict = new Dictionary<string, string>();
+            IDictionary<string, string> dictionary = new Dictionary<string, string>();
 
-            var props = t.GetProperties();
+            var properties = type.GetValidPropertiesOfType();
 
-            props = props.AsQueryable().Where(p => p.CanWrite && p.CanRead).ToArray();
-            props = props.AsQueryable().Where(p => p.GetCustomAttribute<NotMappedAttribute>() == null).ToArray();
-            props = props.AsQueryable().Where(p => p.PropertyType.IsSimpleTypeV2() == true).ToArray();
-
-            foreach (var prp in props)
+            foreach (var property in properties)
             {
-                var attributes = prp.GetCustomAttributes(typeof(ColumnAttribute), true);
+                var attributes = property.GetCustomAttributes(typeof(ColumnAttribute), true);
                 attributes = attributes ?? new object[] { };
+
                 if (attributes.Length > 0)
                 {
-                    ColumnAttribute ca = (ColumnAttribute)attributes[0];
-                    dict.Add(ca.Name, prp.Name);
+                    ColumnAttribute columnAttribute = (ColumnAttribute)attributes[0];
+                    dictionary.Add(columnAttribute.Name, property.Name);
                 }
                 else
                 {
-                    dict.Add(prp.Name, prp.Name);
+                    dictionary.Add(property.Name, property.Name);
                 }
             }
 
-            return dict;
+            return dictionary;
         }
 
-        public static string GetKeyOfType(this Type t, bool isFirstPropKey = false)
+        public static string GetKeyOfType(this Type type)
         {
-            string key = string.Empty;
+            var keyPropertyName = string.Empty;
+            var propertyInfo = type
+                .GetValidPropertiesOfType()
+                .Where(q => q.GetCustomAttribute<KeyAttribute>(inherit: true) != null)
+                .FirstOrDefault();
 
-            var props = t.GetProperties();
-
-            props = props.AsQueryable().Where(p => p.CanWrite && p.CanRead).ToArray();
-            props = props.AsQueryable().Where(p => p.GetCustomAttribute<NotMappedAttribute>() == null).ToArray();
-            props = props.AsQueryable().Where(p => p.PropertyType.IsSimpleTypeV2() == true).ToArray();
-            var prps = props.AsQueryable().Where(p => (p.GetCustomAttributes(typeof(KeyAttribute), true) ?? new object[] { }).Length > 0).ToArray();
-            prps = prps ?? new PropertyInfo[] { };
-
-            if (prps.Length > 0)
+            if (propertyInfo != null)
             {
-                key = prps[0].Name;
-            }
-            else
-            {
-                if (isFirstPropKey)
-                    key = props[0].Name;
+                keyPropertyName = propertyInfo.Name;
             }
 
-            return key;
+            return keyPropertyName;
         }
 
-        public static string GetKeyColumnOfType(this Type t, bool isFirstPropKey = false)
+        public static string GetIdentityPropertyOfType(this Type type)
         {
-            string idCol = string.Empty;
+            var result = string.Empty;
 
-            var props = t.GetProperties();
+            var propertyInfo = type
+                .GetValidPropertiesOfType()
+                .Where(q => q.GetCustomAttribute<DatabaseGeneratedAttribute>(inherit: true) != null)
+                .FirstOrDefault();
 
-            props = props.AsQueryable().Where(p => p.CanWrite && p.CanRead).ToArray();
-            props = props.AsQueryable().Where(p => p.GetCustomAttribute<NotMappedAttribute>() == null).ToArray();
-            props = props.AsQueryable().Where(p => p.PropertyType.IsSimpleTypeV2() == true).ToArray();
-            var prps = props.AsQueryable().Where(p => (p.GetCustomAttributes(typeof(KeyAttribute), true) ?? new object[] { }).Length > 0).ToArray();
-            prps = prps ?? new PropertyInfo[] { };
-
-            PropertyInfo pinfo = null;
-
-            if (prps.Length > 0)
+            if (propertyInfo != null)
             {
-                pinfo = prps[0];
-            }
-            else
-            {
-                if (isFirstPropKey)
-                    pinfo = props[0];
-            }
+                var isMember = propertyInfo
+                    .GetCustomAttribute<DatabaseGeneratedAttribute>(inherit: true)
+                    .DatabaseGeneratedOption
+                    .IsMember(DatabaseGeneratedOption.Computed, DatabaseGeneratedOption.Identity);
 
-            if (pinfo != null)
-            {
-                ColumnAttribute ca = pinfo.GetCustomAttribute<ColumnAttribute>(inherit: true);
-                idCol = ca != null ? ca.Name : pinfo.Name;
+                if (isMember)
+                    result = propertyInfo.Name;
             }
-
-            return idCol;
+            return result;
         }
 
-        public static string GetPropertyColumnOfType(this Type t, string propName)
+        public static string GetKeyColumnOfType(this Type type)
         {
-            if (string.IsNullOrWhiteSpace(propName))
+            string keyColumnName = string.Empty;
+            var keyPropertyName = type.GetKeyOfType();
+
+            if (!string.IsNullOrWhiteSpace(keyPropertyName))
+            {
+                var keyProperty = type.GetProperty(keyPropertyName);
+                if (keyProperty != null)
+                {
+                    ColumnAttribute columnAttribute = keyProperty.GetCustomAttribute<ColumnAttribute>(inherit: true);
+                    keyColumnName = columnAttribute?.Name;
+
+                    if (string.IsNullOrWhiteSpace(keyColumnName))
+                        keyColumnName = keyProperty.Name;
+                }
+            }
+
+            return keyColumnName;
+        }
+
+        public static string GetPropertyColumnOfType(this Type type, string propertyName)
+        {
+            if (string.IsNullOrWhiteSpace(propertyName))
                 throw new Exception("Property Name should be defined.");
 
-            PropertyInfo pinfo = t.GetProperty(propName);
+            PropertyInfo propertyInfo = type.GetProperty(propertyName);
 
-            if (pinfo == null)
+            if (propertyInfo == null)
                 throw new Exception("Property Name with given name could not be found.");
 
-            string col = string.Empty;
-            ColumnAttribute ca = pinfo.GetCustomAttribute<ColumnAttribute>(inherit: true);
-            col = ca != null ? ca.Name : pinfo.Name;
+            string columnName = string.Empty;
+            ColumnAttribute columnAttribute = propertyInfo.GetCustomAttribute<ColumnAttribute>(inherit: true);
 
-            if (string.IsNullOrWhiteSpace(col))
-                col = pinfo.Name;
+            columnName = columnAttribute != null ? columnAttribute.Name : propertyInfo.Name;
 
-            return col;
+            if (string.IsNullOrWhiteSpace(columnName))
+                columnName = propertyInfo.Name;
+
+            columnName = columnName.Trim();
+
+            return columnName;
         }
 
-        public static string GetTableNameOfType(this Type t)
+        public static string GetTableNameOfType(this Type type)
         {
-            string s = t.Name;
+            string tableName = type.Name;
 
-            TableAttribute tt = t.GetCustomAttribute<TableAttribute>();
-            if (tt != null)
+            TableAttribute tableAttribute = type.GetCustomAttribute<TableAttribute>();
+
+            if (tableAttribute != null)
             {
-                s = string.IsNullOrWhiteSpace(tt.Name) ? s : tt.Name;
+                tableName = string.IsNullOrWhiteSpace(tableAttribute.Name) ? tableName : tableAttribute.Name;
             }
 
-            return s;
+            tableName = tableName.Trim();
+
+            return tableName;
         }
 
-        public static string GetSchemaNameOfType(this Type t)
+        public static string GetSchemaNameOfType(this Type type)
         {
-            string s = string.Empty;
+            string schemaName = string.Empty;
 
-            TableAttribute tt = t.GetCustomAttribute<TableAttribute>();
-            if (tt != null)
+            TableAttribute tableAttribute = type.GetCustomAttribute<TableAttribute>();
+            if (tableAttribute != null)
             {
-                s = tt.Schema ?? string.Empty;
+                schemaName = tableAttribute.Schema ?? string.Empty;
             }
 
-            return s;
+            schemaName = schemaName.Trim();
+
+            return schemaName;
         }
 
-        public static IDictionary<string, string> GetColumnsOfType(this Type t)
+        public static IDictionary<string, string> GetColumnsOfType(this Type type)
         {
-            IDictionary<string, string> dict = new Dictionary<string, string>();
+            IDictionary<string, string> dictionary = new Dictionary<string, string>();
 
-            var props = t.GetProperties();
+            var properties = type.GetValidPropertiesOfType();
 
-            props = props.AsQueryable().Where(p => p.CanWrite && p.CanRead).ToArray();
-            props = props.AsQueryable().Where(p => p.GetCustomAttribute<NotMappedAttribute>() == null).ToArray();
-            props = props.AsQueryable().Where(p => TypeExtensions.IsSimpleTypeV2(p.PropertyType) == true).ToArray();
-
-            foreach (var prp in props)
+            foreach (var property in properties)
             {
-                var attributes = prp.GetCustomAttributes(typeof(ColumnAttribute), true);
+                var attributes = property.GetCustomAttributes(typeof(ColumnAttribute), true);
                 attributes = attributes ?? new object[] { };
+
                 if (attributes.Length > 0)
                 {
-                    ColumnAttribute ca = (ColumnAttribute)attributes[0];
-                    string can = ca == null ? prp.Name :
-                        string.IsNullOrWhiteSpace(ca.Name) ?
-                        prp.Name : ca.Name;
+                    ColumnAttribute columnAttribute = (ColumnAttribute)attributes[0];
 
-                    dict.Add(prp.Name, can);
+                    string columnName = columnAttribute == null ? property.Name :
+                        string.IsNullOrWhiteSpace(columnAttribute.Name) ?
+                        property.Name : columnAttribute.Name;
+
+                    dictionary.Add(property.Name, columnName);
                 }
                 else
                 {
-                    dict.Add(prp.Name, prp.Name);
+                    dictionary.Add(property.Name, property.Name);
                 }
             }
 
-            return dict;
+            return dictionary;
         }
 
-        public static bool IsKeyColumnColumnNumeric(this Type t)
+        public static IDictionary<string, string> GetColumnsReverseOfType(this Type type)
         {
-            bool isIdColNumeric = false;
+            IDictionary<string, string> dictionary = new Dictionary<string, string>();
 
-            string key = t.GetKeyOfType();
+            var properties = type.GetValidPropertiesOfType();
 
-            if (string.IsNullOrWhiteSpace(key))
-                throw new Exception("Key Property must be defined.");
+            foreach (var property in properties)
+            {
+                var attributes = property.GetCustomAttributes(typeof(ColumnAttribute), true);
+                attributes = attributes ?? new object[] { };
+                if (attributes.Length > 0)
+                {
+                    var columnAttribute = (ColumnAttribute)attributes[0];
 
-            isIdColNumeric = TypeHelper.IsNumeric(t.GetProperty(key).PropertyType);
+                    string columnName = columnAttribute == null ? property.Name :
+                        string.IsNullOrWhiteSpace(columnAttribute.Name) ?
+                        property.Name : columnAttribute.Name;
 
-            return isIdColNumeric;
+                    dictionary.Add(columnName, property.Name);
+                }
+                else
+                {
+                    dictionary.Add(property.Name, property.Name);
+                }
+            }
+
+            return dictionary;
         }
 
-        public static PropertyInfo[] GetValidPropertiesOfType(this Type t)
+        public static bool IsKeyColumnNumeric(this Type type)
         {
-            var props = t.GetProperties();
+            bool isIdColumnNumeric = false;
 
-            props = props.AsQueryable().Where(p => p.CanWrite && p.CanRead).ToArray();
-            props = props.AsQueryable().Where(p => p.GetCustomAttribute<NotMappedAttribute>() == null).ToArray();
-            props = props.AsQueryable().Where(p => TypeExtensions.IsSimpleTypeV2(p.PropertyType) == true).ToArray();
+            var keyPropertyName = type.GetKeyOfType();
 
-            return props;
+            if (!string.IsNullOrWhiteSpace(keyPropertyName))
+            {
+                isIdColumnNumeric =
+                    TypeHelper.IsNumeric(type.GetProperty(keyPropertyName).PropertyType);
+            }
+
+            return isIdColumnNumeric;
         }
 
-        public static IDictionary<string, Type> GetPropertyTypesOfType(this Type t)
+        public static PropertyInfo[] GetValidPropertiesOfType(this Type type)
+        {
+            var properties = type.GetProperties();
+
+            properties = properties
+                .Where(p => p.CanWrite && p.CanRead)
+                .Where(p => p.GetCustomAttribute<NotMappedAttribute>() == null)
+                .Where(p => IsSimpleTypeV2(p.PropertyType) == true)
+                .ToArray() ?? new PropertyInfo[] { };
+
+            return properties;
+        }
+
+        public static IDictionary<string, Type> GetPropertyTypesOfType(this Type type)
         {
             IDictionary<string, Type> types = new Dictionary<string, Type>();
+            var properties = type.GetValidPropertiesOfType();
 
-            var props = t.GetProperties();
-
-            props = props.AsQueryable().Where(p => p.CanWrite && p.CanRead).ToArray();
-            props = props.AsQueryable().Where(p => p.GetCustomAttribute<NotMappedAttribute>() == null).ToArray();
-            props = props.AsQueryable().Where(p => TypeExtensions.IsSimpleTypeV2(p.PropertyType) == true).ToArray();
-
-            props.ToList().ForEach(p => types[p.Name] = p.PropertyType);
+            properties.ToList().ForEach(p => types[p.Name] = p.PropertyType);
 
             return types;
         }
@@ -385,9 +416,9 @@
             //, typeof(float),  typeof(double)
         };
 
-        public static bool IsNumeric(Type myType)
+        public static bool IsNumeric(Type type)
         {
-            return NumericTypes.Contains(Nullable.GetUnderlyingType(myType) ?? myType);
+            return NumericTypes.Contains(Nullable.GetUnderlyingType(type) ?? type);
         }
     }
 }
