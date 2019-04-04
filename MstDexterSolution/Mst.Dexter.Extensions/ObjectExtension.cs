@@ -20,7 +20,8 @@
 
             try
             {
-                str = string.Format("{0}", obj);
+                str = obj.IsNullOrDbNull() ?
+                    string.Empty : string.Format("{0}", obj);
             }
             catch (Exception e)
             {
