@@ -1,4 +1,5 @@
 ﻿using Mst.Dexter.Extensions;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Mst.Dexter.PocoGenerator.Source.BO
@@ -33,6 +34,8 @@ namespace Mst.Dexter.PocoGenerator.Source.BO
             {
                 _ColumnName = value;
                 _propName = PropName();
+
+                (new List<string> { "kodu", "pk", "fk", "rowid", "id" }).ForEach(q => _propName = _propName.CapitalizeEndPart(q));
             }
         }
 

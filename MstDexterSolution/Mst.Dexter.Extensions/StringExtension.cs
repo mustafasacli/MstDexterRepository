@@ -86,6 +86,25 @@
             return result;
         }
 
+        public static string CapitalizeEndPart(this string str, string endPart)
+        {
+            if (str.IsNullOrEmpty())
+                return str;
+
+            if (endPart.IsNullOrEmpty())
+                return str;
+
+            var result = str;
+
+            if (str.ToLowerInvariant().EndsWith(endPart.ToLowerInvariant()))
+            {
+                result = result.ToLowerInvariant().Substring(0, result.Length - endPart.Length);
+                result = string.Concat(result, endPart.CapitalizeString());
+            }
+
+            return result;
+        }
+
         public static string CapitalizeString(this string str)
         {
             var s = str.ToLowerInvariant();

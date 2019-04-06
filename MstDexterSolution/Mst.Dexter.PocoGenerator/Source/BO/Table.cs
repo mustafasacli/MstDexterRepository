@@ -50,6 +50,8 @@ namespace Mst.Dexter.PocoGenerator.Source.BO
 
                 strResult = strResult.RemoveUnderLineAndCapitalizeString();
 
+                (new List<string> { "kodu", "pk", "fk", "rowid", "id" }).ForEach(q => strResult = strResult.CapitalizeEndPart(q));
+
                 return strResult;
             }
         }
