@@ -35,7 +35,7 @@
                 _ColumnName = value;
                 _propName = PropName();
 
-                (new List<string> { "kodu", "pk", "fk", "rowid", "id" }).ForEach(q => _propName = _propName.CapitalizeEndPart(q));
+                (new List<string> { "kodu", "kod", "pk", "fk", "rowid", "id" }).ForEach(q => _propName = _propName.CapitalizeEndPart(q));
             }
         }
 

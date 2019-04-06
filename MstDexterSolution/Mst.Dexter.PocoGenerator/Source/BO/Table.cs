@@ -50,7 +50,7 @@
 
                 strResult = strResult.RemoveUnderLineAndCapitalizeString();
 
-                (new List<string> { "kodu", "pk", "fk", "rowid", "id" }).ForEach(q => strResult = strResult.CapitalizeEndPart(q));
+                (new List<string> { "kodu", "kod", "pk", "fk", "rowid", "id" }).ForEach(q => strResult = strResult.CapitalizeEndPart(q));
 
                 return strResult;
             }
