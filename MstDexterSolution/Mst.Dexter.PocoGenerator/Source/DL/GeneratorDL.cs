@@ -1,10 +1,10 @@
-﻿using System;
-using System.Data;
-using System.Data.Odbc;
-using System.Data.OleDb;
-
-namespace Mst.Dexter.PocoGenerator.Source.DL
+﻿namespace Mst.Dexter.PocoGenerator.Source.DL
 {
+    using System;
+    using System.Data;
+    using System.Data.Odbc;
+    using System.Data.OleDb;
+
     internal class GeneratorDL
     {
         #region [ GetSqlServerTables method ]

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Xml;
-
-namespace Mst.Dexter.PocoGenerator.Source.Settings
+﻿namespace Mst.Dexter.PocoGenerator.Source.Settings
 {
+    using System;
+    using System.Collections;
+    using System.Xml;
+
     internal class Setting
     {
         public static readonly string xmlFile = "conf.xml";

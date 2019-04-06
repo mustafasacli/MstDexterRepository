@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-
-namespace Mst.Dexter.PocoGenerator.Source.Util
+﻿namespace Mst.Dexter.PocoGenerator.Source.Util
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+
     internal class DbDataUtil
     {
         #region [ Copy method ]

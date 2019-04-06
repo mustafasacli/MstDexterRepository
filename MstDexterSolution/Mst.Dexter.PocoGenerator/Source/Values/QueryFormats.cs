@@ -1,7 +1,7 @@
-﻿using Mst.Dexter.PocoGenerator.Source.Enum;
-
-namespace Mst.Dexter.PocoGenerator.Source.Values
+﻿namespace Mst.Dexter.PocoGenerator.Source.Values
 {
+    using Mst.Dexter.PocoGenerator.Source.Enum;
+
     internal class QueryFormats
     {
         public static string GetQueryFormat(GeneratedQueryTypes queryType)

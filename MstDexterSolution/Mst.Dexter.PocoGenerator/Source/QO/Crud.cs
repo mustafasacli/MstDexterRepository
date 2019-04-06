@@ -1,7 +1,7 @@
-﻿using Mst.Dexter.PocoGenerator.Source.Enum;
-
-namespace Mst.Dexter.PocoGenerator.Source.QO
+﻿namespace Mst.Dexter.PocoGenerator.Source.QO
 {
+    using Mst.Dexter.PocoGenerator.Source.Enum;
+
     internal class Crud
     {
         #region [ GetTablesAndColumns method ]

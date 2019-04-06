@@ -1,11 +1,11 @@
-﻿using Mst.Dexter.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Mst.Dexter.PocoGenerator.Source.BO
+﻿namespace Mst.Dexter.PocoGenerator.Source.BO
 {
+    using Mst.Dexter.Extensions;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     internal class Table
     {
         public string NameSpace
@@ -64,7 +64,6 @@ namespace Mst.Dexter.PocoGenerator.Source.BO
 
         public List<Column> TableColumns
         { get; set; } = new List<Column> { };
-
         public override string ToString()
         {
             string s = string.Empty;
@@ -108,7 +107,7 @@ namespace Mst.Dexter.PocoGenerator.Source.BO
                 tableAndSchemaFormat = tableAndSchemaFormat.Replace("#SCHEMA#", schemaName);
                 entityBuilder.AppendFormat("\t{0}\n", tableAndSchemaFormat);
 
-                entityBuilder.AppendFormat("\tpublic class {0}\n", TableName.RemoveSpaces().RemoveUnderLineAndCapitalizeString());
+                entityBuilder.AppendFormat("\tpublic class {0}\n", this.TableName.RemoveSpaces().RemoveUnderLineAndCapitalizeString());
                 entityBuilder.Append("\t{\n");
 
                 this.TableColumns = this.TableColumns ?? new List<Column> { };

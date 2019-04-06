@@ -1,16 +1,14 @@
-﻿using Mst.Dexter.PocoGenerator.Source.BO;
-using Mst.Dexter.PocoGenerator.Source.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Mst.Dexter.Extensions;
-
-namespace Mst.Dexter.PocoGenerator.Source.Printing
+﻿namespace Mst.Dexter.PocoGenerator.Source.Printing
 {
+    using Mst.Dexter.PocoGenerator.Source.BO;
+    using Mst.Dexter.PocoGenerator.Source.Enum;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     internal class ClassPrinter
     {
-
         public static string GetPrintContent(OutputFileType fileType, Table table)
         {
             var result = string.Empty;
@@ -79,7 +77,7 @@ namespace Mst.Dexter.PocoGenerator.Source.Printing
                 tableAndSchemaFormat = tableAndSchemaFormat.Replace("#SCHEMA#", schemaName);
                 entityBuilder.AppendFormat("\t{0}\n", tableAndSchemaFormat);
 
-                entityBuilder.AppendFormat("\tpublic class {0}\n", table.TableName.RemoveSpaces().RemoveUnderLineAndCapitalizeString());
+                entityBuilder.AppendFormat("\tpublic class {0}\n", table.ClassNameOld);//TableName.RemoveSpaces().RemoveUnderLineAndCapitalizeString());
                 entityBuilder.Append("\t{\n");
 
                 var columnList = (table?.TableColumns ?? new List<Column> { }).Select(q => q.ToPropertyString()).ToArray();
@@ -130,7 +128,6 @@ namespace Mst.Dexter.PocoGenerator.Source.Printing
             }
         }
 
-
         //
         // OutputFileType.BusinessInterface
         //
@@ -160,7 +157,6 @@ namespace Mst.Dexter.PocoGenerator.Source.Printing
             }
         }
 
-
         //
         // OutputFileType.QueryObject
         //
@@ -175,7 +171,7 @@ namespace Mst.Dexter.PocoGenerator.Source.Printing
             qoBuilder.AppendLine("\t{");
 
             ///
-            /// TODO MUSTAFA 
+            /// TODO MUSTAFA
             /// CRUD, LIST AND SERCH METHODS WILL BE ADDED TO CLASS.
             ///
 
@@ -184,6 +180,5 @@ namespace Mst.Dexter.PocoGenerator.Source.Printing
 
             return qoBuilder.ToString();
         }
-
     }
 }

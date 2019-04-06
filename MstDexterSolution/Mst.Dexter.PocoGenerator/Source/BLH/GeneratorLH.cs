@@ -1,13 +1,13 @@
-﻿using Mst.Dexter.PocoGenerator.Source.BO;
-using Mst.Dexter.PocoGenerator.Source.DL;
-using Mst.Dexter.PocoGenerator.Source.Enum;
-using Mst.Dexter.PocoGenerator.Source.Util;
-using System;
-using System.Collections.Generic;
-using System.Data;
-
-namespace Mst.Dexter.PocoGenerator.Source.BLH
+﻿namespace Mst.Dexter.PocoGenerator.Source.BLH
 {
+    using Mst.Dexter.PocoGenerator.Source.BO;
+    using Mst.Dexter.PocoGenerator.Source.DL;
+    using Mst.Dexter.PocoGenerator.Source.Enum;
+    using Mst.Dexter.PocoGenerator.Source.Util;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+
     internal class GeneratorLH
     {
         private GeneratorDL generatorDL;
@@ -141,7 +141,7 @@ namespace Mst.Dexter.PocoGenerator.Source.BLH
                     foreach (DataRow rw in rows)
                     {
                         //columns.Add(new Column(rw["COLUMN_NAME"].ToString(), rw["DATA_TYPE"].ToString()));
-                        
+
                         // TODO
                         Column cl = null;
                         //rw.RowToObject<Column>(dt.Columns);

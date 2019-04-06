@@ -1,16 +1,16 @@
-﻿using Mst.Dexter.Extensions;
-using Mst.Dexter.PocoGenerator.Source.BO;
-using Mst.Dexter.PocoGenerator.Source.Enum;
-using Mst.Dexter.PocoGenerator.Source.Interfaces;
-using Mst.Dexter.PocoGenerator.Source.QO;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Dynamic;
-using System.Linq;
-
-namespace Mst.Dexter.PocoGenerator.Source.Factory
+﻿namespace Mst.Dexter.PocoGenerator.Source.Factory
 {
+    using Mst.Dexter.Extensions;
+    using Mst.Dexter.PocoGenerator.Source.BO;
+    using Mst.Dexter.PocoGenerator.Source.Enum;
+    using Mst.Dexter.PocoGenerator.Source.Interfaces;
+    using Mst.Dexter.PocoGenerator.Source.QO;
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Dynamic;
+    using System.Linq;
+
     internal sealed class TableFactory
     {
         internal static List<Table> GetTables(IDbConnection dbConnection)

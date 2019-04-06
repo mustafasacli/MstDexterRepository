@@ -1,9 +1,9 @@
-﻿using Mst.Dexter.Extensions;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Mst.Dexter.PocoGenerator.Source.BO
+﻿namespace Mst.Dexter.PocoGenerator.Source.BO
 {
+    using Mst.Dexter.Extensions;
+    using System.Collections.Generic;
+    using System.Text;
+
     internal class Column
     {
         private string _propName;

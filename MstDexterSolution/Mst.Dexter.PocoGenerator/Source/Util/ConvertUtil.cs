@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Mst.Dexter.PocoGenerator.Source.Util
+﻿namespace Mst.Dexter.PocoGenerator.Source.Util
 {
+    using System;
+
     internal class ConvertUtil
     {
         public static int ToInt(string willBeConverted)

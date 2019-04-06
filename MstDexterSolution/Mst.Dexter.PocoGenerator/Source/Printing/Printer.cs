@@ -1,12 +1,12 @@
-﻿using Mst.Dexter.PocoGenerator.Source.BO;
-using Mst.Dexter.PocoGenerator.Source.Enum;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-
-namespace Mst.Dexter.PocoGenerator.Source.Printing
+﻿namespace Mst.Dexter.PocoGenerator.Source.Printing
 {
+    using Mst.Dexter.PocoGenerator.Source.BO;
+    using Mst.Dexter.PocoGenerator.Source.Enum;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
+
     internal class Printer
     {
         public delegate void PrintTableDetail(object obj);

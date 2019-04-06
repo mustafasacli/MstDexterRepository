@@ -1,11 +1,11 @@
-﻿using Mst.Dexter.PocoGenerator.Source.BLH;
-using Mst.Dexter.PocoGenerator.Source.BO;
-using Mst.Dexter.PocoGenerator.Source.Enum;
-using System;
-using System.Collections.Generic;
-
-namespace Mst.Dexter.PocoGenerator.Source.Generate
+﻿namespace Mst.Dexter.PocoGenerator.Source.Generate
 {
+    using Mst.Dexter.PocoGenerator.Source.BLH;
+    using Mst.Dexter.PocoGenerator.Source.BO;
+    using Mst.Dexter.PocoGenerator.Source.Enum;
+    using System;
+    using System.Collections.Generic;
+
     internal class CodeGenerator
     {
         public static string ConnStr = string.Empty;
