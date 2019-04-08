@@ -1,16 +1,23 @@
 ﻿namespace Mst.Dexter.PocoGenerator.Source.Printing
 {
+    using Mst.Dexter.Extensions;
     using Mst.Dexter.PocoGenerator.Source.BO;
     using Mst.Dexter.PocoGenerator.Source.Enum;
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Text;
 
     internal class Printer
     {
         public delegate void PrintTableDetail(object obj);
+
         public PrintTableDetail PrintDetail;
+
+        public delegate void PrintTableError(Exception ex);
+
+        public PrintTableError PrintError;
 
         public Printer()
         {
@@ -18,7 +25,6 @@
 
         public string NameSpace
         { get; set; } = string.Empty;
-
 
         public string SavingPath
         { get; set; } = string.Empty;
@@ -33,19 +39,19 @@
         {
             StringBuilder qoBuilder = new StringBuilder();
 
-            qoBuilder.AppendFormat("namespace {0}.QueryObjects\n", this.NameSpace);
-            qoBuilder.AppendLine("{");
-            qoBuilder.AppendLine("\t/* Query Object Class */");
-            qoBuilder.AppendLine(string.Format("\tpublic class {0}Crud", className));
-            qoBuilder.AppendLine("\t{");
+            qoBuilder.AppendFormat("namespace {0}.QueryObjects\n", this.NameSpace)
+                .AppendLine("{")
+                .AppendLine("\t/* Query Object Class */")
+                .AppendLine(string.Format("\tpublic class {0}Crud", className))
+                .AppendLine("\t{");
 
             ///
-            /// TODO MUSTAFA 
+            /// TODO MUSTAFA
             /// CRUD, LIST AND SERCH METHODS WILL BE ADDED TO CLASS.
             ///
 
-            qoBuilder.AppendLine("\t}");
-            qoBuilder.AppendLine("}");
+            qoBuilder.AppendLine("\t}")
+                .AppendLine("}");
 
             return qoBuilder.ToString();
         }
@@ -75,24 +81,31 @@
 
                 foreach (var clazz in classList)
                 {
-                    fileTableInfo = new FileInfo(
-                        string.Format(@"{0}\{1}.cs",
-                        dirInfoBO.FullName,
-                        clazz.ClassNameOld
-                        ));
-
-                    tableStrObject = ClassPrinter.GetPrintContent(OutputFileType.Entity, clazz);//clazz.ToTableString();
-
-                    using (StreamWriter outfile = new StreamWriter(fileTableInfo.FullName, false) { AutoFlush = true })
+                    try
                     {
-                        outfile.Write(tableStrObject);
-                        outfile.Close();
+                        fileTableInfo = new FileInfo(
+                                        string.Format(@"{0}\{1}.cs",
+                                        dirInfoBO.FullName,
+                                        clazz.ClassNameOld
+                                        ));
+
+                        tableStrObject = ClassPrinter.GetPrintContent(OutputFileType.Entity, clazz);
+
+                        using (StreamWriter outfile = new StreamWriter(fileTableInfo.FullName, false) { AutoFlush = true })
+                        {
+                            outfile.Write(tableStrObject);
+                            outfile.Close();
+                        }
+
+                        tableStrObject = string.Empty;
+
+                        this.PrintDetail?.Invoke(string.Format("{0} - {1} table Entity has been printed.", clazz.TableName, clazz.ClassName));
                     }
-
-                    tableStrObject = string.Empty;
-
-                    this.PrintDetail?.Invoke(string.Format("{0} - {1} table Entity has been printed.", clazz.TableName, clazz.ClassName));
-
+                    catch (Exception e)
+                    {
+                        this.PrintError?.Invoke(new Exception(string.Format("Error on writing {0} - {1} table Entity.", clazz.TableName, clazz.ClassName), e));
+                        throw;
+                    }
                 }
 
                 #endregion [ Writing Business Object(BO) CLasses Part ]
@@ -107,21 +120,29 @@
 
                 foreach (var clazz in classList)
                 {
-                    fileTableInfo = new FileInfo(string.Format(@"{0}\{1}Business.cs", dirInfoBusiness.FullName, clazz.ClassNameOld));
-                    tableStrObject = ClassPrinter.GetPrintContent(OutputFileType.Business, clazz);//clazz.ToBusinessString();
-
-                    using (StreamWriter outfile = new StreamWriter(fileTableInfo.FullName, false) { AutoFlush = true })
+                    try
                     {
-                        outfile.Write(tableStrObject);
-                        outfile.Close();
+                        fileTableInfo = new FileInfo(string.Format(@"{0}\{1}Business.cs", dirInfoBusiness.FullName, clazz.ClassNameOld));
+                        tableStrObject = ClassPrinter.GetPrintContent(OutputFileType.Business, clazz);//clazz.ToBusinessString();
+
+                        using (StreamWriter outfile = new StreamWriter(fileTableInfo.FullName, false) { AutoFlush = true })
+                        {
+                            outfile.Write(tableStrObject);
+                            outfile.Close();
+                        }
+
+                        tableStrObject = string.Empty;
+
+                        this.PrintDetail?.Invoke(string.Format("{0} - {1} table Business has been printed.", clazz.TableName, clazz.ClassName));
                     }
-
-                    tableStrObject = string.Empty;
-
-                    this.PrintDetail?.Invoke(string.Format("{0} - {1} table Business has been printed.", clazz.TableName, clazz.ClassName));
+                    catch (Exception e)
+                    {
+                        this.PrintError?.Invoke(new Exception(string.Format("Error on writing {0} - {1} table Entity.", clazz.TableName, clazz.ClassName), e));
+                        throw;
+                    }
                 }
 
-                #endregion [ Writing Business Layer(BL) Interfaces Part ]
+                #endregion [ Writing Business Layer(BL) Classes Part ]
 
                 fileTableInfo = null;
 
@@ -129,18 +150,26 @@
 
                 foreach (var clazz in classList)
                 {
-                    fileTableInfo = new FileInfo(string.Format(@"{0}\I{1}Business.cs", dirInfoBusinessInterfaces.FullName, clazz.ClassNameOld));
-                    tableStrObject = ClassPrinter.GetPrintContent(OutputFileType.BusinessInterface, clazz);//clazz.ToBusinessInterfaceString();
-
-                    using (StreamWriter outfile = new StreamWriter(fileTableInfo.FullName, false) { AutoFlush = true })
+                    try
                     {
-                        outfile.Write(tableStrObject);
-                        outfile.Close();
+                        fileTableInfo = new FileInfo(string.Format(@"{0}\I{1}Business.cs", dirInfoBusinessInterfaces.FullName, clazz.ClassNameOld));
+                        tableStrObject = ClassPrinter.GetPrintContent(OutputFileType.BusinessInterface, clazz);//clazz.ToBusinessInterfaceString();
+
+                        using (StreamWriter outfile = new StreamWriter(fileTableInfo.FullName, false) { AutoFlush = true })
+                        {
+                            outfile.Write(tableStrObject);
+                            outfile.Close();
+                        }
+
+                        tableStrObject = string.Empty;
+
+                        this.PrintDetail?.Invoke(string.Format("{0} - {1} table Business Interface has been printed.", clazz.TableName, clazz.ClassName));
                     }
-
-                    tableStrObject = string.Empty;
-
-                    this.PrintDetail?.Invoke(string.Format("{0} - {1} table Business Interface has been printed.", clazz.TableName, clazz.ClassName));
+                    catch (Exception e)
+                    {
+                        this.PrintError?.Invoke(new Exception(string.Format("Error on writing {0} - {1} table Business Interface.", clazz.TableName, clazz.ClassName), e));
+                        throw;
+                    }
                 }
 
                 fileTableInfo = null;
@@ -153,24 +182,100 @@
 
                 foreach (var clazz in classList)
                 {
-                    fileTableInfo = new FileInfo(string.Format(@"{0}\{1}Crud.cs", dirInfQO.FullName, clazz.ClassNameOld));
-                    tableStrObject = ClassPrinter.GetPrintContent(OutputFileType.QueryObject, clazz);//QOToString(clazz.ClassNameOld);
-
-                    using (StreamWriter outfile = new StreamWriter(fileTableInfo.FullName, false) { AutoFlush = true })
+                    try
                     {
-                        outfile.Write(tableStrObject);
-                        outfile.Close();
+                        fileTableInfo = new FileInfo(string.Format(@"{0}\{1}Crud.cs", dirInfQO.FullName, clazz.ClassNameOld));
+                        tableStrObject = ClassPrinter.GetPrintContent(OutputFileType.QueryObject, clazz);//QOToString(clazz.ClassNameOld);
+
+                        using (StreamWriter outfile = new StreamWriter(fileTableInfo.FullName, false) { AutoFlush = true })
+                        {
+                            outfile.Write(tableStrObject);
+                            outfile.Close();
+                        }
+
+                        tableStrObject = string.Empty;
+
+                        this.PrintDetail?.Invoke(string.Format("{0} - {1} table Crud object has been printed.", clazz.TableName, clazz.ClassName));
                     }
-
-                    tableStrObject = string.Empty;
-
-                    this.PrintDetail?.Invoke(string.Format("{0} - {1} table Crud object has been printed.", clazz.TableName, clazz.ClassName));
+                    catch (Exception e)
+                    {
+                        this.PrintError?.Invoke(new Exception(string.Format("Error on writing {0} - {1} table Crud object.", clazz.TableName, clazz.ClassName), e));
+                        throw;
+                    }
                 }
 
                 #endregion [ Writing QO.Crud Class Part ]
             }
             catch (Exception e)
             {
+                throw;
+            }
+        }
+
+        public void PrintClassTableV2(List<Table> classList)
+        {
+            try
+            {
+                if (classList == null || classList.Count == 0)
+                    return;
+
+                var dirInfoSavePath = new DirectoryInfo(this.SavingPath);
+
+                if (dirInfoSavePath.Exists == false)
+                    dirInfoSavePath.Create();
+
+                var dirInfoSourcePath = dirInfoSavePath.CreateSubdirectory("Source");
+
+                var outputFileTypes = Enum.GetValues(typeof(OutputFileType))
+                    .Cast<OutputFileType>()
+                    .Where(q => q.IsMember(OutputFileType.Views) == false);
+
+                DirectoryInfo dirInfo = null;
+
+                foreach (var fileType in outputFileTypes)
+                {
+                    var directoryName = ClassPrinter.GetPrintFolderName(fileType);
+
+                    if (!directoryName.IsNullOrSpace())
+                    {
+                        dirInfo = dirInfoSourcePath.CreateSubdirectory(directoryName);
+                        classList.ForEach(q => { PrintClassFile(dirInfo, fileType, q); });
+                    }
+                }
+
+                //// Printing Views
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        protected void PrintClassFile(DirectoryInfo dirInfo, OutputFileType fileType, Table clazz)
+        {
+            try
+            {
+                var fileTableInfo = new FileInfo(
+                                 string.Format(@"{0}\{1}.cs",
+                                 dirInfo.FullName,
+                                 clazz.GetObjectFileName(fileType)
+                                 ));
+
+                var tableStrObject = ClassPrinter.GetPrintContent(fileType, clazz);
+
+                using (StreamWriter outfile = new StreamWriter(fileTableInfo.FullName, false) { AutoFlush = true })
+                {
+                    outfile.Write(tableStrObject);
+                    outfile.Close();
+                }
+
+                tableStrObject = string.Empty;
+
+                this.PrintDetail?.Invoke(string.Format("{0} - {1} table {2} has been printed.", clazz.TableName, clazz.ClassName, fileType.ToString()));
+            }
+            catch (Exception e)
+            {
+                this.PrintError?.Invoke(new Exception(string.Format("Error on writing {0} - {1} table {2}.", clazz.TableName, clazz.ClassName, fileType.ToString()), e));
                 throw;
             }
         }

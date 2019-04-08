@@ -435,8 +435,10 @@
 
             PropertyInfo[] props = typeof(T).GetProperties();
 
-            props = props.AsQueryable().Where(p => p.CanWrite == true).ToArray();
-            props = props.AsQueryable().Where(p => columns.Contains(p.Name) == true).ToArray();
+            props = props
+                .AsQueryable()
+                .Where(p => p.CanWrite == true && columns.Contains(p.Name))
+                .ToArray();
 
             foreach (PropertyInfo p in props)
             {
@@ -473,6 +475,8 @@
 
         #endregion [ GetColumnAsUniqueList method ]
 
+        #region [ ToDynamicList ]
+
         public static List<ExpandoObject> ToDynamicList(this DataTable table)
         {
             List<ExpandoObject> list = new List<ExpandoObject>();
@@ -501,5 +505,7 @@
 
             return list;
         }
+
+        #endregion
     }
 }

@@ -39,6 +39,7 @@
             tableGenerator = new CodeGenerator();
             printer = new Printer();
             printer.PrintDetail = this.PrintDetail;
+            printer.PrintError = this.LogError;
         }
 
         #endregion [ FrmCodeGenerator Ctor ]
@@ -208,11 +209,13 @@
                         tbl.NameSpace = printer.NameSpace;
                         tbl.KeyColumns = TableFactory.GetTableKeyColumns(conn, tbl.TableName);
                         var columns = TableFactory.BuildColumnList(conn, tbl.TableName, tbl.SchemaName);
-
-                        for (int columnCounter = 0; columnCounter < columns.Count; columnCounter++)
+                        if (columns.Count > 0 && tbl.KeyColumns.Count > 0)
                         {
-                            columns[columnCounter].IsKeyColumn =
-                                tbl.KeyColumns.Contains(columns[columnCounter].ColumnName);
+                            for (int columnCounter = 0; columnCounter < columns.Count; columnCounter++)
+                            {
+                                columns[columnCounter].IsKeyColumn =
+                                    tbl.KeyColumns.Contains(columns[columnCounter].ColumnName);
+                            }
                         }
 
                         tbl.TableColumns = columns;
@@ -220,7 +223,7 @@
                     }
                 }
 
-                printer.PrintClassTable(checkedTables);
+                printer.PrintClassTableV2(checkedTables);
 
                 ////var tableNames = checkedTables.Select(q => q.TableName).ToArray();
                 ////var tableNameStr = string.Join(",\n", tableNames);
@@ -244,13 +247,18 @@
         {
             try
             {
-                txtLog.AppendText(obj?.ToString());
+                txtLog.AppendText(string.Format("{0} : {1}", DateTime.Now.ToString(AppConstants.GeneralDateFormat), obj?.ToString()));
                 txtLog.AppendText(Environment.NewLine);
             }
             catch (Exception e)
             {
                 LogException(e, 8);
             }
+        }
+
+        private void LogError(Exception e)
+        {
+            LogException(e, 9);
         }
 
         #region [ btnGetTables Click event ]

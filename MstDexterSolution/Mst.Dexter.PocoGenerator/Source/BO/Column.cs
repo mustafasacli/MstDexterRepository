@@ -13,18 +13,6 @@
             get { return "OnPropertyChanged"; }
         }
 
-        /*
-        public Column(string sColumnName, string sColumnType, bool sIsRequired = false)
-        {
-            _ColumnName = sColumnName;
-            _ColumnTypeName = sColumnType;
-            _propName = string.Empty;
-            _isRequired = sIsRequired;
-            _stringMinLen = 0;
-            _stringMaxLen = 50;
-        }
-        */
-
         private string _ColumnName;
 
         public string ColumnName
@@ -34,8 +22,6 @@
             {
                 _ColumnName = value;
                 _propName = PropName();
-
-                (new List<string> { "kodu", "kod", "pk", "fk", "rowid", "id" }).ForEach(q => _propName = _propName.CapitalizeEndPart(q));
             }
         }
 
@@ -65,6 +51,10 @@
             strResult = strResult.Replace("Ö", "O");
             strResult = strResult.Replace("Ü", "U");
             strResult = strResult.Replace("İ", "I");
+
+            strResult = strResult.RemoveUnderLineAndCapitalizeString();
+
+            (new List<string> { "kodu", "kod", "tc", "no", "pk", "fk", "rowid", "id" }).ForEach(q => strResult = strResult.CapitalizeEndPart(q));
 
             return strResult;
         }
@@ -107,9 +97,8 @@
         public bool IsKeyColumn
         { get; set; }
 
-        public string ToPropertyString()
+        public string ToPropertyString(bool isViewModel = false)
         {
-            string colName = this.PropertyName;
             string colType = this.ColumnTypeName;
 
             StringBuilder propertyBuilder = new StringBuilder();
@@ -139,20 +128,36 @@
                 }
             }
 
-            var typeName = string.Empty;
-            if (!this.DataType.IsNullOrSpace())
-                typeName = string.Format(", TypeName = \"{0}\"", this.DataType);
+            if (!isViewModel)
+            {
+                var typeName = string.Empty;
+                if (!this.DataType.IsNullOrSpace())
+                    typeName = string.Format(", TypeName = \"{0}\"", this.DataType);
 
-            var orderText = string.Empty;
-            if (this.Order.GetValueOrDefault(-1) > -1)
-                orderText = string.Format(", Order = {0}", this.Order.GetValueOrDefault());
+                var orderText = string.Empty;
+                if (this.Order.GetValueOrDefault(-1) > -1)
+                    orderText = string.Format(", Order = {0}", this.Order.GetValueOrDefault());
 
-            propertyBuilder.AppendFormat("\t\t[Column(\"{0}\"{1}{2})]\n", this.ColumnName, orderText, typeName);
+                propertyBuilder.AppendFormat("\t\t[Column(\"{0}\"{1}{2})]\n", this.ColumnName, orderText, typeName);
+            }
 
-            propertyBuilder.AppendFormat("\t\tpublic {0} {1}\n", colType, colName.RemoveUnderLineAndCapitalizeString());
-            propertyBuilder.Append("\t\t{ get; set; }");
-            //propertyBuilder.AppendLine();
-            //propertyBuilder.AppendLine();
+            propertyBuilder
+                .AppendFormat("\t\tpublic {0} {1}\n", colType, this.PropertyName)
+                .Append("\t\t{ get; set; }");
+
+            return propertyBuilder.ToString();
+        }
+
+        public string ToDataMemberString()
+        {
+            string colType = this.ColumnTypeName;
+
+            StringBuilder propertyBuilder = new StringBuilder();
+
+            propertyBuilder
+                .AppendLine("\t\t[DataMember]")
+                .AppendFormat("\t\tpublic {0} {1}\n", colType, this.PropertyName)
+                .Append("\t\t{ get; set; }");
 
             return propertyBuilder.ToString();
         }

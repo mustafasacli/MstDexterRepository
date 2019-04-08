@@ -1,9 +1,8 @@
 ﻿namespace Mst.Dexter.PocoGenerator.Source.BO
 {
+    using Enum;
     using Mst.Dexter.Extensions;
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Text;
 
     internal class Table
@@ -11,50 +10,78 @@
         public string NameSpace
         { get; set; }
 
+        private string _tableName;
+
         public string TableName
-        { get; set; }
+        {
+            get { return _tableName ?? string.Empty; }
+            set
+            {
+                _tableName = value ?? string.Empty;
+                this.ClassName = BuildClassName();
+                this.ClassNameOld = this.ClassName;
+            }
+        }
 
         public string SchemaName
         { get; set; }
+
+        protected string BuildClassName()
+        {
+            string strResult = string.Empty;
+
+            strResult = TableName.RemoveChars('.', ' ');
+
+            strResult = strResult.Replace("ğ", "g");
+            strResult = strResult.Replace("ı", "i");
+            strResult = strResult.Replace("ç", "c");
+            strResult = strResult.Replace("ö", "o");
+            strResult = strResult.Replace("ü", "u");
+
+            strResult = strResult.Replace("Ğ", "G");
+            strResult = strResult.Replace("Ç", "C");
+            strResult = strResult.Replace("Ö", "O");
+            strResult = strResult.Replace("Ü", "U");
+            strResult = strResult.Replace("İ", "I");
+
+            strResult = strResult.TrimEnd('s');
+
+            if (strResult.StartsWith("t_"))
+                strResult = strResult.TrimStart('t').TrimStart('_');
+
+            if (strResult.StartsWith("T_"))
+                strResult = strResult.TrimStart('T').TrimStart('_');
+
+            strResult = strResult.RemoveUnderLineAndCapitalizeString();
+
+            (new List<string> { "kodu", "kod", "tc", "no", "pk", "fk", "rowid", "id" }).ForEach(q => strResult = strResult.CapitalizeEndPart(q));
+
+            return strResult;
+        }
 
         public string ClassName
         { get; set; }
 
         public string ClassNameOld
-        {
-            get
-            {
-                string strResult = string.Empty;
+        { get; private set; }
 
-                strResult = TableName.RemoveChars('.', ' ');
+        public string BusinessClassName
+        { get { return $"{this.ClassName}Business"; } }
 
-                strResult = strResult.Replace("ğ", "g");
-                strResult = strResult.Replace("ı", "i");
-                strResult = strResult.Replace("ç", "c");
-                strResult = strResult.Replace("ö", "o");
-                strResult = strResult.Replace("ü", "u");
+        public string BusinessInterfaceName
+        { get { return $"I{this.ClassName}Business"; } }
 
-                strResult = strResult.Replace("Ğ", "G");
-                strResult = strResult.Replace("Ç", "C");
-                strResult = strResult.Replace("Ö", "O");
-                strResult = strResult.Replace("Ü", "U");
-                strResult = strResult.Replace("İ", "I");
+        public string QueryObjectClassName
+        { get { return $"{this.ClassName}Crud"; } }
 
-                strResult = strResult.TrimEnd('s');
+        public string ViewModelClassName
+        { get { return $"{this.ClassName}ViewModel"; } }
 
-                if (strResult.StartsWith("t_"))
-                    strResult = strResult.TrimStart('t').TrimStart('_');
+        public string DataTransferObjectClassName
+        { get { return $"{this.ClassName}Dto"; } }
 
-                if (strResult.StartsWith("T_"))
-                    strResult = strResult.TrimStart('T').TrimStart('_');
-
-                strResult = strResult.RemoveUnderLineAndCapitalizeString();
-
-                (new List<string> { "kodu", "kod", "pk", "fk", "rowid", "id" }).ForEach(q => strResult = strResult.CapitalizeEndPart(q));
-
-                return strResult;
-            }
-        }
+        public string ControllerClassName
+        { get { return $"{this.ClassName}Controller"; } }
 
         public string IdColumn
         { get; set; }
@@ -64,6 +91,7 @@
 
         public List<Column> TableColumns
         { get; set; } = new List<Column> { };
+
         public override string ToString()
         {
             string s = string.Empty;
@@ -77,109 +105,76 @@
             return s;
         }
 
-        public string ToTableString()
+        public string GetObjectFileName(OutputFileType fileType)
         {
-            try
+            var s = string.Empty;
+
+            switch (fileType)
             {
-                StringBuilder entityBuilder = new StringBuilder();
+                case OutputFileType.Entity:
+                    s = this.ClassName;
+                    break;
 
-                /// usings
-                entityBuilder.AppendLine("using System;");
-                entityBuilder.AppendLine("using System.ComponentModel.DataAnnotations;");
-                entityBuilder.AppendLine("using System.ComponentModel.DataAnnotations.Schema;");
+                case OutputFileType.Business:
+                    s = this.BusinessClassName;
+                    break;
 
-                entityBuilder.AppendLine();
-                entityBuilder.AppendFormat("namespace {0}\n", string.Format(AppConstants.EntityNamespace, this.NameSpace));
-                entityBuilder.AppendLine("{");
+                case OutputFileType.BusinessInterface:
+                    s = this.BusinessInterfaceName;
+                    break;
 
-                ///
-                /// TODO MUSTAFA - DONE
-                /// Schema info will be processed here.
-                /// [Table("YURT_YATAK_V2", Schema = "KYKEDONUSUM")]
-                string tableAndSchemaFormat = string.Format("[Table(\"{0}\"#SCHEMA#)]", this.TableName);
+                case OutputFileType.QueryObject:
+                    s = this.QueryObjectClassName;
+                    break;
 
-                string schemaName = string.Empty;
-                if (!string.IsNullOrWhiteSpace(SchemaName))
-                {
-                    schemaName = string.Format(", Schema = \"{0}\"", SchemaName);
-                }
+                case OutputFileType.ViewModel:
+                    s = this.ViewModelClassName;
+                    break;
 
-                tableAndSchemaFormat = tableAndSchemaFormat.Replace("#SCHEMA#", schemaName);
-                entityBuilder.AppendFormat("\t{0}\n", tableAndSchemaFormat);
+                case OutputFileType.DataTransferObject:
+                    s = this.DataTransferObjectClassName;
+                    break;
 
-                entityBuilder.AppendFormat("\tpublic class {0}\n", this.TableName.RemoveSpaces().RemoveUnderLineAndCapitalizeString());
-                entityBuilder.Append("\t{\n");
+                case OutputFileType.Controller:
+                    s = this.ControllerClassName;
+                    break;
 
-                this.TableColumns = this.TableColumns ?? new List<Column> { };
-                var columnList = this.TableColumns.Select(q => q.ToPropertyString()).ToArray();
-                entityBuilder.Append(string.Join("\n\n", columnList));
-                entityBuilder.AppendLine();
+                case OutputFileType.Views:
+                    s = this.ClassName;
+                    break;
 
-                entityBuilder.AppendLine("\t}");
-                entityBuilder.Append("}");
-                return entityBuilder.ToString();
+                default:
+                    break;
             }
-            catch (Exception e)
-            {
-                throw;
-            }
+
+            return s;
         }
 
-        public string ToBusinessString()
+        public string GetObjectFileExtension(OutputFileType fileType)
         {
-            try
+            var s = string.Empty;
+
+            switch (fileType)
             {
-                StringBuilder builder = new StringBuilder();
+                case OutputFileType.Entity:
+                case OutputFileType.Business:
+                case OutputFileType.BusinessInterface:
+                case OutputFileType.QueryObject:
+                case OutputFileType.DataTransferObject:
+                case OutputFileType.Controller:
+                case OutputFileType.ViewModel:
+                    s = "cs";
+                    break;
 
-                builder
-                    .AppendLine("using System;")
-                    .AppendFormat("using {0}.Interfaces;", string.Format(AppConstants.BusinessNamespace, NameSpace))
-                    .AppendLine()
-                    .AppendLine()
-                    .AppendFormat("namespace {0}\n", string.Format(AppConstants.BusinessNamespace, NameSpace))
-                    .AppendLine("{")
-                    .AppendFormat("\tpublic class {0}Business : I{0}Business\n", this.ClassNameOld)
-                    .AppendLine("\t{")
-                    .AppendFormat("\t\tpublic {0}Business()\n", this.ClassNameOld)
-                    .AppendLine("\t\t{")
-                    ///
-                    /// TODO CRUD AND SEARCH LOGIC.
-                    ///
-                    .AppendLine("\t\t}")
-                    .Append("\t}\n}");
+                case OutputFileType.Views:
+                    s = "cshtml";
+                    break;
 
-                return builder.ToString();
+                default:
+                    break;
             }
-            catch (Exception e)
-            {
-                throw;
-            }
-        }
 
-        public string ToBusinessInterfaceString()
-        {
-            try
-            {
-                StringBuilder builder = new StringBuilder();
-
-                builder
-                    .AppendLine("using System;")
-                    .AppendLine()
-                    .AppendFormat("namespace {0}\n", string.Format(AppConstants.BusinessInterfaceNamespace, NameSpace))
-                    .AppendLine("{")
-                    .AppendFormat("\tpublic class I{0}Business\n", this.ClassNameOld)
-                    .AppendLine("\t{")
-                    ///
-                    /// TODO CRUD AND SEARCH LOGIC.
-                    ///
-                    .Append("\t}\n}");
-
-                return builder.ToString();
-            }
-            catch (Exception e)
-            {
-                throw;
-            }
+            return s;
         }
 
         public string MethodString(string returnType, string methodName)

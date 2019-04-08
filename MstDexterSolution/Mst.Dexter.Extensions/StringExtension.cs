@@ -96,9 +96,9 @@
 
             var result = str;
 
-            if (str.ToLowerInvariant().EndsWith(endPart.ToLowerInvariant()))
+            if (result.ToLowerInvariant().EndsWith(endPart.ToLowerInvariant()))
             {
-                result = result.ToLowerInvariant().Substring(0, result.Length - endPart.Length);
+                result = str.Substring(0, str.Length - endPart.Length);
                 result = string.Concat(result, endPart.CapitalizeString());
             }
 

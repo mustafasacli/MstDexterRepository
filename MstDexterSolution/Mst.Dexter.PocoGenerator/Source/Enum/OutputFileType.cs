@@ -2,7 +2,6 @@
 {
     internal enum OutputFileType : byte
     {
-        None = 0,
         Entity = 10,
         Business = 11,
         BusinessInterface = 12,
