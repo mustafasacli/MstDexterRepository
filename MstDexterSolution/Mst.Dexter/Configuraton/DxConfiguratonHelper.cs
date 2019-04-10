@@ -39,8 +39,6 @@
 
             try
             {
-                //XmlNode mainNode = ConfigurationManager.GetSection(AppValues.ConfigMainSectionName) as XmlNode; //"dexter.configs") as XmlNode;
-                //nodeList = mainNode.SelectNodes(AppValues.ConfigAddSectionName);
                 nodeList = GetMainNode()?.SelectNodes(AppValues.ConfigAddSectionName);
             }
             catch (Exception e)

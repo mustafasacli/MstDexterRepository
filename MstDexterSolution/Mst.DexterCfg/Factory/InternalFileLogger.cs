@@ -20,15 +20,19 @@
         {
             try
             {
-                string str;
-                FileMode fMode = File.Exists(filePath) ? FileMode.Append : FileMode.OpenOrCreate;
-                if (!writeLine)
+                if (rows == null || rows.Count < 1)
+                    return;
+
+                var fileMode = File.Exists(filePath) ? FileMode.Append : FileMode.OpenOrCreate;
+
+                using (StreamWriter writer = new StreamWriter(
+                           new FileStream(filePath, fileMode))
+                { AutoFlush = true })
                 {
-                    using (StreamWriter writer = new StreamWriter(
-                               new FileStream(filePath, fMode))
-                    { AutoFlush = true })
+                    if (!writeLine)
                     {
-                        foreach (string s in rows)
+                        string str;
+                        rows.ForEach(s =>
                         {
                             str = s ?? string.Empty;
                             if (str.EndsWith("\r\n") || str.EndsWith("\n"))
@@ -39,22 +43,14 @@
                             {
                                 writer.WriteLine(str);
                             }
-                        }
-
-                        writer.Flush();
+                        });
                     }
-                }
-                else
-                {
-                    using (StreamWriter writer = new StreamWriter(
-                new FileStream(filePath, fMode))
-                    { AutoFlush = true })
+                    else
                     {
-                        foreach (string s in rows)
+                        rows.ForEach(s =>
                         {
                             writer.WriteLine(s ?? string.Empty);
-                        }
-                        writer.Flush();
+                        });
                     }
                 }
             }
@@ -65,4 +61,3 @@
         }
     }
 }
-

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mst.Dexter.ConnectionExtensions</name>
+    </assembly>
+    <members>
+        <member name="M:Mst.Dexter.ConnectionExtensions.DbCommandHelper.SetCommandParameters(System.Data.IDbCommand,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            creates parameters and sets their values of IDbCommand.
+            </summary>
+            <param name="command"></param>
+            <param name="inputArgs"></param>
+            <param name="outputArgs"></param>
+        </member>
+        <member name="M:Mst.Dexter.ConnectionExtensions.DbCommandHelper.GetOutParametersOfCommand(System.Data.IDbCommand)">
+            <summary>
+            Get Output Values of IDbCommand
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
