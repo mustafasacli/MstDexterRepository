@@ -85,9 +85,15 @@
             }
         }
 
+        /// <summary>
+        /// Enables Error Log
+        /// </summary>
         public bool IsWriteErrorLog
         { get; set; }
 
+        /// <summary>
+        /// Enables Event Log
+        /// </summary>
         public bool IsWriteEventLog
         { get; set; }
 

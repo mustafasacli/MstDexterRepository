@@ -24,6 +24,16 @@
             Error List.
             </summary>
         </member>
+        <member name="P:Mst.Dexter.Auto.DxAutoConnectionFactory.IsWriteErrorLog">
+            <summary>
+            Enables Error Log
+            </summary>
+        </member>
+        <member name="P:Mst.Dexter.Auto.DxAutoConnectionFactory.IsWriteEventLog">
+            <summary>
+            Enables Event Log
+            </summary>
+        </member>
         <member name="M:Mst.Dexter.Auto.DxAutoConnectionFactory.Register``1(System.String,``0)">
             <summary>
             Registers IDbConnection with given conn name key.
