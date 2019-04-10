@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+    <metadata>
+        <id>Mst.Dexter.dll</id>
+        <version>1.0.0</version>
+        <authors>mustafa sacli</authors>
+        <owners>mustafa sacli</owners>
+        <projectUrl>http://github.com/mustafasacli/MstDexterRepository</projectUrl>
+        <license type="expression">Apache-2.0</license>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <releaseNotes>Bug fixes and performance improvements</releaseNotes>
+        <description>Supports IDbConnection operations.</description>
+        <copyright>Copyright ©2019 Msacli Corporation</copyright>
+        <tags>IDbConnection Dapper DbConnection</tags>
+	<!-- <frameworkAssemblies>
+		<frameworkAssembly assemblyName="System.ComponentModel.DataAnnotations" targetFramework="net452" />
+	</frameworkAssemblies> -->
+    </metadata>
+</package>
