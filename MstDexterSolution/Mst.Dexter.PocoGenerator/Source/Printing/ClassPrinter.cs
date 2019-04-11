@@ -372,26 +372,20 @@
                     .AppendLine("\t\t}")
                     .AppendLine();
 
-                builder.AppendLine(string.Format("\t\tpublic object Create({0} entity)", table.ClassNameOld));
-                builder = AppendNotImplemented(builder);
+                builder.AppendLine(string.Format("\t\tpublic ActionResult Index()", table.ClassNameOld));
+                builder = AppendReturnView(builder);
 
-                builder.AppendLine(string.Format("\t\tpublic {0} Read(object oid)", table.ClassNameOld));
-                builder = AppendNotImplemented(builder);
+                builder.AppendLine(string.Format("\t\tpublic ActionResult Create()", table.ClassNameOld));
+                builder = AppendReturnView(builder);
 
-                builder.AppendLine(string.Format("\t\tpublic object Update({0} entity)", table.ClassNameOld));
-                builder = AppendNotImplemented(builder);
+                builder.AppendLine(string.Format("\t\tpublic ActionResult Update()", table.ClassNameOld));
+                builder = AppendReturnView(builder);
 
-                builder.AppendLine(string.Format("\t\tpublic object Delete({0} entity)", table.ClassNameOld));
-                builder = AppendNotImplemented(builder);
+                builder.AppendLine(string.Format("\t\tpublic ActionResult Delete()", table.ClassNameOld));
+                builder = AppendReturnView(builder);
 
-                builder.AppendLine(string.Format("\t\tpublic IEnumerable<{0}> ReadWhereIdIn(params object[] oids)", table.ClassNameOld));
-                builder = AppendNotImplemented(builder);
-
-                builder.AppendLine(string.Format("\t\tpublic IEnumerable<{0}> ReadAll()", table.ClassNameOld));
-                builder = AppendNotImplemented(builder);
-
-                builder.AppendLine(string.Format("\t\tpublic IEnumerable<{0}> Search(IDictionary<string, object> searchParameters, uint? pageNo = null, uint? pageItemSize = null)", table.ClassNameOld));
-                builder = AppendNotImplemented(builder, addLine: false);
+                builder.AppendLine(string.Format("\t\tpublic ActionResult Detail(object oid)", table.ClassNameOld));
+                builder = AppendReturnView(builder);
 
                 builder.Append("\t}\n}");
 
@@ -408,6 +402,19 @@
             builder = builder
                 .AppendLine("\t\t{")
                 .AppendLine("\t\t\tthrow new NotImplementedException();")
+                .AppendLine("\t\t}");
+
+            if (addLine)
+                builder = builder.AppendLine();
+
+            return builder;
+        }
+
+        internal static StringBuilder AppendReturnView(StringBuilder builder, bool addLine = true)
+        {
+            builder = builder
+                .AppendLine("\t\t{")
+                .AppendLine("\t\t\treturn View();")
                 .AppendLine("\t\t}");
 
             if (addLine)
