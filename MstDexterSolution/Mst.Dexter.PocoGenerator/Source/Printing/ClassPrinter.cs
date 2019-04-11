@@ -117,7 +117,7 @@
                 ///
                 /// TODO MUSTAFA - DONE
                 /// Schema info will be processed here.
-                /// [Table("YURT_YATAK_V2", Schema = "KYKEDONUSUM")]
+                /// [Table("TABLE_NAME", Schema = "SCHEMA_NAME")]
                 string tableAndSchemaFormat = string.Format("[Table(\"{0}\"#SCHEMA#)]", table.TableName);
 
                 string schemaName = string.Empty;
@@ -168,34 +168,27 @@
                     .AppendFormat("\t\tpublic {0}()\n", table.BusinessClassName)
                     .AppendLine("\t\t{")
                     .AppendLine("\t\t}")
-                    .AppendLine()
-                    /// object Create(AylikTahakkukLog entity);
-                    .AppendLine(string.Format("\t\tpublic object Create({0} entity)", table.ClassNameOld));
-                builder = AppendNotImplemented(builder);
-                builder
-                    /// AylikTahakkukLog Read(object oid);
-                    .AppendLine(string.Format("\t\tpublic {0} Read(object oid)", table.ClassNameOld));
-                builder = AppendNotImplemented(builder);
-                builder
-                    /// object Update(AylikTahakkukLog entity);
-                    .AppendLine(string.Format("\t\tpublic object Update({0} entity)", table.ClassNameOld));
-                builder = AppendNotImplemented(builder);
-                builder
-                    /// object Delete(AylikTahakkukLog entity);
-                    .AppendLine(string.Format("\t\tpublic object Delete({0} entity)", table.ClassNameOld));
-                builder = AppendNotImplemented(builder);
-                builder
-                    /// IEnumerable<AylikTahakkukLog> ReadWhereIdIn(params object[] oids);
-                    .AppendLine(string.Format("\t\tpublic IEnumerable<{0}> ReadWhereIdIn(params object[] oids)", table.ClassNameOld));
-                builder = AppendNotImplemented(builder);
-                builder
-                    /// IEnumerable<AylikTahakkukLog> ReadAll();
-                    .AppendLine(string.Format("\t\tpublic IEnumerable<{0}> ReadAll()", table.ClassNameOld));
-                builder = AppendNotImplemented(builder);
-                builder
-                    /// IEnumerable<AylikTahakkukLog> Search(IDictionary <string, object> searchParameters);
-                    .AppendLine(string.Format("\t\tpublic IEnumerable<{0}> Search(IDictionary<string, object> searchParameters, uint? pageNo = null, uint? pageItemSize = null)", table.ClassNameOld));
+                    .AppendLine();
 
+                builder.AppendLine(string.Format("\t\tpublic object Create({0} entity)", table.ClassNameOld));
+                builder = AppendNotImplemented(builder);
+
+                builder.AppendLine(string.Format("\t\tpublic {0} Read(object oid)", table.ClassNameOld));
+                builder = AppendNotImplemented(builder);
+
+                builder.AppendLine(string.Format("\t\tpublic object Update({0} entity)", table.ClassNameOld));
+                builder = AppendNotImplemented(builder);
+
+                builder.AppendLine(string.Format("\t\tpublic object Delete({0} entity)", table.ClassNameOld));
+                builder = AppendNotImplemented(builder);
+
+                builder.AppendLine(string.Format("\t\tpublic IEnumerable<{0}> ReadWhereIdIn(params object[] oids)", table.ClassNameOld));
+                builder = AppendNotImplemented(builder);
+
+                builder.AppendLine(string.Format("\t\tpublic IEnumerable<{0}> ReadAll()", table.ClassNameOld));
+                builder = AppendNotImplemented(builder);
+
+                builder.AppendLine(string.Format("\t\tpublic IEnumerable<{0}> Search(IDictionary<string, object> searchParameters, uint? pageNo = null, uint? pageItemSize = null)", table.ClassNameOld));
                 builder = AppendNotImplemented(builder, addLine: false);
 
                 builder.Append("\t}\n}");
@@ -226,26 +219,18 @@
                     .AppendLine()
                     .AppendFormat("\tpublic interface {0}\n", table.BusinessInterfaceName)
                     .AppendLine("\t{")
-
-                    /// object Create(AylikTahakkukLog entity);
                     .AppendLine(string.Format("\t\tobject Create({0} entity);", table.ClassNameOld))
                     .AppendLine()
-                    /// AylikTahakkukLog Read(object oid);
                     .AppendLine(string.Format("\t\t{0} Read(object oid);", table.ClassNameOld))
                     .AppendLine()
-                    /// object Update(AylikTahakkukLog entity);
                     .AppendLine(string.Format("\t\tobject Update({0} entity);", table.ClassNameOld))
                     .AppendLine()
-                    /// object Delete(AylikTahakkukLog entity);
                     .AppendLine(string.Format("\t\tobject Delete({0} entity);", table.ClassNameOld))
                     .AppendLine()
-                    /// IEnumerable<AylikTahakkukLog> ReadWhereIdIn(params object[] oids);
                     .AppendLine(string.Format("\t\tIEnumerable<{0}> ReadWhereIdIn(params object[] oids);", table.ClassNameOld))
                     .AppendLine()
-                    /// IEnumerable<AylikTahakkukLog> ReadAll();
                     .AppendLine(string.Format("\t\tIEnumerable<{0}> ReadAll();", table.ClassNameOld))
                     .AppendLine()
-                    /// IEnumerable<AylikTahakkukLog> Search(IDictionary <string, object> searchParameters);
                     .AppendLine(string.Format("\t\tIEnumerable<{0}> Search(IDictionary<string, object> searchParameters, uint? pageNo = null, uint? pageItemSize = null);", table.ClassNameOld))
                     ///
                     /// TODO MUSTAFA, DONE.
@@ -385,34 +370,27 @@
                     .AppendFormat("\t\tpublic {0}()\n", table.ControllerClassName)
                     .AppendLine("\t\t{")
                     .AppendLine("\t\t}")
-                    .AppendLine()
-                    /// object Create(AylikTahakkukLog entity);
-                    .AppendLine(string.Format("\t\tpublic object Create({0} entity)", table.ClassNameOld));
-                builder = AppendNotImplemented(builder);
-                builder
-                    /// AylikTahakkukLog Read(object oid);
-                    .AppendLine(string.Format("\t\tpublic {0} Read(object oid)", table.ClassNameOld));
-                builder = AppendNotImplemented(builder);
-                builder
-                    /// object Update(AylikTahakkukLog entity);
-                    .AppendLine(string.Format("\t\tpublic object Update({0} entity)", table.ClassNameOld));
-                builder = AppendNotImplemented(builder);
-                builder
-                    /// object Delete(AylikTahakkukLog entity);
-                    .AppendLine(string.Format("\t\tpublic object Delete({0} entity)", table.ClassNameOld));
-                builder = AppendNotImplemented(builder);
-                builder
-                    /// IEnumerable<AylikTahakkukLog> ReadWhereIdIn(params object[] oids);
-                    .AppendLine(string.Format("\t\tpublic IEnumerable<{0}> ReadWhereIdIn(params object[] oids)", table.ClassNameOld));
-                builder = AppendNotImplemented(builder);
-                builder
-                    /// IEnumerable<AylikTahakkukLog> ReadAll();
-                    .AppendLine(string.Format("\t\tpublic IEnumerable<{0}> ReadAll()", table.ClassNameOld));
-                builder = AppendNotImplemented(builder);
-                builder
-                    /// IEnumerable<AylikTahakkukLog> Search(IDictionary <string, object> searchParameters);
-                    .AppendLine(string.Format("\t\tpublic IEnumerable<{0}> Search(IDictionary<string, object> searchParameters, uint? pageNo = null, uint? pageItemSize = null)", table.ClassNameOld));
+                    .AppendLine();
 
+                builder.AppendLine(string.Format("\t\tpublic object Create({0} entity)", table.ClassNameOld));
+                builder = AppendNotImplemented(builder);
+
+                builder.AppendLine(string.Format("\t\tpublic {0} Read(object oid)", table.ClassNameOld));
+                builder = AppendNotImplemented(builder);
+
+                builder.AppendLine(string.Format("\t\tpublic object Update({0} entity)", table.ClassNameOld));
+                builder = AppendNotImplemented(builder);
+
+                builder.AppendLine(string.Format("\t\tpublic object Delete({0} entity)", table.ClassNameOld));
+                builder = AppendNotImplemented(builder);
+
+                builder.AppendLine(string.Format("\t\tpublic IEnumerable<{0}> ReadWhereIdIn(params object[] oids)", table.ClassNameOld));
+                builder = AppendNotImplemented(builder);
+
+                builder.AppendLine(string.Format("\t\tpublic IEnumerable<{0}> ReadAll()", table.ClassNameOld));
+                builder = AppendNotImplemented(builder);
+
+                builder.AppendLine(string.Format("\t\tpublic IEnumerable<{0}> Search(IDictionary<string, object> searchParameters, uint? pageNo = null, uint? pageItemSize = null)", table.ClassNameOld));
                 builder = AppendNotImplemented(builder, addLine: false);
 
                 builder.Append("\t}\n}");
