@@ -149,6 +149,14 @@
             return input.First().ToString().ToUpper() + input.Substring(1);
         }
 
+        public static string FirstCharToLower(this string input)
+        {
+            if (input.IsNullOrSpace())
+                return input;
+
+            return input.First().ToString().ToLower() + input.Substring(1);
+        }
+
         public static string UppercaseFirst(this string s)
         {
             // Check for empty string.
