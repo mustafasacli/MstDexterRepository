@@ -3,12 +3,13 @@
     internal enum OutputFileType : byte
     {
         Entity = 10,
-        Business = 11,
-        BusinessInterface = 12,
-        QueryObject = 13,
-        ViewModel = 14,
-        DataTransferObject = 15,
-        Controller = 16,
-        Views = 17
+        DbContext = 11,
+        Business = 12,
+        BusinessInterface = 13,
+        QueryObject = 14,
+        ViewModel = 15,
+        DataTransferObject = 16,
+        Controller = 17,
+        Views = 18
     }
 }

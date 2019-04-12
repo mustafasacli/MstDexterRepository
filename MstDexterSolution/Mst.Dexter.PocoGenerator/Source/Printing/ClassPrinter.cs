@@ -5,6 +5,7 @@
     using Mst.Dexter.PocoGenerator.Source.Enum;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Text;
 
@@ -18,6 +19,10 @@
             {
                 case OutputFileType.Entity:
                     s = "Entity";
+                    break;
+
+                case OutputFileType.DbContext:
+                    s = "Context";
                     break;
 
                 case OutputFileType.Business:
@@ -279,13 +284,13 @@
             {
                 StringBuilder entityBuilder = new StringBuilder();
 
-                entityBuilder.AppendFormat("namespace {0}\n", string.Format(AppConstants.EntityNamespace, table.NameSpace));
+                entityBuilder.AppendFormat("namespace {0}\n", string.Format(AppConstants.ViewModelNamespace, table.NameSpace));
                 entityBuilder.AppendLine("{");
 
                 /// usings
                 entityBuilder.AppendLine("\tusing System;")
                     .AppendLine("\tusing System.ComponentModel.DataAnnotations;")
-                    .AppendLine("\tusing System.ComponentModel.DataAnnotations.Schema;")
+                    /// .AppendLine("\tusing System.ComponentModel.DataAnnotations.Schema;")
                     .AppendLine();
 
                 entityBuilder
@@ -352,23 +357,26 @@
         {
             try
             {
-                var businessInterfaceInstanceName = string.Concat("_", table.BusinessInterfaceName.FirstCharToLower());
+                var businessInterfaceInstanceNamePrm = table.BusinessInterfaceName.FirstCharToLower();
+                var businessInterfaceInstanceName = string.Concat("_", businessInterfaceInstanceNamePrm);
 
                 StringBuilder builder = new StringBuilder();
 
                 builder
-                    .AppendFormat("namespace {0}\n", string.Format(AppConstants.BusinessNamespace, table.NameSpace))
+                    .AppendFormat("namespace {0}\n", string.Format(AppConstants.ControllerNamespace, table.NameSpace))
                     .AppendLine("{")
                     .AppendLine("\tusing System;")
                     .AppendLine("\tusing System.Collections.Generic;")
-                    .AppendLine(string.Format("\tusing {0};", string.Format(AppConstants.EntityNamespace, table.NameSpace)))
+                    .AppendLine(string.Format("\tusing {0};", string.Format(AppConstants.ViewModelNamespace, table.NameSpace)))
                     .AppendFormat("\tusing {0};", string.Format(AppConstants.BusinessInterfaceNamespace, table.NameSpace))
                     .AppendLine()
                     .AppendLine()
                     .AppendFormat("\tpublic class {0} : Controller\n", table.ControllerClassName)
                     .AppendLine("\t{")
-                    .AppendFormat("\t\tpublic {0}()\n", table.ControllerClassName)
+                    .AppendFormat("\t\tprivate {0} {1};\n\n", table.BusinessInterfaceName, businessInterfaceInstanceName)
+                    .AppendFormat("\t\tpublic {0}({1} {2})\n", table.ControllerClassName, table.BusinessInterfaceName, businessInterfaceInstanceNamePrm)
                     .AppendLine("\t\t{")
+                    .AppendFormat("\t\t\t this.{0} = {1};\n", businessInterfaceInstanceName, businessInterfaceInstanceNamePrm)
                     .AppendLine("\t\t}")
                     .AppendLine();
 
@@ -378,13 +386,18 @@
                 builder.AppendLine(string.Format("\t\tpublic ActionResult Create()", table.ClassNameOld));
                 builder = AppendReturnView(builder);
 
-                builder.AppendLine(string.Format("\t\tpublic ActionResult Update()", table.ClassNameOld));
+                builder.AppendLine(string.Format("\t\tpublic ActionResult Update(object oid)", table.ClassNameOld));
                 builder = AppendReturnView(builder);
 
-                builder.AppendLine(string.Format("\t\tpublic ActionResult Delete()", table.ClassNameOld));
+                builder.AppendLine(string.Format("\t\tpublic ActionResult Delete(object oid)", table.ClassNameOld));
                 builder = AppendReturnView(builder);
 
                 builder.AppendLine(string.Format("\t\tpublic ActionResult Detail(object oid)", table.ClassNameOld));
+                builder = AppendReturnView(builder);
+
+                builder.AppendLine("\t\t[HttpPost]");
+                builder.AppendLine("\t\t[ValidateAntiForgeryToken]");
+                builder.AppendLine(string.Format("\t\tpublic ActionResult CreatePost({0} {1})", table.ViewModelClassName, table.ViewModelClassName.FirstCharToLower()));
                 builder = AppendReturnView(builder);
 
                 builder.Append("\t}\n}");
@@ -422,5 +435,41 @@
 
             return builder;
         }
+
+        internal static string ToDbContextProperty(Table table)
+        {
+            var str = "\t\tpublic virtual DbSet<#Tbl#> #Tbl#List \n\t\t{ get; set; }\n";
+            str = str.Replace("#Tbl#", table.ClassName);
+            return str;
+        }
+
+        internal static string GetDbContextContent(string contextClassName, string nameSpace, string schemaName)
+        {
+            var builder = new StringBuilder();
+            builder
+                    .AppendFormat("namespace {0}.Context\n", nameSpace)
+                    .AppendLine("{")
+                    .AppendLine("\tusing System.Data.Entity;")
+                    .AppendLine("\tusing System.Reflection;")
+                    .AppendLine(string.Format("\tusing {0};", string.Format(AppConstants.EntityNamespace, nameSpace)))
+                    .AppendLine()
+                    .AppendLine(string.Format("\tpublic class {0} : DbContext", contextClassName))
+                    .AppendLine("\t{")
+                    .AppendLine(string.Format("\t\tpublic {0}() : base(\"name={0}\")", contextClassName))
+                    .AppendLine("\t\t{")
+                    .AppendLine(string.Format("\t\t\tDatabase.SetInitializer<{0}>(null);", contextClassName))
+                    .AppendLine("\t\t}")
+                    .AppendLine()
+                    .AppendLine("\t\tprotected override void OnModelCreating(DbModelBuilder modelBuilder)")
+                    .AppendLine("\t\t{")
+                    .AppendLine(string.Format("\t\t\tmodelBuilder.HasDefaultSchema(\"{0}\");", schemaName))
+                    .AppendLine("\t\t\tmodelBuilder.Configurations.AddFromAssembly(Assembly.GetExecutingAssembly());")
+                    .AppendLine("\t\t}")
+                    .AppendLine();
+
+            var str = builder.ToString();
+            return str;
+        }
+
     }
 }

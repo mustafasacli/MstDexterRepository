@@ -154,7 +154,7 @@
             if (input.IsNullOrSpace())
                 return input;
 
-            return input.First().ToString().ToLower() + input.Substring(1);
+            return input.First().ToString().ToLowerInvariant() + input.Substring(1);
         }
 
         public static string UppercaseFirst(this string s)
@@ -164,7 +164,7 @@
                 return s;
 
             // Return char and concat substring.
-            return char.ToUpper(s[0]) + s.Substring(1);
+            return char.ToUpperInvariant(s[0]) + s.Substring(1);
         }
     }
 }

@@ -228,9 +228,18 @@
 
                 var outputFileTypes = Enum.GetValues(typeof(OutputFileType))
                     .Cast<OutputFileType>()
-                    .Where(q => q.IsMember(OutputFileType.Views) == false);
+                    .Where(q => q.IsMember(OutputFileType.Views, OutputFileType.DbContext) == false);
 
                 DirectoryInfo dirInfo = null;
+
+                {
+                    var contextDirName = ClassPrinter.GetPrintFolderName(OutputFileType.DbContext);
+                    if (!contextDirName.IsNullOrSpace())
+                    {
+                        dirInfo = dirInfoSourcePath.CreateSubdirectory(contextDirName);
+                        PrintDbContext(dirInfo, classList);
+                    }
+                }
 
                 foreach (var fileType in outputFileTypes)
                 {
@@ -256,9 +265,10 @@
             try
             {
                 var fileTableInfo = new FileInfo(
-                                 string.Format(@"{0}\{1}.cs",
+                                 string.Format(@"{0}\{1}.{2}",
                                  dirInfo.FullName,
-                                 clazz.GetObjectFileName(fileType)
+                                 clazz.GetObjectFileName(fileType),
+                                 clazz.GetObjectFileExtension(fileType)
                                  ));
 
                 var tableStrObject = ClassPrinter.GetPrintContent(fileType, clazz);
@@ -277,6 +287,43 @@
             {
                 this.PrintError?.Invoke(new Exception(string.Format("Error on writing {0} - {1} table {2}.", clazz.TableName, clazz.ClassName, fileType.ToString()), e));
                 throw;
+            }
+        }
+
+        internal void PrintDbContext(DirectoryInfo dirInfo, List<Table> classList)
+        {
+            var contextName = "EntityDbContext";
+            var fileTableInfo = new FileInfo(
+                                    string.Format(@"{0}\{1}.cs",
+                                    dirInfo.FullName,
+                                    contextName
+                                    ));
+
+            classList = classList ?? new List<Table>();
+            if (!dirInfo.Exists || classList.Count < 1)
+                return;
+
+            var schemaName = classList[0].SchemaName;
+            var nameSpace = classList[0].NameSpace;
+
+            var contextContent = ClassPrinter.GetDbContextContent(contextName, nameSpace, schemaName);
+
+            using (StreamWriter outfile = new StreamWriter(fileTableInfo.FullName, false) { AutoFlush = true })
+            {
+                outfile.Write(contextContent);
+                var cnt = classList.Count;
+
+                for (int counter = 0; counter < cnt; counter++)
+                {
+                    var clscontent = ClassPrinter.ToDbContextProperty(classList[counter]);
+                    outfile.Write(clscontent);
+
+                    if (counter < cnt - 1)
+                        outfile.WriteLine();
+                }
+                outfile.Write("\t}\n}");
+
+                outfile.Close();
             }
         }
     }

@@ -7,6 +7,16 @@
 
     public static class DataReaderExtensions
     {
+        #region [ CloseIfNot method ]
+
+        public static void CloseIfNot(this IDataReader dataReader)
+        {
+            if (dataReader != null && !dataReader.IsClosed)
+                dataReader.Close();
+        }
+
+        #endregion
+
         #region [ FirstRow method ]
 
         public static ExpandoObject FirstRow(this IDataReader dataReader)
@@ -42,7 +52,7 @@
             return d;
         }
 
-        #endregion [ First method ]
+        #endregion [ FirstRow method ]
 
         #region [ LastRow method ]
 
@@ -78,7 +88,7 @@
             return d;
         }
 
-        #endregion [ Last method ]
+        #endregion [ LastRow method ]
 
         #region [ GetDynamicResultSet method ]
 

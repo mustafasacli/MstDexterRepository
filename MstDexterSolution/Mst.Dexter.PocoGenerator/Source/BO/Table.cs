@@ -157,6 +157,7 @@
             switch (fileType)
             {
                 case OutputFileType.Entity:
+                case OutputFileType.DbContext:
                 case OutputFileType.Business:
                 case OutputFileType.BusinessInterface:
                 case OutputFileType.QueryObject:
