@@ -47,6 +47,11 @@
         public List<Exception> Errors
         { get; private set; }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets the filename of the error file. </summary>
+        ///
+        /// <value> The filename of the error file. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private string ErrorFileName
         {
             get
@@ -67,6 +72,11 @@
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets the filename of the event file. </summary>
+        ///
+        /// <value> The filename of the event file. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private string EventFileName
         {
             get
@@ -87,6 +97,11 @@
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Adds types. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private void AddTypes()
         {
             XmlNodeList nodeList = DxConfiguratonHelper.GetConnectionNodeList();
@@ -193,6 +208,13 @@
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Logs an error. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="e">    An Exception to process. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private void LogError(Exception e)
         {
             try
@@ -247,6 +269,13 @@
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Logs an event. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="messages"> A variable-length parameters list containing messages. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private void LogEvent(params string[] messages)
         {
             try
@@ -264,8 +293,6 @@
                     string assFileName = frm.GetFileName();
                     string methodName = mthd.Name;
 
-                    //string fileName = DateTime.Now.ToString(AppValues.LogFileDateFormat);
-                    //fileName = string.Format(AppValues.LogFileNameFormat, fileName);
                     string folderName = $"{AssemblyDirectory}/{AppValues.EventFolderName}";
 
                     try
@@ -308,6 +335,11 @@
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets the pathname of the assembly directory. </summary>
+        ///
+        /// <value> The pathname of the assembly directory. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private static string AssemblyDirectory
         {
             get

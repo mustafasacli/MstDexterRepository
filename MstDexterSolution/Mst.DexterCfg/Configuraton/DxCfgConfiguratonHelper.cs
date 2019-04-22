@@ -3,6 +3,11 @@
     using System;
     using System.Xml;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   A dx configuration configuraton helper. </summary>
+    ///
+    /// <remarks>   Msacli, 22.04.2019. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     internal static class DxCfgConfiguratonHelper
     {
         private static object syncObj = new object();
@@ -76,7 +81,7 @@
 
             return nodeList;
         }
-        
+
         /// <summary>
         /// Checks events will be logged.
         /// </summary>
@@ -96,7 +101,7 @@
                 return b;
             }
         }
-        
+
         /// <summary>
         /// Checks erors will be logged.
         /// </summary>

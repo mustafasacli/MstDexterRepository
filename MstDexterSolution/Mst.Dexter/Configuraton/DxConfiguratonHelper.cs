@@ -4,6 +4,11 @@
     using System.Configuration;
     using System.Xml;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   A dx configuraton helper. </summary>
+    ///
+    /// <remarks>   Msacli, 22.04.2019. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     internal static class DxConfiguratonHelper
     {
         private static object syncObj = new object();

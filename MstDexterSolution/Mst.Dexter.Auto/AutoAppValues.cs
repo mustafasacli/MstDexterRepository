@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace Mst.Dexter.Auto
 {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   An automatic application values. </summary>
+    ///
+    /// <remarks>   Msacli, 22.04.2019. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     internal class AutoAppValues
     {
         internal static readonly string LogFileNameFormat = "dexter-event-{0}.log";

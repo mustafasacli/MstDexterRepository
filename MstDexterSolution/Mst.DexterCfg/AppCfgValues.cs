@@ -1,5 +1,10 @@
 ﻿namespace Mst.DexterCfg
 {
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   An application configuration values. </summary>
+    ///
+    /// <remarks>   Msacli, 22.04.2019. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     internal class AppCfgValues
     {
         internal static readonly string LogFileNameFormat = "event-{0}.log";
@@ -42,6 +47,5 @@
 
         internal static readonly string Key = "key";
         internal static readonly string Value = "value";
-        // "dexter.configuration/dexter-settings/setting"
     }
 }

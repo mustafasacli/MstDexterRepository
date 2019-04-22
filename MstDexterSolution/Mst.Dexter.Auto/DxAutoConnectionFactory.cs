@@ -45,6 +45,11 @@
         public List<Exception> Errors
         { get; private set; }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets the filename of the error file. </summary>
+        ///
+        /// <value> The filename of the error file. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private string ErrorFileName
         {
             get
@@ -65,6 +70,11 @@
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets the filename of the event file. </summary>
+        ///
+        /// <value> The filename of the event file. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private string EventFileName
         {
             get
@@ -97,12 +107,19 @@
         public bool IsWriteEventLog
         { get; set; }
 
-        /// <summary>
-        /// Registers IDbConnection with given conn name key.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="connName"></param>
-        /// <param name="t"></param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Registers IDbConnection with given conn name key. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <exception cref="ArgumentException">    Thrown when one or more arguments have unsupported or
+        ///                                         illegal values. </exception>
+        /// <exception cref="Exception">            Thrown when an exception error condition occurs. </exception>
+        ///
+        /// <typeparam name="T">    . </typeparam>
+        /// <param name="connName"> . </param>
+        /// <param name="t">        . </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public void Register<T>(string connName, T t) where T : class, IDbConnection
         {
             if (string.IsNullOrWhiteSpace(connName))
@@ -160,6 +177,13 @@
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Logs an error. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="e">    An Exception to process. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private void LogError(Exception e)
         {
             try
@@ -177,8 +201,6 @@
                     string assFileName = frm.GetFileName();
                     string methodName = mthd.Name;
 
-                    //string fileName = DateTime.Now.ToString(AutoAppValues.ErrorFileDateFormat);
-                    //fileName = string.Format(AutoAppValues.ErrorLogFileNameFormat, fileName);
                     string folderName = $"{AssemblyDirectory}/{AutoAppValues.ErrorFolderName}";
 
                     try
@@ -214,6 +236,13 @@
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Logs an event. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="messages"> A variable-length parameters list containing messages. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private void LogEvent(params string[] messages)
         {
             try
@@ -275,6 +304,11 @@
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets the pathname of the assembly directory. </summary>
+        ///
+        /// <value> The pathname of the assembly directory. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private static string AssemblyDirectory
         {
             get

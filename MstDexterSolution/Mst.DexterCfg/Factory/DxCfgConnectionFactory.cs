@@ -102,7 +102,7 @@
                 return settings?.Keys?.ToList() ?? new List<string> { };
             }
         }
-        
+
         /// <summary>
         /// Gets setting value with given key.
         /// </summary>
@@ -125,6 +125,11 @@
         public List<Exception> Errors
         { get; private set; }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets the filename of the error file. </summary>
+        ///
+        /// <value> The filename of the error file. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private string ErrorFileName
         {
             get
@@ -145,6 +150,11 @@
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets the filename of the event file. </summary>
+        ///
+        /// <value> The filename of the event file. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private string EventFileName
         {
             get
@@ -165,6 +175,11 @@
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Adds types. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private void AddTypes()
         {
             XmlNodeList nodeList = DxCfgConfiguratonHelper.GetConnectionNodeList();
@@ -206,6 +221,11 @@
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Adds settings. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private void AddSettings()
         {
             try
@@ -227,6 +247,13 @@
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Logs an error. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="e">    An Exception to process. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private void LogError(Exception e)
         {
             try
@@ -279,6 +306,13 @@
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Logs an event. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="messages"> A variable-length parameters list containing messages. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private void LogEvent(params string[] messages)
         {
             try
@@ -338,6 +372,11 @@
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets the pathname of the assembly directory. </summary>
+        ///
+        /// <value> The pathname of the assembly directory. </value>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         private string AssemblyDirectory
         {
             get
