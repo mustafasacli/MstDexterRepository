@@ -6,7 +6,7 @@
     using System.Dynamic;
     using System.Linq;
 
-    public static class DxConnectionOperationExtension
+    public static class DxConnectionOperationExtensionV2
     {
         #region [ Execute method ]
 
@@ -14,14 +14,13 @@
             string sql,
             CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
-            Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null)
+           params object[] parameters)
         {
             int res = 0;
 
             try
             {
-                using (IDbCommand command = connection.CreateCommand())
+                using (var command = connection.CreateCommand())
                 {
                     command.CommandText = sql;
                     command.CommandType = commandType;
@@ -29,12 +28,9 @@
                     if (transaction != null)
                         command.Transaction = transaction;
 
-                    DxDbCommandHelper.SetCommandParameters(command, inputParameters, outputParameters);
+                    DxDbCommandHelper.SetCommandParameters(command, parameters);
 
                     res = command.ExecuteNonQuery();
-
-                    if (outputParameters != null && outputParameters.Count > 0)
-                        outputParameters = (Dictionary<string, object>)DxDbCommandHelper.GetOutParametersOfCommand(command);
                 }
             }
             catch (Exception e)
@@ -53,8 +49,7 @@
         public static IDataReader ExecuteReader(this IDbConnection connection,
             string sql, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
-            Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null)
+           params object[] parameters)
         {
             IDataReader reader = null;
 
@@ -68,12 +63,9 @@
                     if (transaction != null)
                         command.Transaction = transaction;
 
-                    DxDbCommandHelper.SetCommandParameters(command, inputParameters, outputParameters);
+                    DxDbCommandHelper.SetCommandParameters(command, parameters);
 
                     reader = command.ExecuteReader();
-
-                    if (outputParameters != null && outputParameters.Count > 0)
-                        outputParameters = (Dictionary<string, object>)DxDbCommandHelper.GetOutParametersOfCommand(command);
                 }
             }
             catch (Exception e)
@@ -91,8 +83,7 @@
         public static object ExecuteScalar(this IDbConnection connection,
             string sql, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
-            Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null)
+           params object[] parameters)
         {
             object res = null;
 
@@ -106,12 +97,9 @@
                     if (transaction != null)
                         command.Transaction = transaction;
 
-                    DxDbCommandHelper.SetCommandParameters(command, inputParameters, outputParameters);
+                    DxDbCommandHelper.SetCommandParameters(command, parameters);
 
                     res = command.ExecuteScalar();
-
-                    if (outputParameters != null && outputParameters.Count > 0)
-                        outputParameters = (Dictionary<string, object>)DxDbCommandHelper.GetOutParametersOfCommand(command);
                 }
             }
             catch (Exception e)
@@ -130,8 +118,7 @@
         public static DataSet GetResultSet(this IDbConnection connection,
             string sql, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
-            Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null)
+           params object[] parameters)
         {
             DataSet dataset = null;
 
@@ -167,14 +154,11 @@
                         if (transaction != null)
                             command.Transaction = transaction;
 
-                        DxDbCommandHelper.SetCommandParameters(command, inputParameters, outputParameters);
+                        DxDbCommandHelper.SetCommandParameters(command, parameters);
 
                         dataAdapter.SelectCommand = command;
                         dataset = new DataSet();
                         var result = dataAdapter.Fill(dataset);
-
-                        if (outputParameters != null && outputParameters.Count > 0)
-                            outputParameters = (Dictionary<string, object>)DxDbCommandHelper.GetOutParametersOfCommand(command);
                     }
                 }
             }
@@ -193,8 +177,7 @@
         public static List<ExpandoObject> GetDynamicResultSet(this IDbConnection connection,
             string sql, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
-            Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null)
+           params object[] parameters)
         {
             List<ExpandoObject> list = new List<ExpandoObject>();
 
@@ -206,15 +189,12 @@
                 if (transaction != null)
                     command.Transaction = transaction;
 
-                DxDbCommandHelper.SetCommandParameters(command, inputParameters, outputParameters);
+                DxDbCommandHelper.SetCommandParameters(command, parameters);
 
                 using (var reader = command.ExecuteReader())
                 {
                     try
                     {
-                        if (outputParameters != null && outputParameters.Count > 0)
-                            outputParameters = (Dictionary<string, object>)DxDbCommandHelper.GetOutParametersOfCommand(command);
-
                         list = reader.GetDynamicResultSet(closeAtFinal: true);
                     }
                     catch (Exception e)
@@ -239,9 +219,8 @@
         public static List<ExpandoObject> GetDynamicResultSetWithPaging(this IDbConnection connection,
             string sql, CommandType commandType,
             IDbTransaction transaction = null,
-            Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null,
-            uint pageNumber = 1, uint pageItemCount = 10)
+            uint pageNumber = 1, uint pageItemCount = 10,
+           params object[] parameters)
         {
             List<ExpandoObject> list = new List<ExpandoObject>();
 
@@ -253,15 +232,12 @@
                 if (transaction != null)
                     command.Transaction = transaction;
 
-                DxDbCommandHelper.SetCommandParameters(command, inputParameters, outputParameters);
+                DxDbCommandHelper.SetCommandParameters(command, parameters);
 
                 using (var reader = command.ExecuteReader())
                 {
                     try
                     {
-                        if (outputParameters != null && outputParameters.Count > 0)
-                            outputParameters = (Dictionary<string, object>)DxDbCommandHelper.GetOutParametersOfCommand(command);
-
                         list = reader.GetDynamicResultSetWithPaging(
                             pageNumber: pageNumber, pageItemCount: pageItemCount, closeAtFinal: false);
                     }
@@ -287,8 +263,7 @@
         public static List<List<ExpandoObject>> GetMultiDynamicResultSet(this IDbConnection connection,
             string sql, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
-            Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null)
+           params object[] parameters)
         {
             var list = new List<List<ExpandoObject>>();
 
@@ -300,15 +275,12 @@
                 if (transaction != null)
                     command.Transaction = transaction;
 
-                DxDbCommandHelper.SetCommandParameters(command, inputParameters, outputParameters);
+                DxDbCommandHelper.SetCommandParameters(command, parameters);
 
                 using (var reader = command.ExecuteReader())
                 {
                     try
                     {
-                        if (outputParameters != null && outputParameters.Count > 0)
-                            outputParameters = (Dictionary<string, object>)DxDbCommandHelper.GetOutParametersOfCommand(command);
-
                         list = reader.GetMultiDynamicResultSet(closeAtFinal: true);
                     }
                     catch (Exception e)
@@ -333,11 +305,10 @@
         public static T ExecuteScalarAs<T>(this IDbConnection connection,
            string sqlText, CommandType commandType = CommandType.Text,
            IDbTransaction transaction = null,
-           Dictionary<string, object> inputParameters = null,
-           Dictionary<string, object> outputParameters = null) where T : struct
+           params object[] parameters) where T : struct
         {
             var value = ExecuteScalar(
-                connection, sqlText, commandType, transaction, inputParameters, outputParameters);
+                connection, sqlText, commandType, transaction, parameters);
 
             return !value.IsNullOrDbNull() ? (T)value : default(T);
         }
@@ -349,11 +320,10 @@
         public static long ExecuteAsLong(this IDbConnection connection,
            string sqlText, CommandType commandType = CommandType.Text,
            IDbTransaction transaction = null,
-           Dictionary<string, object> inputParameters = null,
-           Dictionary<string, object> outputParameters = null)
+           params object[] parameters)
         {
             var value = Execute(
-                connection, sqlText, commandType, transaction, inputParameters, outputParameters);
+                connection, sqlText, commandType, transaction, parameters);
 
             return (long)value;
         }
@@ -365,11 +335,10 @@
         public static decimal ExecuteAsDecimal(this IDbConnection connection,
            string sqlText, CommandType commandType = CommandType.Text,
            IDbTransaction transaction = null,
-           Dictionary<string, object> inputParameters = null,
-           Dictionary<string, object> outputParameters = null)
+           params object[] parameters)
         {
             var value = Execute(
-                connection, sqlText, commandType, transaction, inputParameters, outputParameters);
+                connection, sqlText, commandType, transaction, parameters);
 
             return (decimal)value;
         }
@@ -381,14 +350,13 @@
         public static ExpandoObject FirstAsDynamic(this IDbConnection connection,
             string sqlText, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
-            Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null)
+           params object[] parameters)
         {
             ExpandoObject expando;
 
             using (var reader = ExecuteReader(
                 connection, sqlText, commandType,
-                transaction, inputParameters, outputParameters))
+                transaction, parameters))
             {
                 try
                 {
@@ -415,8 +383,7 @@
         public static T First<T>(this IDbConnection connection,
             string sqlText, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
-            Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null) where T : class
+           params object[] parameters) where T : class
         {
             T instance = null;
 
@@ -424,7 +391,7 @@
             {
                 ExpandoObject expando = FirstAsDynamic(
                     connection, sqlText, commandType,
-                    transaction, inputParameters, outputParameters);
+                    transaction, parameters);
 
                 instance = DynamicExtensions.ConvertTo<T>(expando);
             }
@@ -443,14 +410,13 @@
         public static ExpandoObject LastAsDynamic(this IDbConnection connection,
             string sqlText, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
-            Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null)
+           params object[] parameters)
         {
             ExpandoObject expando;
 
             using (var reader = ExecuteReader(
                 connection, sqlText, commandType,
-                transaction, inputParameters, outputParameters))
+                transaction, parameters))
             {
                 try
                 {
@@ -477,8 +443,7 @@
         public static T Last<T>(this IDbConnection connection,
             string sqlText, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
-            Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null) where T : class
+           params object[] parameters) where T : class
         {
             T instance = null;
 
@@ -486,7 +451,7 @@
             {
                 ExpandoObject expando = LastAsDynamic(
                     connection, sqlText, commandType,
-                    transaction, inputParameters, outputParameters);
+                    transaction, parameters);
 
                 instance = DynamicExtensions.ConvertTo<T>(expando);
             }

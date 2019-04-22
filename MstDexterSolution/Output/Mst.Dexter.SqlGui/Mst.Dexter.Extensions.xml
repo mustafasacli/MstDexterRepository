@@ -68,6 +68,13 @@
             <param name="inputParameters"></param>
             <param name="outputParameters"></param>
         </member>
+        <member name="M:Mst.Dexter.Extensions.DxDbCommandHelper.SetCommandParameters(System.Data.IDbCommand,System.Object[])">
+            <summary>
+            Sets parameters of DbCommand
+            </summary>
+            <param name="command">Db command</param>
+            <param name="parameters">Db Command Parameters</param>
+        </member>
         <member name="M:Mst.Dexter.Extensions.DxDbCommandHelper.GetOutParametersOfCommand(System.Data.IDbCommand)">
             <summary>
             Get Output Values of IDbCommand

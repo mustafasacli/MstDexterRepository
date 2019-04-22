@@ -55,7 +55,9 @@
     <Compile Include="DictionaryExtensions.cs" />
     <Compile Include="DxConnectionAsyncOperationExtension.cs" />
     <Compile Include="DxConnectionExtension.cs" />
+    <Compile Include="DxConnectionOperationExtensionV2.cs" />
     <Compile Include="DxConnectionOperationExtension.cs" />
+    <Compile Include="DxDbCommandHelper.cs" />
     <Compile Include="DynamicExtensions.cs" />
     <Compile Include="GeneralMapperExtensions.cs" />
     <Compile Include="GenericExtensions.cs" />
