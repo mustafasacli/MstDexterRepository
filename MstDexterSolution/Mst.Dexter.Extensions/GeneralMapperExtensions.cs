@@ -5,8 +5,24 @@
     using System.Linq;
     using System.Reflection;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   A general mapper extensions. </summary>
+    ///
+    /// <remarks>   Msacli, 22.04.2019. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class GeneralMapperExtensions
     {
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A TSource extension method that maps the given source. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <typeparam name="TSource">  Type of the source. </typeparam>
+        /// <typeparam name="TDest">    Type of the destination. </typeparam>
+        /// <param name="source">   The source to act on. </param>
+        ///
+        /// <returns>   A TDest. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static TDest Map<TSource, TDest>(this TSource source)
             where TSource : class
             where TDest : class

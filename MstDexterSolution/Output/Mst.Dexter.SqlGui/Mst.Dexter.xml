@@ -4,6 +4,11 @@
         <name>Mst.Dexter</name>
     </assembly>
     <members>
+        <member name="T:Mst.Dexter.AppValues">
+             <summary>   An application values. </summary>
+            
+             <remarks>   Msacli, 22.04.2019. </remarks>
+        </member>
         <member name="M:Mst.Dexter.Configuraton.DxConfiguratonHelper.GetMainNode">
             <summary>
             Get Connection Main Node.

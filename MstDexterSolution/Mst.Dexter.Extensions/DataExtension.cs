@@ -8,20 +8,27 @@
     using System.Linq;
     using System.Reflection;
 
-    /// <summary>
-    /// Description of DataExtensions.
-    /// </summary>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   Description of DataExtensions. </summary>
+    ///
+    /// <remarks>   Msacli, 22.04.2019. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class DataExtensions
     {
         #region [ DataTable To Generic List ]
 
-        /// <summary>
-        /// This method returns A List of T object.
-        /// </summary>
-        /// <typeparam name="T">T object type</typeparam>
-        /// <param name="datatable">Datatble object</param>
-        /// <param name="accordingToColumn">if it is true, returns a List with DataTable Columns else returns a List with PropertyInfo of Object.</param>
-        /// <returns>Returns A List of T object.</returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   This method returns A List of T object. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <typeparam name="T">    T object type. </typeparam>
+        /// <param name="datatable">            Datatble object. </param>
+        /// <param name="accordingToColumn">    if it is true, returns a List with DataTable Columns else
+        ///                                     returns a List with PropertyInfo of Object. </param>
+        ///
+        /// <returns>   Returns A List of T object. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static List<T> ToList<T>(this DataTable datatable, Boolean accordingToColumn) where T : new()
         {
             try
@@ -74,6 +81,20 @@
 
         #region [ GetPageOfDataTable method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A DataTable extension method that gets page of data table. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <exception cref="NullReferenceException">   Thrown when a value was unexpectedly null. </exception>
+        /// <exception cref="Exception">                Thrown when an exception error condition occurs. </exception>
+        ///
+        /// <param name="dt">           DataTable object. </param>
+        /// <param name="pageNumber">   The page number. </param>
+        /// <param name="rowCount">     Number of rows. </param>
+        ///
+        /// <returns>   The page of data table. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static DataTable GetPageOfDataTable(this DataTable dt, Int32 pageNumber, Int32 rowCount)
         {
             try
@@ -117,12 +138,16 @@
 
         #region [ Get Columns Of DataTable ]
 
-        /// <summary>
-        /// Returns a DataTable with Selected column names.
-        /// </summary>
-        /// <param name="dt">DataTable object</param>
-        /// <param name="columnList"> column names array </param>
-        /// <returns>Returns a DataTable with Selected column names.</returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Returns a DataTable with Selected column names. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="dt">           DataTable object. </param>
+        /// <param name="columnList">   column names array. </param>
+        ///
+        /// <returns>   Returns a DataTable with Selected column names. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static DataTable GetColumnsOfDataTable(this DataTable dt, params string[] columnList)
         {
             try
@@ -152,16 +177,20 @@
             }
         }
 
-        #endregion [ Get Column Numbers Of DataTable ]
+        #endregion [ Get Columns Of DataTable ]
 
         #region [ Get Columns Of DataTable ColumnNumbers ]
 
-        /// <summary>
-        /// Returns a DataTable with Selected column numbers.
-        /// </summary>
-        /// <param name="dt">DataTable object</param>
-        /// <param name="columnList">column numbers array</param>
-        /// <returns>Returns a DataTable with Selected column numbers.</returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Returns a DataTable with Selected column numbers. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="dt">           DataTable object. </param>
+        /// <param name="columnList">   column numbers array. </param>
+        ///
+        /// <returns>   Returns a DataTable with Selected column numbers. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static DataTable GetColumnsOfDataTable(this DataTable dt, params int[] columnList)
         {
             try
@@ -195,14 +224,22 @@
 
         #region [ Get Object With Selected Column ]
 
-        /// <summary>
-        /// Returns a object with given parameters.
-        /// </summary>
-        /// <param name="dt">DataTable object</param>
-        /// <param name="refColumn">Name of Reference Column</param>
-        /// <param name="refValue">Value of Reference Column</param>
-        /// <param name="destinationColumn">Name of Destination Column</param>
-        /// <returns>Returns a object at destination column which contains reference value at reference column. Otherwise return null.</returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Returns a object with given parameters. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="dt">                   DataTable object. </param>
+        /// <param name="refColumn">            Name of Reference Column. </param>
+        /// <param name="refValue">             Value of Reference Column. </param>
+        /// <param name="destinationColumn">    Name of Destination Column. </param>
+        ///
+        /// <returns>
+        /// Returns a object at destination column which contains reference value at reference column.
+        /// Otherwise return null.
+        /// </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public static object GetObjectWithSelectedColumn(this DataTable dt, string refColumn, object refValue, string destinationColumn)
         {
             object retObj = null;
@@ -230,6 +267,17 @@
 
         #region [ Export As Excel With Include Columns ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// A DataTable extension method that export as excel with ınclude columns.
+        /// </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="dt">               DataTable object. </param>
+        /// <param name="fileName">         Filename of the file. </param>
+        /// <param name="includeColumns">   A variable-length parameters list containing include columns. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static void ExportAsExcelWithIncludeColumns(this DataTable dt, String fileName, params Object[] includeColumns)
         {
             try
@@ -271,7 +319,18 @@
 
         #region [ Export As Excel With Exclude Columns ]
 
-        public static void ExportAsExcelWithExcludeColumns(this DataTable dt, String fileName, params Object[] excludeColumns)
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// A DataTable extension method that export as excel with exclude columns.
+        /// </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="dt">               DataTable object. </param>
+        /// <param name="fileName">         Filename of the file. </param>
+        /// <param name="excludeColumns">   A variable-length parameters list containing exclude columns. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static void ExportAsExcelWithExcludeColumns(this DataTable dt, String fileName, params object[] excludeColumns)
         {
             try
             {
@@ -345,6 +404,15 @@
 
         #region [ Copy method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A DataTable extension method that copies the given dt. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="dt">   DataTable object. </param>
+        ///
+        /// <returns>   A DataTable. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static DataTable Copy(this DataTable dt)
         {
             try
@@ -379,6 +447,16 @@
 
         #region [ GetSomeColumnsAsTable method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A DataTable extension method that gets some columns as table. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="dt">           DataTable object. </param>
+        /// <param name="columnList">   column names array. </param>
+        ///
+        /// <returns>   some columns as table. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static DataTable GetSomeColumnsAsTable(this DataTable dt, string[] columnList)
         {
             try
@@ -422,6 +500,19 @@
 
         #region [ RowToObject method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A DataRow extension method that row to object. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+        ///
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="row">      The row to act on. </param>
+        /// <param name="columns">  (Optional) The columns. </param>
+        ///
+        /// <returns>   A T instance. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static T RowToObject<T>(this DataRow row, DataColumnCollection columns = null)//, PropertyInfo[] props = null)
             where T : new()
         {
@@ -452,6 +543,22 @@
 
         #region [ GetColumnAsUniqueList method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A DataTable extension method that gets column as unique list. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+        ///                                             null. </exception>
+        /// <exception cref="ArgumentException">        Thrown when one or more arguments have
+        ///                                             unsupported or illegal values. </exception>
+        ///
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="dataTable">    The dataTable to act on. </param>
+        /// <param name="columnName">   Name of the column. </param>
+        ///
+        /// <returns>   The column as unique list. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static List<T> GetColumnAsUniqueList<T>(this DataTable dataTable, string columnName)
         {
             if (dataTable == null)
@@ -477,6 +584,15 @@
 
         #region [ ToDynamicList ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A DataTable extension method that converts a table to a dynamic list. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="table">    The table to act on. </param>
+        ///
+        /// <returns>   Table as a List&lt;ExpandoObject&gt; </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static List<ExpandoObject> ToDynamicList(this DataTable table)
         {
             List<ExpandoObject> list = new List<ExpandoObject>();
@@ -506,6 +622,6 @@
             return list;
         }
 
-        #endregion
+        #endregion [ ToDynamicList ]
     }
 }

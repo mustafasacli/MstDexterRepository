@@ -87,6 +87,20 @@
 
         #region [ ExecuteScalar method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An IDbConnection extension method that executes the scalar operation. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="mConn">        The mConn to act on. </param>
+        /// <param name="sql">          The SQL. </param>
+        /// <param name="cmdType">      (Optional) Type of the command. </param>
+        /// <param name="mTrans">       (Optional) The transaction. </param>
+        /// <param name="inputArgs">    (Optional) The input arguments. </param>
+        /// <param name="outputArgs">   (Optional) The output arguments. </param>
+        ///
+        /// <returns>   An object. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static object ExecuteScalar(this IDbConnection mConn,
             string sql, CommandType cmdType = CommandType.Text,
             IDbTransaction mTrans = null,

@@ -1,19 +1,24 @@
 namespace Mst.Dexter.Extensions
 {
-    using System;
     using System.Collections.Generic;
     using System.Data;
-    using System.Dynamic;
-    using System.Linq;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   A dx database command helper. </summary>
+    ///
+    /// <remarks>   Msacli, 22.04.2019. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     public partial class DxDbCommandHelper
     {
-        /// <summary>
-        /// creates parameters and sets their values of IDbCommand.
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="inputParameters"></param>
-        /// <param name="outputParameters"></param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   creates parameters and sets their values of IDbCommand. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="command">          . </param>
+        /// <param name="inputParameters">  (Optional) </param>
+        /// <param name="outputParameters"> (Optional) </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static void SetCommandParameters(IDbCommand command,
             Dictionary<string, object> inputParameters = null,
             Dictionary<string, object> outputParameters = null)
@@ -49,11 +54,14 @@ namespace Mst.Dexter.Extensions
             }
         }
 
-        /// <summary>
-        /// Sets parameters of DbCommand
-        /// </summary>
-        /// <param name="command">Db command</param>
-        /// <param name="parameters">Db Command Parameters</param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Sets parameters of DbCommand. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="command">      Db command. </param>
+        /// <param name="parameters">   Db Command Parameters. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static void SetCommandParameters(IDbCommand command,
            params object[] parameters)
         {
@@ -66,11 +74,15 @@ namespace Mst.Dexter.Extensions
             }
         }
 
-        /// <summary>
-        /// Get Output Values of IDbCommand
-        /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Get Output Values of IDbCommand. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="command">  . </param>
+        ///
+        /// <returns>   The out parameters of command. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static IDictionary<string, object> GetOutParametersOfCommand(IDbCommand command)
         {
             IDictionary<string, object> outputParameters = new Dictionary<string, object>();

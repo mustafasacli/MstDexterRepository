@@ -3,8 +3,22 @@
     using System;
     using System.Linq;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   A string extension. </summary>
+    ///
+    /// <remarks>   Msacli, 22.04.2019. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class StringExtension
     {
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A string extension method that query if 's' ıs valid. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="s">    The s to act on. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static bool IsValid(this string s)
         {
             bool result = false;
@@ -14,6 +28,15 @@
             return result;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A string extension method that lengths the given s. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="s">    The s to act on. </param>
+        ///
+        /// <returns>   An int. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static int Len(this string s)
         {
             int len = -1;
@@ -26,6 +49,15 @@
             return len;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A string extension method that trim all. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="s">    The s to act on. </param>
+        ///
+        /// <returns>   A string. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static string TrimAll(this string s)
         {
             string result = string.Empty;
@@ -39,6 +71,16 @@
             return result;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A string extension method that first ındex of. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="str">  The str to act on. </param>
+        /// <param name="ch">   The ch. </param>
+        ///
+        /// <returns>   An int. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static int FirstIndexOf(this string str, char ch)
         {
             int _index = -1;
@@ -70,6 +112,18 @@
             return _index;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// A string extension method that removes the under line and capitalize string described by
+        /// str.
+        /// </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="str">  The str to act on. </param>
+        ///
+        /// <returns>   A string. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static string RemoveUnderLineAndCapitalizeString(this string str)
         {
             if (str.IsNullOrEmpty())
@@ -86,6 +140,16 @@
             return result;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A string extension method that capitalize end part. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="str">      The str to act on. </param>
+        /// <param name="endPart">  The end part. </param>
+        ///
+        /// <returns>   A string. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static string CapitalizeEndPart(this string str, string endPart)
         {
             if (str.IsNullOrEmpty())
@@ -105,6 +169,15 @@
             return result;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A string extension method that capitalize string. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="str">  The str to act on. </param>
+        ///
+        /// <returns>   A string. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static string CapitalizeString(this string str)
         {
             var s = str.ToLowerInvariant();
@@ -114,6 +187,15 @@
             return s;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A string extension method that removes the spaces described by str. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="str">  The str to act on. </param>
+        ///
+        /// <returns>   A string. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static string RemoveSpaces(this string str)
         {
             if (string.IsNullOrEmpty(str))
@@ -123,6 +205,16 @@
             return str;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A string extension method that removes the characters. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="str">      The str to act on. </param>
+        /// <param name="chars">    A variable-length parameters list containing characters. </param>
+        ///
+        /// <returns>   A string. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static string RemoveChars(this string str, params char[] chars)
         {
             if (string.IsNullOrEmpty(str))
@@ -141,6 +233,15 @@
             return str;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A string extension method that first character to upper. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="input">    The input to act on. </param>
+        ///
+        /// <returns>   A string. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static string FirstCharToUpper(this string input)
         {
             if (input.IsNullOrSpace())
@@ -149,6 +250,15 @@
             return input.First().ToString().ToUpper() + input.Substring(1);
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A string extension method that first character to lower. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="input">    The input to act on. </param>
+        ///
+        /// <returns>   A string. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static string FirstCharToLower(this string input)
         {
             if (input.IsNullOrSpace())
@@ -157,6 +267,15 @@
             return input.First().ToString().ToLowerInvariant() + input.Substring(1);
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A string extension method that uppercase first. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="s">    The s to act on. </param>
+        ///
+        /// <returns>   A string. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static string UppercaseFirst(this string s)
         {
             // Check for empty string.

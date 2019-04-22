@@ -6,8 +6,26 @@
     using System.Linq;
     using System.Reflection;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   A dynamic extensions. </summary>
+    ///
+    /// <remarks>   Msacli, 22.04.2019. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class DynamicExtensions
     {
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An ExpandoObject extension method that convert to. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+        ///                                             null. </exception>
+        ///
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="dyn">  The dyn to act on. </param>
+        ///
+        /// <returns>   to converted. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static T ConvertTo<T>(this ExpandoObject dyn) where T : class
         {
             if (dyn == null)
@@ -36,6 +54,19 @@
             return instance;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An ExpandoObject extension method that converts a dyn to a v 2. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+        ///                                             null. </exception>
+        ///
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="dyn">  The dyn to act on. </param>
+        ///
+        /// <returns>   The given data converted to a v 2. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static T ConvertToV2<T>(this ExpandoObject dyn) where T : class
         {
             if (dyn == null)
@@ -65,6 +96,21 @@
             return instance;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// A List&lt;ExpandoObject&gt; extension method that converts a dynList to a list.
+        /// </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+        ///                                             null. </exception>
+        ///
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="dynList">  The dynList to act on. </param>
+        ///
+        /// <returns>   The given data converted to a list. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static List<T> ConvertToList<T>(this List<ExpandoObject> dynList) where T : class
         {
             if (dynList == null)
@@ -102,6 +148,19 @@
             return list;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An ExpandoObject extension method that gets a value. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+        ///                                             null. </exception>
+        ///
+        /// <param name="expandoObj">   The expandoObj to act on. </param>
+        /// <param name="key">          The key. </param>
+        ///
+        /// <returns>   The value. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static object GetValue(this ExpandoObject expandoObj, string key)
         {
             if (expandoObj == null)
@@ -125,6 +184,20 @@
             return result;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An ExpandoObject extension method that sets a value. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+        ///                                             null. </exception>
+        ///
+        /// <param name="expandoObj">   The expandoObj to act on. </param>
+        /// <param name="key">          The key. </param>
+        /// <param name="value">        The value. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static bool SetValue(this ExpandoObject expandoObj, string key, object value)
         {
             if (expandoObj == null)

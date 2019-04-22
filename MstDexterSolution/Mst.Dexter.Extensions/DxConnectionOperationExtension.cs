@@ -6,10 +6,29 @@
     using System.Dynamic;
     using System.Linq;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   A dx connection operation extension. </summary>
+    ///
+    /// <remarks>   Msacli, 22.04.2019. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class DxConnectionOperationExtension
     {
         #region [ Execute method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An IDbConnection extension method that executes. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="connection">       The connection to act on. </param>
+        /// <param name="sql">              The SQL. </param>
+        /// <param name="commandType">      (Optional) Type of the command. </param>
+        /// <param name="transaction">      (Optional) The transaction. </param>
+        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
+        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        ///
+        /// <returns>   An int. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static int Execute(this IDbConnection connection,
             string sql,
             CommandType commandType = CommandType.Text,
@@ -50,6 +69,20 @@
 
         #region [ ExecuteReader method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An IDbConnection extension method that executes the reader operation. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="connection">       The connection to act on. </param>
+        /// <param name="sql">              The SQL. </param>
+        /// <param name="commandType">      (Optional) Type of the command. </param>
+        /// <param name="transaction">      (Optional) The transaction. </param>
+        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
+        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        ///
+        /// <returns>   An IDataReader. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static IDataReader ExecuteReader(this IDbConnection connection,
             string sql, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
@@ -88,6 +121,20 @@
 
         #region [ ExecuteScalar method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An IDbConnection extension method that executes the scalar operation. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="connection">       The connection to act on. </param>
+        /// <param name="sql">              The SQL. </param>
+        /// <param name="commandType">      (Optional) Type of the command. </param>
+        /// <param name="transaction">      (Optional) The transaction. </param>
+        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
+        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        ///
+        /// <returns>   An object. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static object ExecuteScalar(this IDbConnection connection,
             string sql, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
@@ -127,6 +174,20 @@
 
         #region [ GetResultSet method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An IDbConnection extension method that gets result set of sql query. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="connection">       The connection to act on. </param>
+        /// <param name="sql">              The SQL. </param>
+        /// <param name="commandType">      (Optional) Type of the command. </param>
+        /// <param name="transaction">      (Optional) The transaction. </param>
+        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
+        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        ///
+        /// <returns>   The DataSet object instance. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static DataSet GetResultSet(this IDbConnection connection,
             string sql, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
@@ -190,6 +251,20 @@
 
         #region [ GetDynamicResultSet method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An IDbConnection extension method that gets dynamic result set. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="connection">       The connection to act on. </param>
+        /// <param name="sql">              The SQL. </param>
+        /// <param name="commandType">      (Optional) Type of the command. </param>
+        /// <param name="transaction">      (Optional) The transaction. </param>
+        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
+        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        ///
+        /// <returns>   The dynamic result set. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static List<ExpandoObject> GetDynamicResultSet(this IDbConnection connection,
             string sql, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
@@ -236,6 +311,24 @@
 
         #region [ GetDynamicResultSetWithPaging method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// An IDbConnection extension method that gets dynamic result set with paging.
+        /// </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="connection">       The connection to act on. </param>
+        /// <param name="sql">              The SQL. </param>
+        /// <param name="commandType">      Type of the command. </param>
+        /// <param name="transaction">      (Optional) The transaction. </param>
+        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
+        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        /// <param name="pageNumber">       (Optional) The page number. </param>
+        /// <param name="pageItemCount">    (Optional) Number of page ıtems. </param>
+        ///
+        /// <returns>   The dynamic result set with paging. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static List<ExpandoObject> GetDynamicResultSetWithPaging(this IDbConnection connection,
             string sql, CommandType commandType,
             IDbTransaction transaction = null,
@@ -284,6 +377,20 @@
 
         #region [ GetMultiDynamicResultSet method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An IDbConnection extension method that gets multi dynamic result set. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="connection">       The connection to act on. </param>
+        /// <param name="sql">              The SQL. </param>
+        /// <param name="commandType">      (Optional) Type of the command. </param>
+        /// <param name="transaction">      (Optional) The transaction. </param>
+        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
+        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        ///
+        /// <returns>   The multi dynamic result set. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static List<List<ExpandoObject>> GetMultiDynamicResultSet(this IDbConnection connection,
             string sql, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
@@ -330,6 +437,23 @@
 
         #region [ ExecuteScalarAs method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// An IDbConnection extension method that executes the scalar as operation.
+        /// </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="connection">       The connection to act on. </param>
+        /// <param name="sqlText">          The SQL text. </param>
+        /// <param name="commandType">      (Optional) Type of the command. </param>
+        /// <param name="transaction">      (Optional) The transaction. </param>
+        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
+        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        ///
+        /// <returns>   A T. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static T ExecuteScalarAs<T>(this IDbConnection connection,
            string sqlText, CommandType commandType = CommandType.Text,
            IDbTransaction transaction = null,
@@ -346,6 +470,20 @@
 
         #region [ ExecuteAsLong method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An IDbConnection extension method that executes as long operation. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="connection">       The connection to act on. </param>
+        /// <param name="sqlText">          The SQL text. </param>
+        /// <param name="commandType">      (Optional) Type of the command. </param>
+        /// <param name="transaction">      (Optional) The transaction. </param>
+        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
+        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        ///
+        /// <returns>   A long. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static long ExecuteAsLong(this IDbConnection connection,
            string sqlText, CommandType commandType = CommandType.Text,
            IDbTransaction transaction = null,
@@ -362,6 +500,20 @@
 
         #region [ ExecuteAsDecimal method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An IDbConnection extension method that executes as decimal operation. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="connection">       The connection to act on. </param>
+        /// <param name="sqlText">          The SQL text. </param>
+        /// <param name="commandType">      (Optional) Type of the command. </param>
+        /// <param name="transaction">      (Optional) The transaction. </param>
+        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
+        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        ///
+        /// <returns>   A decimal. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static decimal ExecuteAsDecimal(this IDbConnection connection,
            string sqlText, CommandType commandType = CommandType.Text,
            IDbTransaction transaction = null,
@@ -378,6 +530,20 @@
 
         #region [ FirstAsDynamic method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An IDbConnection extension method that first as dynamic. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="connection">       The connection to act on. </param>
+        /// <param name="sqlText">          The SQL text. </param>
+        /// <param name="commandType">      (Optional) Type of the command. </param>
+        /// <param name="transaction">      (Optional) The transaction. </param>
+        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
+        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        ///
+        /// <returns>   An ExpandoObject. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static ExpandoObject FirstAsDynamic(this IDbConnection connection,
             string sqlText, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
@@ -412,6 +578,21 @@
 
         #region [ First method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An IDbConnection extension method that firsts. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="connection">       The connection to act on. </param>
+        /// <param name="sqlText">          The SQL text. </param>
+        /// <param name="commandType">      (Optional) Type of the command. </param>
+        /// <param name="transaction">      (Optional) The transaction. </param>
+        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
+        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        ///
+        /// <returns>   A T. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static T First<T>(this IDbConnection connection,
             string sqlText, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
@@ -440,6 +621,20 @@
 
         #region [ LastAsDynamic method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An IDbConnection extension method that last as dynamic. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="connection">       The connection to act on. </param>
+        /// <param name="sqlText">          The SQL text. </param>
+        /// <param name="commandType">      (Optional) Type of the command. </param>
+        /// <param name="transaction">      (Optional) The transaction. </param>
+        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
+        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        ///
+        /// <returns>   An ExpandoObject. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static ExpandoObject LastAsDynamic(this IDbConnection connection,
             string sqlText, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
@@ -474,6 +669,21 @@
 
         #region [ Last method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An IDbConnection extension method that lasts. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="connection">       The connection to act on. </param>
+        /// <param name="sqlText">          The SQL text. </param>
+        /// <param name="commandType">      (Optional) Type of the command. </param>
+        /// <param name="transaction">      (Optional) The transaction. </param>
+        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
+        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        ///
+        /// <returns>   A T. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static T Last<T>(this IDbConnection connection,
             string sqlText, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,

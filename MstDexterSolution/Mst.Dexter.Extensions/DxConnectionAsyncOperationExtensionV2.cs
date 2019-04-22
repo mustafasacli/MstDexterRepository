@@ -10,7 +10,7 @@
     ///
     /// <remarks>   Msacli, 22.04.2019. </remarks>
     ////////////////////////////////////////////////////////////////////////////////////////////////////
-    public static class DxConnectionAsyncOperationExtension
+    public static class DxConnectionAsyncOperationExtensionV2
     {
         #region [ ExecuteAsync method ]
 
@@ -21,30 +21,28 @@
         ///
         /// <remarks>   Msacli, 22.04.2019. </remarks>
         ///
-        /// <param name="connection">       The connection to act on. </param>
-        /// <param name="sql">              The SQL. </param>
-        /// <param name="commandType">      (Optional) Type of the command. </param>
-        /// <param name="transaction">      (Optional) The transaction. </param>
-        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
-        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        /// <param name="connection">   The connection to act on. </param>
+        /// <param name="sql">          The SQL. </param>
+        /// <param name="commandType">  (Optional) Type of the command. </param>
+        /// <param name="transaction">  (Optional) The transaction. </param>
+        /// <param name="parameters">   A variable-length parameters list containing parameters. </param>
         ///
         /// <returns>   An asynchronous result that yields the execute. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public static Task<int> ExecuteAsync(this IDbConnection connection,
             string sql,
             CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
-            Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null)
+           params object[] parameters)
         {
             var resultTask = Task.Factory.StartNew(() =>
             {
-                return DxConnectionOperationExtension.Execute(connection,
+                return DxConnectionOperationExtensionV2.Execute(connection,
             sql,
             commandType,
             transaction,
-             inputParameters,
-             outputParameters);
+            parameters);
             });
 
             return resultTask;
@@ -61,29 +59,27 @@
         ///
         /// <remarks>   Msacli, 22.04.2019. </remarks>
         ///
-        /// <param name="connection">       The connection to act on. </param>
-        /// <param name="sql">              The SQL. </param>
-        /// <param name="commandType">      (Optional) Type of the command. </param>
-        /// <param name="transaction">      (Optional) The transaction. </param>
-        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
-        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        /// <param name="connection">   The connection to act on. </param>
+        /// <param name="sql">          The SQL. </param>
+        /// <param name="commandType">  (Optional) Type of the command. </param>
+        /// <param name="transaction">  (Optional) The transaction. </param>
+        /// <param name="parameters">   A variable-length parameters list containing parameters. </param>
         ///
         /// <returns>   An asynchronous result that yields the execute reader. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public static Task<IDataReader> ExecuteReaderAsync(this IDbConnection connection,
             string sql, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
-            Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null)
+           params object[] parameters)
         {
             var resultTask = Task.Factory.StartNew(() =>
             {
-                return DxConnectionOperationExtension.ExecuteReader(connection,
+                return DxConnectionOperationExtensionV2.ExecuteReader(connection,
             sql,
             commandType,
             transaction,
-             inputParameters,
-             outputParameters);
+            parameters);
             });
 
             return resultTask;
@@ -100,12 +96,11 @@
         ///
         /// <remarks>   Msacli, 22.04.2019. </remarks>
         ///
-        /// <param name="connection">       The connection to act on. </param>
-        /// <param name="sql">              The SQL. </param>
-        /// <param name="commandType">      (Optional) Type of the command. </param>
-        /// <param name="transaction">      (Optional) The transaction. </param>
-        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
-        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        /// <param name="connection">   The connection to act on. </param>
+        /// <param name="sql">          The SQL. </param>
+        /// <param name="commandType">  (Optional) Type of the command. </param>
+        /// <param name="transaction">  (Optional) The transaction. </param>
+        /// <param name="parameters">   A variable-length parameters list containing parameters. </param>
         ///
         /// <returns>   An asynchronous result that yields the execute scalar. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -113,17 +108,15 @@
         public static Task<object> ExecuteScalarAsync(this IDbConnection connection,
             string sql, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
-            Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null)
+           params object[] parameters)
         {
             var resultTask = Task.Factory.StartNew(() =>
             {
-                return DxConnectionOperationExtension.ExecuteScalar(connection,
+                return DxConnectionOperationExtensionV2.ExecuteScalar(connection,
             sql,
             commandType,
             transaction,
-             inputParameters,
-             outputParameters);
+            parameters);
             });
 
             return resultTask;
@@ -138,29 +131,27 @@
         ///
         /// <remarks>   Msacli, 22.04.2019. </remarks>
         ///
-        /// <param name="connection">       The connection to act on. </param>
-        /// <param name="sql">              The SQL. </param>
-        /// <param name="commandType">      (Optional) Type of the command. </param>
-        /// <param name="transaction">      (Optional) The transaction. </param>
-        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
-        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        /// <param name="connection">   The connection to act on. </param>
+        /// <param name="sql">          The SQL. </param>
+        /// <param name="commandType">  (Optional) Type of the command. </param>
+        /// <param name="transaction">  (Optional) The transaction. </param>
+        /// <param name="parameters">   A variable-length parameters list containing parameters. </param>
         ///
         /// <returns>   An asynchronous result that yields the result set. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public static Task<DataSet> GetResultSetAsync(this IDbConnection connection,
             string sql, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
-            Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null)
+           params object[] parameters)
         {
             var resultTask = Task.Factory.StartNew(() =>
             {
-                return DxConnectionOperationExtension.GetResultSet(connection,
+                return DxConnectionOperationExtensionV2.GetResultSet(connection,
             sql,
             commandType,
             transaction,
-             inputParameters,
-             outputParameters);
+            parameters);
             });
 
             return resultTask;
@@ -177,29 +168,27 @@
         ///
         /// <remarks>   Msacli, 22.04.2019. </remarks>
         ///
-        /// <param name="connection">       The connection to act on. </param>
-        /// <param name="sql">              The SQL. </param>
-        /// <param name="commandType">      (Optional) Type of the command. </param>
-        /// <param name="transaction">      (Optional) The transaction. </param>
-        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
-        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        /// <param name="connection">   The connection to act on. </param>
+        /// <param name="sql">          The SQL. </param>
+        /// <param name="commandType">  (Optional) Type of the command. </param>
+        /// <param name="transaction">  (Optional) The transaction. </param>
+        /// <param name="parameters">   A variable-length parameters list containing parameters. </param>
         ///
         /// <returns>   An asynchronous result that yields the dynamic result set. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public static Task<List<ExpandoObject>> GetDynamicResultSetAsync(this IDbConnection connection,
             string sql, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
-            Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null)
+           params object[] parameters)
         {
             var resultTask = Task.Factory.StartNew(() =>
             {
-                return DxConnectionOperationExtension.GetDynamicResultSet(connection,
+                return DxConnectionOperationExtensionV2.GetDynamicResultSet(connection,
             sql,
             commandType,
             transaction,
-             inputParameters,
-             outputParameters);
+            parameters);
             });
 
             return resultTask;
@@ -220,28 +209,28 @@
         /// <param name="sql">              The SQL. </param>
         /// <param name="commandType">      Type of the command. </param>
         /// <param name="transaction">      (Optional) The transaction. </param>
-        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
-        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
         /// <param name="pageNumber">       (Optional) The page number. </param>
         /// <param name="pageItemCount">    (Optional) Number of page ıtems. </param>
+        /// <param name="parameters">       A variable-length parameters list containing parameters. </param>
         ///
         /// <returns>   An asynchronous result that yields the dynamic result set with paging. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public static Task<List<ExpandoObject>> GetDynamicResultSetWithPagingAsync(this IDbConnection connection,
             string sql, CommandType commandType,
             IDbTransaction transaction = null,
-            Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null,
-            uint pageNumber = 1, uint pageItemCount = 10)
+            uint pageNumber = 1, uint pageItemCount = 10,
+           params object[] parameters)
         {
             var resultTask = Task.Factory.StartNew(() =>
             {
-                return DxConnectionOperationExtension.GetDynamicResultSetWithPaging(connection,
+                return DxConnectionOperationExtensionV2.GetDynamicResultSetWithPaging(connection,
             sql,
             commandType,
             transaction,
-             inputParameters,
-             outputParameters);
+            pageNumber: pageNumber,
+            pageItemCount: pageItemCount,
+            parameters: parameters);
             });
 
             return resultTask;
@@ -258,29 +247,26 @@
         ///
         /// <remarks>   Msacli, 22.04.2019. </remarks>
         ///
-        /// <param name="connection">       The connection to act on. </param>
-        /// <param name="sql">              The SQL. </param>
-        /// <param name="commandType">      (Optional) Type of the command. </param>
-        /// <param name="transaction">      (Optional) The transaction. </param>
-        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
-        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        /// <param name="connection">   The connection to act on. </param>
+        /// <param name="sql">          The SQL. </param>
+        /// <param name="commandType">  (Optional) Type of the command. </param>
+        /// <param name="transaction">  (Optional) The transaction. </param>
+        /// <param name="parameters">   A variable-length parameters list containing parameters. </param>
         ///
         /// <returns>   An asynchronous result that yields the multi dynamic result set. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static Task<List<List<ExpandoObject>>> GetMultiDynamicResultSetAsync(this IDbConnection connection,
             string sql, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
-            Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null)
+           params object[] parameters)
         {
             var resultTask = Task.Factory.StartNew(() =>
             {
-                return DxConnectionOperationExtension.GetMultiDynamicResultSet(connection,
+                return DxConnectionOperationExtensionV2.GetMultiDynamicResultSet(connection,
             sql,
             commandType,
             transaction,
-             inputParameters,
-             outputParameters);
+            parameters);
             });
 
             return resultTask;
@@ -295,29 +281,26 @@
         ///
         /// <remarks>   Msacli, 22.04.2019. </remarks>
         ///
-        /// <param name="connection">       The connection to act on. </param>
-        /// <param name="sqlText">          The SQL text. </param>
-        /// <param name="commandType">      (Optional) Type of the command. </param>
-        /// <param name="transaction">      (Optional) The transaction. </param>
-        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
-        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        /// <param name="connection">   The connection to act on. </param>
+        /// <param name="sqlText">      The SQL text. </param>
+        /// <param name="commandType">  (Optional) Type of the command. </param>
+        /// <param name="transaction">  (Optional) The transaction. </param>
+        /// <param name="parameters">   A variable-length parameters list containing parameters. </param>
         ///
         /// <returns>   An asynchronous result that yields the first as dynamic. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static Task<ExpandoObject> FirstAsDynamicAsync(this IDbConnection connection,
             string sqlText, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
-            Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null)
+           params object[] parameters)
         {
             var resultTask = Task.Factory.StartNew(() =>
             {
-                return DxConnectionOperationExtension.FirstAsDynamic(connection,
+                return DxConnectionOperationExtensionV2.FirstAsDynamic(connection,
             sqlText,
             commandType,
             transaction,
-             inputParameters,
-             outputParameters);
+            parameters);
             });
 
             return resultTask;
@@ -333,29 +316,26 @@
         /// <remarks>   Msacli, 22.04.2019. </remarks>
         ///
         /// <typeparam name="T">    Generic type parameter. </typeparam>
-        /// <param name="connection">       The connection to act on. </param>
-        /// <param name="sqlText">          The SQL text. </param>
-        /// <param name="commandType">      (Optional) Type of the command. </param>
-        /// <param name="transaction">      (Optional) The transaction. </param>
-        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
-        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        /// <param name="connection">   The connection to act on. </param>
+        /// <param name="sqlText">      The SQL text. </param>
+        /// <param name="commandType">  (Optional) Type of the command. </param>
+        /// <param name="transaction">  (Optional) The transaction. </param>
+        /// <param name="parameters">   A variable-length parameters list containing parameters. </param>
         ///
         /// <returns>   An asynchronous result that yields a T. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static Task<T> FirstAsync<T>(this IDbConnection connection,
            string sqlText, CommandType commandType = CommandType.Text,
            IDbTransaction transaction = null,
-           Dictionary<string, object> inputParameters = null,
-           Dictionary<string, object> outputParameters = null) where T : class
+           params object[] parameters) where T : class
         {
             var resultTask = Task.Factory.StartNew(() =>
             {
-                return DxConnectionOperationExtension.First<T>(connection,
+                return DxConnectionOperationExtensionV2.First<T>(connection,
             sqlText,
             commandType,
             transaction,
-             inputParameters,
-             outputParameters);
+            parameters);
             });
 
             return resultTask;
@@ -370,29 +350,26 @@
         ///
         /// <remarks>   Msacli, 22.04.2019. </remarks>
         ///
-        /// <param name="connection">       The connection to act on. </param>
-        /// <param name="sqlText">          The SQL text. </param>
-        /// <param name="commandType">      (Optional) Type of the command. </param>
-        /// <param name="transaction">      (Optional) The transaction. </param>
-        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
-        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        /// <param name="connection">   The connection to act on. </param>
+        /// <param name="sqlText">      The SQL text. </param>
+        /// <param name="commandType">  (Optional) Type of the command. </param>
+        /// <param name="transaction">  (Optional) The transaction. </param>
+        /// <param name="parameters">   A variable-length parameters list containing parameters. </param>
         ///
         /// <returns>   An asynchronous result that yields the last as dynamic. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static Task<ExpandoObject> LastAsDynamicAsync(this IDbConnection connection,
             string sqlText, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
-            Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null)
+           params object[] parameters)
         {
             var resultTask = Task.Factory.StartNew(() =>
             {
-                return DxConnectionOperationExtension.LastAsDynamic(connection,
+                return DxConnectionOperationExtensionV2.LastAsDynamic(connection,
             sqlText,
             commandType,
             transaction,
-             inputParameters,
-             outputParameters);
+            parameters);
             });
 
             return resultTask;
@@ -408,29 +385,26 @@
         /// <remarks>   Msacli, 22.04.2019. </remarks>
         ///
         /// <typeparam name="T">    Generic type parameter. </typeparam>
-        /// <param name="connection">       The connection to act on. </param>
-        /// <param name="sqlText">          The SQL text. </param>
-        /// <param name="commandType">      (Optional) Type of the command. </param>
-        /// <param name="transaction">      (Optional) The transaction. </param>
-        /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
-        /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        /// <param name="connection">   The connection to act on. </param>
+        /// <param name="sqlText">      The SQL text. </param>
+        /// <param name="commandType">  (Optional) Type of the command. </param>
+        /// <param name="transaction">  (Optional) The transaction. </param>
+        /// <param name="parameters">   A variable-length parameters list containing parameters. </param>
         ///
         /// <returns>   An asynchronous result that yields a T. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static Task<T> LastAsync<T>(this IDbConnection connection,
            string sqlText, CommandType commandType = CommandType.Text,
            IDbTransaction transaction = null,
-           Dictionary<string, object> inputParameters = null,
-           Dictionary<string, object> outputParameters = null) where T : class
+           params object[] parameters) where T : class
         {
             var resultTask = Task.Factory.StartNew(() =>
             {
-                return DxConnectionOperationExtension.Last<T>(connection,
+                return DxConnectionOperationExtensionV2.Last<T>(connection,
             sqlText,
             commandType,
             transaction,
-             inputParameters,
-             outputParameters);
+            parameters);
             });
 
             return resultTask;
@@ -438,4 +412,9 @@
 
         #endregion [ LastAsync method ]
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    // End of DxConnectionAsyncOperationExtensionV2.cs
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }

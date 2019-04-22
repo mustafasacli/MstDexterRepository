@@ -7,8 +7,27 @@
     using System.Linq;
     using System.Reflection;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   A generic extensions. </summary>
+    ///
+    /// <remarks>   Msacli, 22.04.2019. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class GenericExtensions
     {
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A T extension method that query if 't' ıs member. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+        ///                                             null. </exception>
+        ///
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="t">    The t to act on. </param>
+        /// <param name="tArr"> A variable-length parameters list containing array. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static bool IsMember<T>(this T t, params T[] tArr)
         {
             if (t == null)
@@ -28,6 +47,18 @@
         }
 
         //Not Completed
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A T extension method that query if 't1' ıs different. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="t1">   The t1 to act on. </param>
+        /// <param name="t2">   The second T. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static bool IsDifferent<T>(this T t1, T t2)
         {
             if (true)
@@ -37,6 +68,16 @@
             return false;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A T extension method that gets valid properties. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="t">    The t to act on. </param>
+        ///
+        /// <returns>   An array of property İnformation. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static PropertyInfo[] GetValidProperties<T>(this T t) where T : class
         {
             var props = typeof(T).GetProperties();
@@ -48,6 +89,16 @@
             return props;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A T extension method that gets the properties. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="t">    The t to act on. </param>
+        ///
+        /// <returns>   The properties. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static IDictionary<string, object> GetProperties<T>(this T t) where T : class
         {
             IDictionary<string, object> dict = new Dictionary<string, object>();
@@ -66,6 +117,16 @@
             return dict;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A T extension method that gets columns reverse. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="t">    The t to act on. </param>
+        ///
+        /// <returns>   The columns reverse. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static IDictionary<string, string> GetColumnsReverse<T>(this T t) where T : class
         {
             IDictionary<string, string> dict = new Dictionary<string, string>();
@@ -98,6 +159,16 @@
             return dict;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A T extension method that gets the columns. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="t">    The t to act on. </param>
+        ///
+        /// <returns>   The columns. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static IDictionary<string, string> GetColumns<T>(this T t) where T : class
         {
             IDictionary<string, string> dict = new Dictionary<string, string>();
@@ -130,6 +201,17 @@
             return dict;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A T extension method that gets a key. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="t">                The t to act on. </param>
+        /// <param name="isFirstPropKey">   (Optional) True if is first property key, false if not. </param>
+        ///
+        /// <returns>   The key. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static string GetKey<T>(this T t, bool isFirstPropKey = false) where T : class
         {
             string key = string.Empty;
@@ -154,6 +236,16 @@
             return key;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A T extension method that gets table name. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="t">    The t to act on. </param>
+        ///
+        /// <returns>   The table name. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static string GetTableName<T>(this T t) where T : class
         {
             string s = typeof(T).Name;
@@ -167,6 +259,16 @@
             return s;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A T extension method that gets schema name. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="t">    The t to act on. </param>
+        ///
+        /// <returns>   The schema name. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static string GetSchemaName<T>(this T t) where T : class
         {
             string s = string.Empty;
@@ -180,6 +282,17 @@
             return s;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A T extension method that gets property value. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="t">        The t to act on. </param>
+        /// <param name="propName"> Name of the property. </param>
+        ///
+        /// <returns>   The property value. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static object GetPropValue<T>(this T t, string propName)
         {
             object val = null;
@@ -190,6 +303,16 @@
             return val;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A T extension method that sets property value. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <typeparam name="T">    Generic type parameter. </typeparam>
+        /// <param name="t">        The t to act on. </param>
+        /// <param name="propName"> Name of the property. </param>
+        /// <param name="value">    The value. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static void SetPropValue<T>(this T t, string propName, object value)
         {
             var p = t.GetType().GetProperty(propName);

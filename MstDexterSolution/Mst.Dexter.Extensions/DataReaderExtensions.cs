@@ -5,20 +5,44 @@
     using System.Data;
     using System.Dynamic;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   A data reader extensions. </summary>
+    ///
+    /// <remarks>   Msacli, 22.04.2019. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class DataReaderExtensions
     {
         #region [ CloseIfNot method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An IDataReader extension method that closes if not. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="dataReader">   The dataReader to act on. </param>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static void CloseIfNot(this IDataReader dataReader)
         {
             if (dataReader != null && !dataReader.IsClosed)
                 dataReader.Close();
         }
 
-        #endregion
+        #endregion [ CloseIfNot method ]
 
         #region [ FirstRow method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An IDataReader extension method that first row. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+        ///                                             null. </exception>
+        ///
+        /// <param name="dataReader">   The dataReader to act on. </param>
+        ///
+        /// <returns>   An ExpandoObject. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static ExpandoObject FirstRow(this IDataReader dataReader)
         {
             if (dataReader == null)
@@ -56,6 +80,18 @@
 
         #region [ LastRow method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An IDataReader extension method that last row. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+        ///                                             null. </exception>
+        ///
+        /// <param name="dataReader">   The dataReader to act on. </param>
+        ///
+        /// <returns>   An ExpandoObject. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static ExpandoObject LastRow(this IDataReader dataReader)
         {
             if (dataReader == null)
@@ -92,12 +128,19 @@
 
         #region [ GetDynamicResultSet method ]
 
-        /// <summary>
-        /// Bind IDataReader content to ExpandoObject list.
-        /// </summary>
-        /// <param name="reader"></param>
-        /// <param name="closeAtFinal"></param>
-        /// <returns>Returns ExpandoObject object list.</returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Bind IDataReader content to ExpandoObject list. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+        ///                                             null. </exception>
+        ///
+        /// <param name="reader">       . </param>
+        /// <param name="closeAtFinal"> (Optional) </param>
+        ///
+        /// <returns>   Returns ExpandoObject object list. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static List<ExpandoObject> GetDynamicResultSet(
             this IDataReader reader, bool closeAtFinal = false)
         {
@@ -136,6 +179,23 @@
 
         #region [ GetDynamicResultSetWithPaging method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// An IDataReader extension method that gets dynamic result set with paging.
+        /// </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
+        ///                                             null. </exception>
+        ///
+        /// <param name="reader">           . </param>
+        /// <param name="pageNumber">       (Optional) The page number. </param>
+        /// <param name="pageItemCount">    (Optional) Number of page ıtems. </param>
+        /// <param name="closeAtFinal">     (Optional) </param>
+        ///
+        /// <returns>   The dynamic result set with paging. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static List<ExpandoObject> GetDynamicResultSetWithPaging(this IDataReader reader,
             uint pageNumber = 1, uint pageItemCount = 10, bool closeAtFinal = false)
         {
@@ -186,6 +246,16 @@
 
         #region [ GetMultipleDynamicResultSet method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An IDataReader extension method that gets multi dynamic result set. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="reader">       . </param>
+        /// <param name="closeAtFinal"> (Optional) </param>
+        ///
+        /// <returns>   The multi dynamic result set. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static List<List<ExpandoObject>> GetMultiDynamicResultSet(
             this IDataReader reader, bool closeAtFinal = false)
         {
@@ -219,6 +289,15 @@
 
         #region [ GetDynamicFromDataReader method ]
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Gets dynamic from data reader. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="dataReader">   The dataReader to act on. </param>
+        ///
+        /// <returns>   The dynamic from data reader. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         internal static ExpandoObject GetDynamicFromDataReader(IDataReader dataReader)
         {
             IDictionary<string, object> expando = new ExpandoObject();

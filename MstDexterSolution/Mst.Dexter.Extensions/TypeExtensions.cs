@@ -9,14 +9,26 @@
     using System.Reflection;
     using System.Xml;
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   A type extensions. </summary>
+    ///
+    /// <remarks>   Msacli, 22.04.2019. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class TypeExtensions
     {
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// Determine whether a type is simple (String, Decimal, DateTime, etc)
-        /// or complex (i.e. custom class with public properties and methods).
-        /// source code: https://gist.github.com/jonathanconway/3330614
+        /// or complex (i.e. custom class with public properties and methods). source code:
+        /// https://gist.github.com/jonathanconway/3330614.
         /// </summary>
-        /// <see cref="http://stackoverflow.com/questions/2442534/how-to-test-if-type-is-primitive"/>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="type"> The type to act on. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static bool IsSimpleType(this Type type)
         {
             return
@@ -33,6 +45,15 @@
                 Convert.GetTypeCode(type) != TypeCode.Object;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A Type extension method that query if 'type' ıs simple type v 2. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="type"> The type to act on. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static bool IsSimpleTypeV2(this Type type)
         {
             return
@@ -54,6 +75,15 @@
                 ;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A Type extension method that converts a type to a database type. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="type"> The type to act on. </param>
+        ///
+        /// <returns>   Type as a DbType. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static DbType ToDbType(this Type type)
         {
             Type realType = Nullable.GetUnderlyingType(type) ?? type;
@@ -170,6 +200,15 @@
             return dbt;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A Type extension method that gets columns of type as reverse. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="type"> The type to act on. </param>
+        ///
+        /// <returns>   The columns of type as reverse. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static IDictionary<string, string> GetColumnsOfTypeAsReverse(this Type type)
         {
             IDictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -195,6 +234,15 @@
             return dictionary;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A Type extension method that gets key of type. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="type"> The type to act on. </param>
+        ///
+        /// <returns>   The key of type. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static string GetKeyOfType(this Type type)
         {
             var keyPropertyName = string.Empty;
@@ -211,6 +259,15 @@
             return keyPropertyName;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A Type extension method that gets ıdentity property of type. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="type"> The type to act on. </param>
+        ///
+        /// <returns>   The ıdentity property of type. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static string GetIdentityPropertyOfType(this Type type)
         {
             var result = string.Empty;
@@ -233,6 +290,15 @@
             return result;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A Type extension method that gets key column of type. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="type"> The type to act on. </param>
+        ///
+        /// <returns>   The key column of type. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static string GetKeyColumnOfType(this Type type)
         {
             string keyColumnName = string.Empty;
@@ -254,6 +320,18 @@
             return keyColumnName;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A Type extension method that gets property column of type. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <exception cref="Exception">    Thrown when an exception error condition occurs. </exception>
+        ///
+        /// <param name="type">         The type to act on. </param>
+        /// <param name="propertyName"> Name of the property. </param>
+        ///
+        /// <returns>   The property column of type. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static string GetPropertyColumnOfType(this Type type, string propertyName)
         {
             if (string.IsNullOrWhiteSpace(propertyName))
@@ -277,6 +355,15 @@
             return columnName;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A Type extension method that gets table name of type. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="type"> The type to act on. </param>
+        ///
+        /// <returns>   The table name of type. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static string GetTableNameOfType(this Type type)
         {
             string tableName = type.Name;
@@ -293,6 +380,15 @@
             return tableName;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A Type extension method that gets schema name of type. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="type"> The type to act on. </param>
+        ///
+        /// <returns>   The schema name of type. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static string GetSchemaNameOfType(this Type type)
         {
             string schemaName = string.Empty;
@@ -308,6 +404,15 @@
             return schemaName;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A Type extension method that gets columns of type. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="type"> The type to act on. </param>
+        ///
+        /// <returns>   The columns of type. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static IDictionary<string, string> GetColumnsOfType(this Type type)
         {
             IDictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -338,6 +443,15 @@
             return dictionary;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A Type extension method that gets columns reverse of type. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="type"> The type to act on. </param>
+        ///
+        /// <returns>   The columns reverse of type. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static IDictionary<string, string> GetColumnsReverseOfType(this Type type)
         {
             IDictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -367,6 +481,15 @@
             return dictionary;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A Type extension method that query if 'type' ıs key column numeric. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="type"> The type to act on. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static bool IsKeyColumnNumeric(this Type type)
         {
             bool isIdColumnNumeric = false;
@@ -382,6 +505,15 @@
             return isIdColumnNumeric;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A Type extension method that gets valid properties of type. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="type"> The type to act on. </param>
+        ///
+        /// <returns>   An array of property İnformation. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static PropertyInfo[] GetValidPropertiesOfType(this Type type)
         {
             var properties = type.GetProperties();
@@ -395,6 +527,15 @@
             return properties;
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A Type extension method that gets property types of type. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="type"> The type to act on. </param>
+        ///
+        /// <returns>   The property types of type. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static IDictionary<string, Type> GetPropertyTypesOfType(this Type type)
         {
             IDictionary<string, Type> types = new Dictionary<string, Type>();
@@ -406,6 +547,11 @@
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    /// <summary>   A type helper. </summary>
+    ///
+    /// <remarks>   Msacli, 22.04.2019. </remarks>
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class TypeHelper
     {
         private static readonly HashSet<Type> NumericTypes = new HashSet<Type>
@@ -416,6 +562,15 @@
             //, typeof(float),  typeof(double)
         };
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   Query if 'type' is numeric. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="type"> The type. </param>
+        ///
+        /// <returns>   True if it succeeds, false if it fails. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static bool IsNumeric(Type type)
         {
             return NumericTypes.Contains(Nullable.GetUnderlyingType(type) ?? type);
