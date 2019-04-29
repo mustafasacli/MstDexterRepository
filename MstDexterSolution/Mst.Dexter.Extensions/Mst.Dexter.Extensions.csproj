@@ -49,23 +49,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataExtension.cs" />
-    <Compile Include="DataReaderAsyncExtensions.cs" />
-    <Compile Include="DataReaderExtensions.cs" />
-    <Compile Include="DictionaryExtensions.cs" />
-    <Compile Include="DxConnectionAsyncOperationExtensionV2.cs" />
-    <Compile Include="DxConnectionAsyncOperationExtension.cs" />
-    <Compile Include="DxConnectionExtension.cs" />
-    <Compile Include="DxConnectionOperationExtensionV2.cs" />
-    <Compile Include="DxConnectionOperationExtension.cs" />
-    <Compile Include="DxDbCommandHelper.cs" />
-    <Compile Include="DynamicExtensions.cs" />
-    <Compile Include="GeneralMapperExtensions.cs" />
-    <Compile Include="GenericExtensions.cs" />
-    <Compile Include="ObjectExtension.cs" />
+    <Compile Include="DataExtensions\DataExtension.cs" />
+    <Compile Include="DataReader\DataReaderAsyncExtensions.cs" />
+    <Compile Include="DataReader\DataReaderExtensions.cs" />
+    <Compile Include="ObjectExtensions\DictionaryExtensions.cs" />
+    <Compile Include="ConnectionExtensions\DxConnectionAsyncOperationExtensionV2.cs" />
+    <Compile Include="ConnectionExtensions\DxConnectionAsyncOperationExtension.cs" />
+    <Compile Include="ConnectionExtensions\DxConnectionExtension.cs" />
+    <Compile Include="ConnectionExtensions\DxConnectionOperationExtensionV2.cs" />
+    <Compile Include="ConnectionExtensions\DxConnectionOperationExtension.cs" />
+    <Compile Include="Helpers\DxDbCommandHelper.cs" />
+    <Compile Include="ObjectExtensions\DynamicExtensions.cs" />
+    <Compile Include="MapperExtensions\GeneralMapperExtensions.cs" />
+    <Compile Include="ObjectExtensions\GenericExtensions.cs" />
+    <Compile Include="ObjectExtensions\ObjectExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StringExtension.cs" />
-    <Compile Include="TypeExtensions.cs" />
+    <Compile Include="ObjectExtensions\StringExtension.cs" />
+    <Compile Include="ObjectExtensions\TypeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="mst.dexter.extensions.snk" />
