@@ -2,6 +2,7 @@ namespace Mst.Dexter.Extensions
 {
     using System.Collections.Generic;
     using System.Data;
+    using System;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>   A dx database command helper. </summary>
@@ -34,7 +35,7 @@ namespace Mst.Dexter.Extensions
             {
                 parameter = command.CreateParameter();
                 parameter.ParameterName = key.Key;
-                parameter.Value = key.Value;
+                parameter.Value = key.Value ?? DBNull.Value;
 
                 parameter.Direction = outputs.ContainsKey(key.Key) ?
                     ParameterDirection.InputOutput : ParameterDirection.Input;
