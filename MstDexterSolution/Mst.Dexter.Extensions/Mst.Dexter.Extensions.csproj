@@ -52,6 +52,7 @@
     <Compile Include="DataExtensions\DataExtension.cs" />
     <Compile Include="DataReader\DataReaderAsyncExtensions.cs" />
     <Compile Include="DataReader\DataReaderExtensions.cs" />
+    <Compile Include="Objects\MstDictionary.cs" />
     <Compile Include="ObjectExtensions\DictionaryExtensions.cs" />
     <Compile Include="ConnectionExtensions\DxConnectionAsyncOperationExtensionV2.cs" />
     <Compile Include="ConnectionExtensions\DxConnectionAsyncOperationExtension.cs" />
