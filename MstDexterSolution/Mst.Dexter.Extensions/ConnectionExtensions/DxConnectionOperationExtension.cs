@@ -87,9 +87,9 @@
             string sql, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
             Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null)
+            Dictionary<string, object> outputParameters = null, CommandBehavior? commandBehavior = null)
         {
-            IDataReader reader = null;
+            IDataReader dataReader = null;
 
             try
             {
@@ -103,7 +103,10 @@
 
                     DxDbCommandHelper.SetCommandParameters(command, inputParameters, outputParameters);
 
-                    reader = command.ExecuteReader();
+                    if (!commandBehavior.HasValue)
+                        dataReader = command.ExecuteReader();
+                    else
+                        dataReader = command.ExecuteReader(commandBehavior.Value);
 
                     if (outputParameters != null && outputParameters.Count > 0)
                         outputParameters = (Dictionary<string, object>)DxDbCommandHelper.GetOutParametersOfCommand(command);
@@ -114,7 +117,7 @@
                 throw;
             }
 
-            return reader;
+            return dataReader;
         }
 
         #endregion [ ExecuteReader method ]
@@ -208,7 +211,10 @@
                 if (adapterTypes.Count() > 1)
                 {
                     var connTypeName = connection.GetType().Name;
-                    connTypeName = connTypeName.Substring(0, connTypeName.Length - 10).ToLower();
+
+                    if (connTypeName.EndsWith("Connection"))
+                        connTypeName = connTypeName.Substring(0, connTypeName.Length - 10).ToLower();
+
                     adapterType = adapterTypes.Where(typ => typ.Name.ToLower().StartsWith(connTypeName)).First();
                 }
                 else

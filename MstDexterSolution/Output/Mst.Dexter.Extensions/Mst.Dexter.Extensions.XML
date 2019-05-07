@@ -1133,7 +1133,7 @@
             
              <returns>   An int. </returns>
         </member>
-        <member name="M:Mst.Dexter.Extensions.DxConnectionOperationExtension.ExecuteReader(System.Data.IDbConnection,System.String,System.Data.CommandType,System.Data.IDbTransaction,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,System.Object})">
+        <member name="M:Mst.Dexter.Extensions.DxConnectionOperationExtension.ExecuteReader(System.Data.IDbConnection,System.String,System.Data.CommandType,System.Data.IDbTransaction,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,System.Object},System.Nullable{System.Data.CommandBehavior})">
              <summary>   An IDbConnection extension method that executes the reader operation. </summary>
             
              <remarks>   Msacli, 22.04.2019. </remarks>
