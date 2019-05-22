@@ -34,8 +34,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Mst.DexterCfg, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9884bbe0e72e13f7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mst.DexterCfg.dll.1.0.0\lib\net451\Mst.DexterCfg.dll</HintPath>
+    <Reference Include="Mst.DexterCfg, Version=1.1.0.0, Culture=neutral, PublicKeyToken=9884bbe0e72e13f7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mst.DexterCfg.dll.1.1.0\lib\net451\Mst.DexterCfg.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
