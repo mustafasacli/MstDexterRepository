@@ -1566,6 +1566,14 @@
              <param name="propName"> Name of the property. </param>
              <param name="value">    The value. </param>
         </member>
+        <member name="M:Mst.Dexter.Extensions.GenericExtensions.IsNotNullOrDefault``1(``0)">
+            <summary>
+            if instance is null or default returns false else returns true.
+            </summary>
+            <typeparam name="T">Generic Type</typeparam>
+            <param name="instance">Generic Type instance</param>
+            <returns>if instance is null or default returns false else returns true.</returns>
+        </member>
         <member name="T:Mst.Dexter.Extensions.ObjectExtension">
              <summary>   An object extension. </summary>
             

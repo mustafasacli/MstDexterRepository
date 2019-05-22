@@ -88,6 +88,9 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static void CloseIfNot(this IDbConnection dbConnection)
         {
+            if (dbConnection == null)
+                throw new ArgumentNullException(nameof(dbConnection));
+
             if (dbConnection.State != ConnectionState.Closed)
                 dbConnection.Close();
         }
@@ -101,6 +104,9 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static void OpenIfNot(this IDbConnection dbConnection)
         {
+            if (dbConnection == null)
+                throw new ArgumentNullException(nameof(dbConnection));
+
             if (dbConnection.State != ConnectionState.Open)
                 dbConnection.Open();
         }
@@ -118,6 +124,9 @@
         public static IDbTransaction OpenAndBeginTransaction(
             this IDbConnection dbConnection, IsolationLevel? isolationLevel = null)
         {
+            if (dbConnection == null)
+                throw new ArgumentNullException(nameof(dbConnection));
+
             IDbTransaction transaction = null;
 
             OpenIfNot(dbConnection);

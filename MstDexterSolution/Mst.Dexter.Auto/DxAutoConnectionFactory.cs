@@ -117,49 +117,50 @@
         /// <exception cref="Exception">            Thrown when an exception error condition occurs. </exception>
         ///
         /// <typeparam name="T">    . </typeparam>
-        /// <param name="connName"> . </param>
-        /// <param name="t">        . </param>
+        /// <param name="connectionName"> . </param>
+        /// <param name="connection">        . </param>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public void Register<T>(string connName, T t) where T : class, IDbConnection
+        public void Register<T>(string connectionName, T connection) where T : class, IDbConnection
         {
-            if (string.IsNullOrWhiteSpace(connName))
-                throw new ArgumentException(nameof(connName));
+            if (string.IsNullOrWhiteSpace(connectionName))
+                throw new ArgumentException(nameof(connectionName));
 
-            if (connObjs.ContainsKey(connName))
-                throw new Exception($"Connection with \"{connName}\" name is already defined.");
+            if (connObjs.ContainsKey(connectionName))
+                throw new Exception($"Connection with \"{connectionName}\" name is already defined.");
 
-            connObjs[connName] = typeof(T);
-            connStrPairs[connName] = t.ConnectionString;
+            connObjs[connectionName] = typeof(T);
+            connStrPairs[connectionName] = connection.ConnectionString;
         }
 
         /// <summary>
         /// Get IDbConnection from configuration file for given connection name.
         /// </summary>
-        /// <param name="connName">Connection name</param>
+        /// <param name="connectionName">Connection name</param>
         /// <returns>Returns IDbConnection instance for given name.</returns>
-        public IDbConnection GetConnection(string connName)
+        public IDbConnection GetConnection(string connectionName)
         {
             IDbConnection conn = null;
 
             try
             {
-                if (string.IsNullOrWhiteSpace(connName))
-                    throw new ArgumentException(nameof(connName));
+                if (string.IsNullOrWhiteSpace(connectionName))
+                    throw new ArgumentException(nameof(connectionName));
 
-                if (!connObjs.ContainsKey(connName))
-                    throw new Exception($"Connection with \"{connName}\" name should be defined.");
+                if (!connObjs.ContainsKey(connectionName))
+                    throw new Exception($"Connection with \"{connectionName}\" name should be defined.");
 
                 Type t;
-                t = connObjs[connName];
+                t = connObjs[connectionName];
 
                 conn = Activator.CreateInstance(t) as IDbConnection;
-                conn.ConnectionString = connStrPairs[connName];
+                conn.ConnectionString = connStrPairs[connectionName];
             }
             catch (Exception e)
             {
                 //Exceptin handling
                 if (this.IsWriteErrorLog)
                     LogError(e);
+
                 throw;
             }
 
@@ -190,16 +191,16 @@
             {
                 if (this.IsWriteErrorLog)
                 {
-                    DateTime dt = DateTime.Now;
-                    StackFrame frm = new StackFrame(1, true);
-                    MethodBase mthd = frm.GetMethod();
-                    int line = frm.GetFileLineNumber();
-                    int col = frm.GetFileColumnNumber();
+                    DateTime time = DateTime.Now;
+                    StackFrame frame = new StackFrame(1, true);
+                    MethodBase method = frame.GetMethod();
+                    int line = frame.GetFileLineNumber();
+                    int column = frame.GetFileColumnNumber();
 
-                    string assName = mthd.Module.Assembly.FullName;
-                    string className = mthd.ReflectedType.Name;
-                    string assFileName = frm.GetFileName();
-                    string methodName = mthd.Name;
+                    string assemblyName = method.Module.Assembly.FullName;
+                    string className = method.ReflectedType.Name;
+                    string assemblyFileName = frame.GetFileName();
+                    string methodName = method.Name;
 
                     string folderName = $"{AssemblyDirectory}/{AutoAppValues.ErrorFolderName}";
 
@@ -210,19 +211,19 @@
                             Directory.CreateDirectory(folderName);
                         }
                     }
-                    catch (Exception)
-                    {
-                    }
-                    string fileName = $"{folderName}/{ErrorFileName}";
+                    catch
+                    { }
 
-                    List<string> rows = new List<string>
+                    var fileName = $"{folderName}/{ErrorFileName}";
+
+                    var rows = new List<string>
                     {
-                        $"Time : {dt.ToString(AutoAppValues.GeneralDateFormat)}",
-                        $"Assembly : {assName}",
+                        $"Time : {time.ToString(AutoAppValues.GeneralDateFormat)}",
+                        $"Assembly : {assemblyName}",
                         $"Class : {className}",
                         $"Method Name : {methodName}",
                         $"Line : {line}",
-                        $"Column : {col}",
+                        $"Column : {column}",
                         $"Message : {e.Message}",
                         $"Stack Trace : {e.StackTrace}",
                         AutoAppValues.Lines

@@ -318,5 +318,17 @@
             var p = t.GetType().GetProperty(propName);
             p.SetValue(t, value);
         }
+
+        /// <summary>
+        /// if instance is null or default returns false else returns true.
+        /// </summary>
+        /// <typeparam name="T">Generic Type</typeparam>
+        /// <param name="instance">Generic Type instance</param>
+        /// <returns>if instance is null or default returns false else returns true.</returns>
+        public static bool IsNotNullOrDefault<T>(this T instance)
+        {
+            var b = instance != null && !object.Equals(instance, default(T));
+            return b;
+        }
     }
 }

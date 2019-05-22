@@ -19,8 +19,8 @@
             new Lazy<DxCfgConnectionFactory>(
             () => new DxCfgConnectionFactory());
 
-        private Dictionary<string, Type> connObjs = null;
-        private readonly Dictionary<string, string> settings = null;
+        private Dictionary<string, Type> connObjs;
+        private readonly Dictionary<string, string> settings;
 
         private readonly object lockErrObj = new object();
         private string errFileName;

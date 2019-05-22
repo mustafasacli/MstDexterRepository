@@ -59,14 +59,14 @@
              <exception cref="T:System.Exception">            Thrown when an exception error condition occurs. </exception>
             
              <typeparam name="T">    . </typeparam>
-             <param name="connName"> . </param>
-             <param name="t">        . </param>
+             <param name="connectionName"> . </param>
+             <param name="connection">        . </param>
         </member>
         <member name="M:Mst.Dexter.Auto.DxAutoConnectionFactory.GetConnection(System.String)">
             <summary>
             Get IDbConnection from configuration file for given connection name.
             </summary>
-            <param name="connName">Connection name</param>
+            <param name="connectionName">Connection name</param>
             <returns>Returns IDbConnection instance for given name.</returns>
         </member>
         <member name="P:Mst.Dexter.Auto.DxAutoConnectionFactory.ConnectionKeys">

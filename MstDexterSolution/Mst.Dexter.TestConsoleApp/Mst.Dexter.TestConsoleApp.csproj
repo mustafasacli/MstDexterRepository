@@ -34,6 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mst.DexterCfg, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9884bbe0e72e13f7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mst.DexterCfg.dll.1.0.0\lib\net451\Mst.DexterCfg.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -50,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mst.Dexter.Auto\Mst.Dexter.Auto.csproj">
@@ -60,14 +65,17 @@
       <Project>{0f96a7d2-f5d7-44a4-aae9-2a672fc93f5f}</Project>
       <Name>Mst.Dexter.ConnectionExtensions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Mst.DexterCfg\Mst.DexterCfg.csproj">
-      <Project>{743AB860-F6D4-447D-9B93-E289357094B6}</Project>
-      <Name>Mst.DexterCfg</Name>
+    <ProjectReference Include="..\Mst.Dexter.Extensions\Mst.Dexter.Extensions.csproj">
+      <Project>{bcc6c2e5-ccfe-4af5-9f8e-41ce73aa1f8a}</Project>
+      <Name>Mst.Dexter.Extensions</Name>
     </ProjectReference>
     <ProjectReference Include="..\Mst.Dexter\Mst.Dexter.csproj">
       <Project>{147b6bc1-23cb-412d-ae65-a3ddd6aa0487}</Project>
       <Name>Mst.Dexter</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dexter.cfg.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
