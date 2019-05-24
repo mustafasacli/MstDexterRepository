@@ -1444,6 +1444,15 @@
             
              <returns>   A TDest. </returns>
         </member>
+        <member name="M:Mst.Dexter.Extensions.GeneralMapperExtensions.MapTo``2(``0,``1)">
+            <summary>
+            Map Property Values to another type instance.
+            </summary>
+            <typeparam name="TSource">Source Generic Type</typeparam>
+            <typeparam name="TDest">Destination Generic Type</typeparam>
+            <param name="source">Source generic type instance</param>
+            <param name="instance">Destination generic type instance</param>
+        </member>
         <member name="T:Mst.Dexter.Extensions.GenericExtensions">
              <summary>   A generic extensions. </summary>
             
@@ -1927,6 +1936,14 @@
              <param name="type"> The type to act on. </param>
             
              <returns>   The property types of type. </returns>
+        </member>
+        <member name="M:Mst.Dexter.Extensions.TypeExtensions.GetSameProperties(System.Type,System.Type)">
+            <summary>
+            Gets common Properties of two types.
+            </summary>
+            <param name="type1">First type</param>
+            <param name="type2">Second type</param>
+            <returns>returns string list</returns>
         </member>
         <member name="T:Mst.Dexter.Extensions.TypeHelper">
              <summary>   A type helper. </summary>

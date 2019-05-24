@@ -75,5 +75,40 @@
 
             return dest;
         }
+
+        /// <summary>
+        /// Map Property Values to another type instance.
+        /// </summary>
+        /// <typeparam name="TSource">Source Generic Type</typeparam>
+        /// <typeparam name="TDest">Destination Generic Type</typeparam>
+        /// <param name="source">Source generic type instance</param>
+        /// <param name="instance">Destination generic type instance</param>
+        public static void MapTo<TSource, TDest>(this TSource source, TDest instance)
+            where TSource : class
+            where TDest : class
+        {
+            if (source == null)
+                return;
+
+            if (instance == null)
+                throw new ArgumentNullException(nameof(instance));
+
+            Type typeDest = typeof(TDest);
+            Type typeSource = typeof(TSource);
+            var list = typeDest.GetSameProperties(typeSource) ?? new List<string>();
+            PropertyInfo propSource;
+            PropertyInfo propDest;
+
+            list.ForEach(q =>
+            {
+                propSource = typeSource.GetProperty(q);
+                propDest = typeDest.GetProperty(q);
+
+                var value = propSource.GetValue(source, null);
+
+                if (value != null)
+                    propDest.SetValue(instance, value);
+            });
+        }
     }
 }

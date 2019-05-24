@@ -545,6 +545,36 @@
 
             return types;
         }
+
+        /// <summary>
+        /// Gets common Properties of two types.
+        /// </summary>
+        /// <param name="type1">First type</param>
+        /// <param name="type2">Second type</param>
+        /// <returns>returns string list</returns>
+        public static List<string> GetSameProperties(this Type type1, Type type2)
+        {
+            var list = new List<string>();
+            var dictionary = new Dictionary<string, Type>();
+
+            type1.GetProperties()
+                .Where(q => q.CanRead && q.CanWrite)
+                .ToList()
+                .ForEach(
+                q =>
+                {
+                    dictionary.Add(q.Name, Nullable.GetUnderlyingType(q.PropertyType) ?? q.PropertyType);
+                });
+
+            list = type2
+                .GetProperties()
+                .Where(q => dictionary.ContainsKey(q.Name) && q.CanRead && q.CanWrite)
+                .Where(q => (Nullable.GetUnderlyingType(q.PropertyType) ?? q.PropertyType) == dictionary[q.Name])
+                .Select(q => q.Name)
+                .ToList() ?? new List<string>();
+
+            return list;
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
