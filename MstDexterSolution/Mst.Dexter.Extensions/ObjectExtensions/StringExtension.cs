@@ -115,7 +115,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// A string extension method that removes the under line and capitalize string described by
-        /// str.
+        /// str removes underline and point.
         /// </summary>
         ///
         /// <remarks>   Msacli, 22.04.2019. </remarks>
@@ -131,7 +131,7 @@
 
             var result = str.Replace(" ", String.Empty);
 
-            var s = str.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries) ?? new string[] { };
+            var s = str.Split(new char[] { '_','.' }, StringSplitOptions.RemoveEmptyEntries) ?? new string[] { };
 
             s = s.Select(q => q.CapitalizeString()).ToArray();
 
