@@ -6,6 +6,7 @@
     using System.Dynamic;
     using System.IO;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Reflection;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -610,10 +611,9 @@
                 cols.Add(col.ColumnName);
             }
 
-            IDictionary<string, object> dict;
             foreach (DataRow row in table.Rows)
             {
-                dict = new Dictionary<string, object>();
+                IDictionary<string, object> dict = new ExpandoObject();
                 cols.ForEach(s => dict[s] = row[s] == DBNull.Value ? null : row[s]);
                 ExpandoObject d = dict as ExpandoObject;
                 list.Add(d);
