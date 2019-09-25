@@ -5,11 +5,8 @@
     using System.Dynamic;
     using System.Threading.Tasks;
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>   A Dx connection asynchronous operation extension. </summary>
-    ///
     /// <remarks>   Msacli, 22.04.2019. </remarks>
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class DxConnectionAsyncOperationExtension
     {
         #region [ ExecuteAsync method ]

@@ -692,9 +692,8 @@
              <returns>   An asynchronous result that yields a T. </returns>
         </member>
         <member name="T:Mst.Dexter.Extensions.DxConnectionAsyncOperationExtension">
-             <summary>   A Dx connection asynchronous operation extension. </summary>
-            
-             <remarks>   Msacli, 22.04.2019. </remarks>
+            <summary>   A Dx connection asynchronous operation extension. </summary>
+            <remarks>   Msacli, 22.04.2019. </remarks>
         </member>
         <member name="M:Mst.Dexter.Extensions.DxConnectionAsyncOperationExtension.ExecuteAsync(System.Data.IDbConnection,System.String,System.Data.CommandType,System.Data.IDbTransaction,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,System.Object})">
              <summary>
@@ -1428,6 +1427,11 @@
             
              <returns>   True if it succeeds, false if it fails. </returns>
         </member>
+        <member name="M:Mst.Dexter.Extensions.DynamicExtensions.ToExpando(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Extension method that turns a dictionary of string and object to an ExpandoObject
+            </summary>
+        </member>
         <member name="T:Mst.Dexter.Extensions.GeneralMapperExtensions">
              <summary>   A general mapper extensions. </summary>
             
@@ -1716,7 +1720,7 @@
         <member name="M:Mst.Dexter.Extensions.StringExtension.RemoveUnderLineAndCapitalizeString(System.String)">
              <summary>
              A string extension method that removes the under line and capitalize string described by
-             str.
+             str removes underline and point.
              </summary>
             
              <remarks>   Msacli, 22.04.2019. </remarks>

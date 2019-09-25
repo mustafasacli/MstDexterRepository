@@ -692,9 +692,8 @@
              <returns>   An asynchronous result that yields a T. </returns>
         </member>
         <member name="T:Mst.Dexter.Extensions.DxConnectionAsyncOperationExtension">
-             <summary>   A Dx connection asynchronous operation extension. </summary>
-            
-             <remarks>   Msacli, 22.04.2019. </remarks>
+            <summary>   A Dx connection asynchronous operation extension. </summary>
+            <remarks>   Msacli, 22.04.2019. </remarks>
         </member>
         <member name="M:Mst.Dexter.Extensions.DxConnectionAsyncOperationExtension.ExecuteAsync(System.Data.IDbConnection,System.String,System.Data.CommandType,System.Data.IDbTransaction,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,System.Object})">
              <summary>
