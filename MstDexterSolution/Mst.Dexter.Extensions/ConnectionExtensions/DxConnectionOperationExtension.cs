@@ -430,8 +430,7 @@
                     }
                     finally
                     {
-                        if (reader != null && !reader.IsClosed)
-                            reader.Close();
+                        reader.CloseIfNot();
                     }
                 }
             }
@@ -572,8 +571,7 @@
                 }
                 finally
                 {
-                    if (reader != null && !reader.IsClosed)
-                        reader.Close();
+                    reader.CloseIfNot();
                 }
             }
 
@@ -663,8 +661,7 @@
                 }
                 finally
                 {
-                    if (reader != null && !reader.IsClosed)
-                        reader.Close();
+                    reader.CloseIfNot();
                 }
             }
 

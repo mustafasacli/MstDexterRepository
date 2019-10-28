@@ -89,6 +89,68 @@
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An object extension method that converts an obj to a byte nullable. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="obj">  The obj to act on. </param>
+        ///
+        /// <returns>   Obj as an byte? </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static byte? ToByteNullable(this object obj)
+        {
+            byte? result = default(byte?);
+
+            if (obj.IsNullOrDbNull())
+                return result;
+
+            try
+            {
+                byte a;
+
+                if (byte.TryParse(obj.ToString(), out a))
+                    result = a;
+            }
+            catch (Exception e)
+            {
+                result = default(byte?);
+            }
+
+            return result;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An object extension method that converts an obj to a short nullable. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="obj">  The obj to act on. </param>
+        ///
+        /// <returns>   Obj as an short? </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static short? ToShortNullable(this object obj)
+        {
+            short? result = default(short?);
+
+            if (obj.IsNullOrDbNull())
+                return result;
+
+            try
+            {
+                short a;
+
+                if (short.TryParse(obj.ToString(), out a))
+                    result = a;
+            }
+            catch (Exception e)
+            {
+                result = default(short?);
+            }
+
+            return result;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   An object extension method that converts an obj to a int nullable. </summary>
         ///
         /// <remarks>   Msacli, 22.04.2019. </remarks>
@@ -114,6 +176,130 @@
             catch (Exception e)
             {
                 result = default(int?);
+            }
+
+            return result;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An object extension method that converts an obj to a long nullable. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="obj">  The obj to act on. </param>
+        ///
+        /// <returns>   Obj as an long? </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static long? ToLongNullable(this object obj)
+        {
+            long? result = default(long?);
+
+            if (obj.IsNullOrDbNull())
+                return result;
+
+            try
+            {
+                long a;
+
+                if (long.TryParse(obj.ToString(), out a))
+                    result = a;
+            }
+            catch (Exception e)
+            {
+                result = default(long?);
+            }
+
+            return result;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An object extension method that converts an obj to a decimal nullable. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="obj">  The obj to act on. </param>
+        ///
+        /// <returns>   Obj as an decimal? </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static decimal? ToDecimalNullable(this object obj)
+        {
+            decimal? result = default(decimal?);
+
+            if (obj.IsNullOrDbNull())
+                return result;
+
+            try
+            {
+                decimal a;
+
+                if (decimal.TryParse(obj.ToString(), out a))
+                    result = a;
+            }
+            catch (Exception e)
+            {
+                result = default(decimal?);
+            }
+
+            return result;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An object extension method that converts an obj to a double nullable. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="obj">  The obj to act on. </param>
+        ///
+        /// <returns>   Obj as an double? </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static double? ToDoubleNullable(this object obj)
+        {
+            double? result = default(double?);
+
+            if (obj.IsNullOrDbNull())
+                return result;
+
+            try
+            {
+                double a;
+
+                if (double.TryParse(obj.ToString(), out a))
+                    result = a;
+            }
+            catch (Exception e)
+            {
+                result = default(double?);
+            }
+
+            return result;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   An object extension method that converts an obj to a float nullable. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="obj">  The obj to act on. </param>
+        ///
+        /// <returns>   Obj as an float? </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static float? ToFloatNullable(this object obj)
+        {
+            float? result = default(float?);
+
+            if (obj.IsNullOrDbNull())
+                return result;
+
+            try
+            {
+                float a;
+
+                if (float.TryParse(obj.ToString(), out a))
+                    result = a;
+            }
+            catch (Exception e)
+            {
+                result = default(float?);
             }
 
             return result;
@@ -205,6 +391,17 @@
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// if value is DbNulll.Value returns null, else return object value.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns>Returns object</returns>
+        public static object GetValueWithCheckNull(this object obj)
+        {
+            var value = obj == (object)DBNull.Value ? null : obj;
+            return value;
         }
     }
 }

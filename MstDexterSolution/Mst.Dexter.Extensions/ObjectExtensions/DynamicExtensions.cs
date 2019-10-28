@@ -44,12 +44,11 @@
             instance = Activator.CreateInstance<T>();
             var props = typeof(T).GetProperties();
 
-            props = props.AsQueryable().Where(p => p.CanWrite == true).ToArray();
-            props = props.AsQueryable().Where(p => dict.ContainsKey(p.Name) == true).ToArray();
+            props = props.Where(p => p.CanWrite == true && dict.ContainsKey(p.Name) == true).ToArray() ?? new PropertyInfo[0];
 
             foreach (var prp in props)
             {
-                prp.SetValue(instance, dict[prp.Name]);
+                prp.SetValue(instance, dict[prp.Name].GetValueWithCheckNull());
             }
 
             return instance;
@@ -87,11 +86,13 @@
             instance = Activator.CreateInstance<T>();
             PropertyInfo[] pInfos = typeof(T).GetValidPropertiesOfType();
 
-            pInfos = pInfos.AsQueryable().Where(q => columns.Values.Contains(q.Name) == true).ToArray();
+            pInfos = pInfos
+                .Where(q => q.CanWrite && columns.Values.Contains(q.Name) == true)
+                .ToArray();
 
             foreach (var prp in pInfos)
             {
-                prp.SetValue(instance, dict[prp.Name]);
+                prp.SetValue(instance, dict[prp.Name].GetValueWithCheckNull());
             }
 
             return instance;
@@ -121,10 +122,18 @@
 
             List<T> list = new List<T>();
 
+            if (dynList.Count < 1)
+                return list;
+
             IDictionary<string, string> columns = typeof(T).GetColumnsOfType();
 
             PropertyInfo[] pInfos = typeof(T).GetValidPropertiesOfType();
-            pInfos = pInfos.AsQueryable().Where(q => columns.Keys.Contains(q.Name) == true).ToArray();
+            pInfos = pInfos
+                .Where(q => q.CanWrite && columns.Keys.Contains(q.Name) == true)
+                .ToArray() ?? new PropertyInfo[0];
+
+            if (pInfos.Length < 1)
+                return list;
 
             IDictionary<string, object> dict;
             T instance;
@@ -142,10 +151,13 @@
                 {
                     col = null;
                     col = columns[prp.Name];
-                    prp.SetValue(instance, dict[col]);
+                    if (dict.ContainsKey(col))
+                        prp.SetValue(instance, dict[col].GetValueWithCheckNull());
                 }
+
                 list.Add(instance);
             }
+
             return list;
         }
 
@@ -178,8 +190,7 @@
 
             if (dictionary.Count > 0 && dictionary.ContainsKey(key))
             {
-                result =
-                    dictionary[key] == (object)DBNull.Value ? null : dictionary[key];
+                result = dictionary[key].GetValueWithCheckNull();
             }
 
             return result;
@@ -215,8 +226,7 @@
 
             if (dictionary.Count > 0 && dictionary.ContainsKey(key))
             {
-                dictionary[key] =
-                    value == (object)DBNull.Value ? null : value;
+                dictionary[key] = value.GetValueWithCheckNull();
                 expandoObj = dictionary as ExpandoObject;
                 result = true;
             }
