@@ -2,13 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
     <metadata>
         <id>Mst.Dexter.Extensions.dll</id>
-        <version>1.5.0.0</version>
+        <version>1.6.0.0</version>
         <authors>mustafa sacli</authors>
         <owners>mustafa sacli</owners>
         <projectUrl>http://github.com/mustafasacli/MstDexterRepository</projectUrl>
         <license type="expression">Apache-2.0</license>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <releaseNotes>Dynamic To Object convert bug fixed. decimal, float, byte, short, long nullable conversion added. DBNull.Value value check for objects added.</releaseNotes>
+        <releaseNotes>Object to DateTime nullable method added.</releaseNotes>
         <description>Supports IDbConnection operations.</description>
         <copyright>Copyright ©2019 Msacli Corporation</copyright>
         <tags>IDbConnection Dapper DbConnection Extensions</tags>
