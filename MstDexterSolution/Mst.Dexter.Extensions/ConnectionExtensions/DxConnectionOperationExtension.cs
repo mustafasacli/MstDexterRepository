@@ -80,6 +80,7 @@
         /// <param name="transaction">      (Optional) The transaction. </param>
         /// <param name="inputParameters">  (Optional) Options for controlling the input. </param>
         /// <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+        /// <param name="commandBehavior">CommandBehaviour for DataReader</param>
         ///
         /// <returns>   An IDataReader. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////

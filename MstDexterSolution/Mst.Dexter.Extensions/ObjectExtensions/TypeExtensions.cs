@@ -410,14 +410,15 @@
         /// <remarks>   Msacli, 22.04.2019. </remarks>
         ///
         /// <param name="type"> The type to act on. </param>
+        /// <param name="includeNotMappedProperties">if true NotMapped Properties are included, else not.</param>
         ///
         /// <returns>   The columns of type. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static IDictionary<string, string> GetColumnsOfType(this Type type)
+        public static IDictionary<string, string> GetColumnsOfType(this Type type, bool includeNotMappedProperties = false)
         {
             IDictionary<string, string> dictionary = new Dictionary<string, string>();
 
-            var properties = type.GetValidPropertiesOfType();
+            var properties = type.GetValidPropertiesOfType(includeNotMappedProperties: includeNotMappedProperties);
 
             foreach (var property in properties)
             {
@@ -511,18 +512,19 @@
         /// <remarks>   Msacli, 22.04.2019. </remarks>
         ///
         /// <param name="type"> The type to act on. </param>
+        /// <param name="includeNotMappedProperties">if true NotMapped Properties are included, else not.</param>
         ///
         /// <returns>   An array of property İnformation. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static PropertyInfo[] GetValidPropertiesOfType(this Type type)
+        public static PropertyInfo[] GetValidPropertiesOfType(this Type type, bool includeNotMappedProperties = false)
         {
             var properties = type.GetProperties();
 
             properties = properties
                 .Where(p => p.CanWrite && p.CanRead)
-                .Where(p => p.GetCustomAttribute<NotMappedAttribute>() == null)
                 .Where(p => IsSimpleTypeV2(p.PropertyType) == true)
-                .ToArray() ?? new PropertyInfo[] { };
+                .Where(p => p.GetCustomAttribute<NotMappedAttribute>() == null || includeNotMappedProperties)
+                .ToArray() ?? new PropertyInfo[0];
 
             return properties;
         }

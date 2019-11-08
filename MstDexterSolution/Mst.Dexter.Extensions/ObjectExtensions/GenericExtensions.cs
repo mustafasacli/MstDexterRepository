@@ -82,9 +82,10 @@
         {
             var props = typeof(T).GetProperties();
 
-            props = props.AsQueryable().Where(p => p.CanWrite && p.CanRead).ToArray();
-            props = props.AsQueryable().Where(p => p.GetCustomAttribute<NotMappedAttribute>() == null).ToArray();
-            props = props.AsQueryable().Where(p => TypeExtensions.IsSimpleTypeV2(p.PropertyType) == true).ToArray();
+            props = props.Where(p => p.CanWrite && p.CanRead)
+                .Where(p => p.GetCustomAttribute<NotMappedAttribute>() == null)
+                .Where(p => TypeExtensions.IsSimpleTypeV2(p.PropertyType) == true)
+                .ToArray() ?? new PropertyInfo[0];
 
             return props;
         }
@@ -105,9 +106,10 @@
 
             var props = typeof(T).GetProperties();
 
-            props = props.AsQueryable().Where(p => p.CanWrite && p.CanRead).ToArray();
-            props = props.AsQueryable().Where(p => p.GetCustomAttribute<NotMappedAttribute>() == null).ToArray();
-            props = props.AsQueryable().Where(p => TypeExtensions.IsSimpleTypeV2(p.PropertyType) == true).ToArray();
+            props = props.Where(p => p.CanWrite && p.CanRead)
+                .Where(p => p.GetCustomAttribute<NotMappedAttribute>() == null)
+                .Where(p => TypeExtensions.IsSimpleTypeV2(p.PropertyType) == true)
+                .ToArray() ?? new PropertyInfo[0];
 
             foreach (var prp in props)
             {

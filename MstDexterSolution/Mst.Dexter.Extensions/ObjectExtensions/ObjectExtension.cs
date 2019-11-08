@@ -398,7 +398,7 @@
         /// </summary>
         /// <param name="obj"></param>
         /// <returns>Returns object</returns>
-        public static object GetValueWithCheckNull(this object obj)
+        public static object GetValueWithCheckDbNull(this object obj)
         {
             var value = obj == (object)DBNull.Value ? null : obj;
             return value;

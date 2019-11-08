@@ -1163,6 +1163,7 @@
              <param name="transaction">      (Optional) The transaction. </param>
              <param name="inputParameters">  (Optional) Options for controlling the input. </param>
              <param name="outputParameters"> (Optional) Options for controlling the output. </param>
+             <param name="commandBehavior">CommandBehaviour for DataReader</param>
             
              <returns>   An IDataReader. </returns>
         </member>
@@ -1749,7 +1750,7 @@
             
              <returns>   True if it succeeds, false if it fails. </returns>
         </member>
-        <member name="M:Mst.Dexter.Extensions.ObjectExtension.GetValueWithCheckNull(System.Object)">
+        <member name="M:Mst.Dexter.Extensions.ObjectExtension.GetValueWithCheckDbNull(System.Object)">
             <summary>
             if value is DbNulll.Value returns null, else return object value.
             </summary>
@@ -1984,12 +1985,13 @@
             
              <returns>   The schema name of type. </returns>
         </member>
-        <member name="M:Mst.Dexter.Extensions.TypeExtensions.GetColumnsOfType(System.Type)">
+        <member name="M:Mst.Dexter.Extensions.TypeExtensions.GetColumnsOfType(System.Type,System.Boolean)">
              <summary>   A Type extension method that gets columns of type. </summary>
             
              <remarks>   Msacli, 22.04.2019. </remarks>
             
              <param name="type"> The type to act on. </param>
+             <param name="includeNotMappedProperties">if true NotMapped Properties are included, else not.</param>
             
              <returns>   The columns of type. </returns>
         </member>
@@ -2011,12 +2013,13 @@
             
              <returns>   True if it succeeds, false if it fails. </returns>
         </member>
-        <member name="M:Mst.Dexter.Extensions.TypeExtensions.GetValidPropertiesOfType(System.Type)">
+        <member name="M:Mst.Dexter.Extensions.TypeExtensions.GetValidPropertiesOfType(System.Type,System.Boolean)">
              <summary>   A Type extension method that gets valid properties of type. </summary>
             
              <remarks>   Msacli, 22.04.2019. </remarks>
             
              <param name="type"> The type to act on. </param>
+             <param name="includeNotMappedProperties">if true NotMapped Properties are included, else not.</param>
             
              <returns>   An array of property İnformation. </returns>
         </member>

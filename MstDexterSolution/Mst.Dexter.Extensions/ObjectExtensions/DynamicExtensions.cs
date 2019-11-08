@@ -34,6 +34,8 @@
                 throw new ArgumentNullException(nameof(dyn));
             }
 
+            IDictionary<string, string> columns = typeof(T).GetColumnsOfType(includeNotMappedProperties: true);
+
             T instance = null;
 
             IDictionary<string, object> dict = dyn;
@@ -42,13 +44,15 @@
                 return instance;
 
             instance = Activator.CreateInstance<T>();
-            var props = typeof(T).GetProperties();
+            PropertyInfo[] pInfos = typeof(T).GetValidPropertiesOfType(includeNotMappedProperties: true);
 
-            props = props.Where(p => p.CanWrite == true && dict.ContainsKey(p.Name) == true).ToArray() ?? new PropertyInfo[0];
+            pInfos = pInfos
+                .Where(q => columns.Keys.Contains(q.Name) == true)
+                .ToArray();
 
-            foreach (var prp in props)
+            foreach (var prp in pInfos)
             {
-                prp.SetValue(instance, dict[prp.Name].GetValueWithCheckNull());
+                prp.SetValue(instance, dict[columns[prp.Name]].GetValueWithCheckDbNull());
             }
 
             return instance;
@@ -74,7 +78,7 @@
                 throw new ArgumentNullException(nameof(dyn));
             }
 
-            IDictionary<string, string> columns = typeof(T).GetColumnsOfTypeAsReverse();
+            IDictionary<string, string> columns = typeof(T).GetColumnsOfType(includeNotMappedProperties: true);
 
             T instance = null;
 
@@ -84,15 +88,15 @@
                 return instance;
 
             instance = Activator.CreateInstance<T>();
-            PropertyInfo[] pInfos = typeof(T).GetValidPropertiesOfType();
+            PropertyInfo[] pInfos = typeof(T).GetValidPropertiesOfType(includeNotMappedProperties: true);
 
             pInfos = pInfos
-                .Where(q => q.CanWrite && columns.Values.Contains(q.Name) == true)
+                .Where(q => columns.Keys.Contains(q.Name) == true)
                 .ToArray();
 
             foreach (var prp in pInfos)
             {
-                prp.SetValue(instance, dict[prp.Name].GetValueWithCheckNull());
+                prp.SetValue(instance, dict[columns[prp.Name]].GetValueWithCheckDbNull());
             }
 
             return instance;
@@ -125,11 +129,11 @@
             if (dynList.Count < 1)
                 return list;
 
-            IDictionary<string, string> columns = typeof(T).GetColumnsOfType();
+            IDictionary<string, string> columns = typeof(T).GetColumnsOfType(includeNotMappedProperties: true);
 
-            PropertyInfo[] pInfos = typeof(T).GetValidPropertiesOfType();
+            PropertyInfo[] pInfos = typeof(T).GetValidPropertiesOfType(includeNotMappedProperties: true);
             pInfos = pInfos
-                .Where(q => q.CanWrite && columns.Keys.Contains(q.Name) == true)
+                .Where(q => columns.Keys.Contains(q.Name) == true)
                 .ToArray() ?? new PropertyInfo[0];
 
             if (pInfos.Length < 1)
@@ -152,7 +156,7 @@
                     col = null;
                     col = columns[prp.Name];
                     if (dict.ContainsKey(col))
-                        prp.SetValue(instance, dict[col].GetValueWithCheckNull());
+                        prp.SetValue(instance, dict[col].GetValueWithCheckDbNull());
                 }
 
                 list.Add(instance);
@@ -190,7 +194,7 @@
 
             if (dictionary.Count > 0 && dictionary.ContainsKey(key))
             {
-                result = dictionary[key].GetValueWithCheckNull();
+                result = dictionary[key].GetValueWithCheckDbNull();
             }
 
             return result;
@@ -226,7 +230,7 @@
 
             if (dictionary.Count > 0 && dictionary.ContainsKey(key))
             {
-                dictionary[key] = value.GetValueWithCheckNull();
+                dictionary[key] = value.GetValueWithCheckDbNull();
                 expandoObj = dictionary as ExpandoObject;
                 result = true;
             }
