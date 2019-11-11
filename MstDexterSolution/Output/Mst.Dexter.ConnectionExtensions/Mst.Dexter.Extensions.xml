@@ -1756,6 +1756,13 @@
             <param name="obj"></param>
             <returns>Returns object</returns>
         </member>
+        <member name="M:Mst.Dexter.Extensions.ObjectExtension.ToDateTimeNullable(System.Object)">
+            <summary>
+            Convert object to DateTime nullable.
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
         <member name="T:Mst.Dexter.Extensions.StringExtension">
              <summary>   A string extension. </summary>
             

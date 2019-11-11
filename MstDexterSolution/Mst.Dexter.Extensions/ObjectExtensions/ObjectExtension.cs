@@ -36,7 +36,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static bool IsNullOrDbNull(this object obj)
         {
-            return (null == obj || obj == DBNull.Value);
+            return (null == obj || obj == DBNull.Value || obj == (object)DBNull.Value);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -402,6 +402,22 @@
         {
             var value = obj == (object)DBNull.Value ? null : obj;
             return value;
+        }
+
+        /// <summary>
+        /// Convert object to DateTime nullable.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static DateTime? ToDateTimeNullable(this object obj)
+        {
+            DateTime? val = null;
+            DateTime dt;
+
+            if (DateTime.TryParse(obj.ToStr(), out dt))
+                val = dt;
+
+            return val;
         }
     }
 }
