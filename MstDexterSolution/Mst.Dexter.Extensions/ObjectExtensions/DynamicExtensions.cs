@@ -34,14 +34,19 @@
                 throw new ArgumentNullException(nameof(dyn));
             }
 
-            IDictionary<string, string> columns = typeof(T).GetColumnsOfType(includeNotMappedProperties: true);
-
             T instance = null;
 
             IDictionary<string, object> dict = dyn;
 
             if ((dict?.Count).GetValueOrDefault(0) < 1)
                 return instance;
+
+            IDictionary<string, string> columns = new Dictionary<string, string>();
+
+            {
+                var cols = typeof(T).GetColumnsOfType(includeNotMappedProperties: true) ?? new Dictionary<string, string>();
+                cols.Where(q => dict.ContainsKey(q.Value)).ToList().ForEach(q => columns[q.Key] = q.Value);
+            }
 
             instance = Activator.CreateInstance<T>();
             PropertyInfo[] pInfos = typeof(T).GetValidPropertiesOfType(includeNotMappedProperties: true);
