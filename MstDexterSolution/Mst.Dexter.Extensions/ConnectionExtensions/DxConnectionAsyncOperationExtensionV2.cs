@@ -411,10 +411,36 @@
         }
 
         #endregion [ LastAsync method ]
+
+        #region [ GetListAsync method ]
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="connection"></param>
+        /// <param name="sqlText"></param>
+        /// <param name="commandType"></param>
+        /// <param name="transaction"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        public static Task<List<T>> GetListAsync<T>(this IDbConnection connection,
+           string sqlText, CommandType commandType = CommandType.Text,
+           IDbTransaction transaction = null,
+           params object[] parameters) where T : class
+        {
+            var resultTask = Task.Factory.StartNew(() =>
+            {
+                return DxConnectionOperationExtensionV2.GetList<T>(connection,
+            sqlText,
+            commandType,
+            transaction,
+            parameters);
+            });
+
+            return resultTask;
+        }
+
+        #endregion
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    // End of DxConnectionAsyncOperationExtensionV2.cs
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-
 }

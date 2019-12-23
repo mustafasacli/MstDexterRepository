@@ -713,5 +713,30 @@
         }
 
         #endregion [ Last method ]
+
+        #region [ GetList method ]
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="sqlText"></param>
+        /// <param name="commandType"></param>
+        /// <param name="transaction"></param>
+        /// <param name="inputParameters"></param>
+        /// <param name="outputParameters"></param>
+        /// <returns></returns>
+        public static List<T> GetList<T>(this IDbConnection connection,
+            string sqlText, CommandType commandType = CommandType.Text,
+            IDbTransaction transaction = null,
+            Dictionary<string, object> inputParameters = null,
+            Dictionary<string, object> outputParameters = null) where T : class
+        {
+            var dynList = GetDynamicResultSet(connection, sqlText, commandType, transaction, inputParameters, outputParameters);
+            var resultSet = DynamicExtensions.ConvertToList<T>(dynList);
+            return resultSet;
+        }
+
+        #endregion
     }
 }

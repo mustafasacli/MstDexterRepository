@@ -711,6 +711,18 @@
             
              <returns>   An asynchronous result that yields a T. </returns>
         </member>
+        <member name="M:Mst.Dexter.Extensions.DxConnectionAsyncOperationExtensionV2.GetListAsync``1(System.Data.IDbConnection,System.String,System.Data.CommandType,System.Data.IDbTransaction,System.Object[])">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="connection"></param>
+            <param name="sqlText"></param>
+            <param name="commandType"></param>
+            <param name="transaction"></param>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
         <member name="T:Mst.Dexter.Extensions.DxConnectionAsyncOperationExtension">
             <summary>   A Dx connection asynchronous operation extension. </summary>
             <remarks>   Msacli, 22.04.2019. </remarks>
@@ -884,6 +896,19 @@
              <param name="outputParameters"> (Optional) Options for controlling the output. </param>
             
              <returns>   An asynchronous result that yields a T. </returns>
+        </member>
+        <member name="M:Mst.Dexter.Extensions.DxConnectionAsyncOperationExtension.GetListAsync``1(System.Data.IDbConnection,System.String,System.Data.CommandType,System.Data.IDbTransaction,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="connection"></param>
+            <param name="sqlText"></param>
+            <param name="commandType"></param>
+            <param name="transaction"></param>
+            <param name="inputParameters"></param>
+            <param name="outputParameters"></param>
+            <returns></returns>
         </member>
         <member name="T:Mst.Dexter.Extensions.DxConnectionExtension">
              <summary>   A dx connection extension. </summary>
@@ -1133,6 +1158,17 @@
             
              <returns>   A T. </returns>
         </member>
+        <member name="M:Mst.Dexter.Extensions.DxConnectionOperationExtensionV2.GetList``1(System.Data.IDbConnection,System.String,System.Data.CommandType,System.Data.IDbTransaction,System.Object[])">
+            <summary>
+            Get List of model
+            </summary>
+            <param name="connection"></param>
+            <param name="sqlText"></param>
+            <param name="commandType"></param>
+            <param name="transaction"></param>
+            <param name="parameters">DbParameter List</param>
+            <returns></returns>
+        </member>
         <member name="T:Mst.Dexter.Extensions.DxConnectionOperationExtension">
              <summary>   A dx connection operation extension. </summary>
             
@@ -1343,6 +1379,18 @@
              <param name="outputParameters"> (Optional) Options for controlling the output. </param>
             
              <returns>   A T. </returns>
+        </member>
+        <member name="M:Mst.Dexter.Extensions.DxConnectionOperationExtension.GetList``1(System.Data.IDbConnection,System.String,System.Data.CommandType,System.Data.IDbTransaction,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,System.Object})">
+            <summary>
+            
+            </summary>
+            <param name="connection"></param>
+            <param name="sqlText"></param>
+            <param name="commandType"></param>
+            <param name="transaction"></param>
+            <param name="inputParameters"></param>
+            <param name="outputParameters"></param>
+            <returns></returns>
         </member>
         <member name="T:Mst.Dexter.Extensions.DxDbCommandHelper">
              <summary>   A dx database command helper. </summary>
