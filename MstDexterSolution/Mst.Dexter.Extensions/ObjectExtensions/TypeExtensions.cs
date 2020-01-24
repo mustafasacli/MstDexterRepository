@@ -7,6 +7,7 @@
     using System.Data;
     using System.Linq;
     using System.Reflection;
+    using System.Runtime.CompilerServices;
     using System.Xml;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -576,6 +577,40 @@
                 .ToList() ?? new List<string>();
 
             return list;
+        }
+
+        /// <summary>
+        /// check type is anonymous
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static bool IsAnonymousType(this Type type)
+        {
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
+            bool hasCompilerGeneratedAttribute = type.GetCustomAttributes(typeof(CompilerGeneratedAttribute), false).Count() > 0;
+            bool nameContainsAnonymousType = type.FullName.Contains("AnonymousType");
+            bool isAnonymousType = hasCompilerGeneratedAttribute && nameContainsAnonymousType;
+
+            return isAnonymousType;
+        }
+
+        /// <summary>
+        /// check type is anonymous
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static bool CheckIfAnonymousType(this Type type)
+        {
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
+            // HACK: The only way to detect anonymous types right now.
+            return Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false)
+                && type.IsGenericType && type.Name.Contains("AnonymousType")
+                && (type.Name.StartsWith("<>") || type.Name.StartsWith("VB$"))
+                && type.Attributes.HasFlag(TypeAttributes.NotPublic);
         }
     }
 

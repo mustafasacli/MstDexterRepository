@@ -1,6 +1,7 @@
 ﻿namespace Mst.Dexter.Extensions
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,7 +132,7 @@
 
             var result = str.Replace(" ", String.Empty);
 
-            var s = str.Split(new char[] { '_','.' }, StringSplitOptions.RemoveEmptyEntries) ?? new string[] { };
+            var s = str.Split(new char[] { '_', '.' }, StringSplitOptions.RemoveEmptyEntries) ?? new string[] { };
 
             s = s.Select(q => q.CapitalizeString()).ToArray();
 
@@ -284,6 +285,31 @@
 
             // Return char and concat substring.
             return char.ToUpperInvariant(s[0]) + s.Substring(1);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="dictionary"></param>
+        /// <returns></returns>
+        public static string RemovewithDictionary(this string str, Dictionary<string, string> dictionary)
+        {
+            if (string.IsNullOrEmpty(str))
+                return str;
+
+            if (dictionary == null || dictionary.Count == 0)
+                return str;
+
+            var dds = dictionary.Where(q => !string.IsNullOrEmpty(q.Key) && q.Value != null).ToList();
+            var s = str;
+
+            foreach (var item in dds)
+            {
+                s = s.Replace(item.Key, item.Value);
+            }
+
+            return s;
         }
     }
 }

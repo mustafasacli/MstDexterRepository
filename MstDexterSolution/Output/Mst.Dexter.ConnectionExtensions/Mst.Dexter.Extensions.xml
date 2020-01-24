@@ -292,6 +292,16 @@
             
              <returns>   The dynamic from data reader. </returns>
         </member>
+        <member name="M:Mst.Dexter.Extensions.DataReaderExtensions.GetDynamicResultSetSkipAndTake(System.Data.IDataReader,System.UInt32,System.UInt32,System.Boolean)">
+            <summary>
+            Get Expando List with skip and take options.
+            </summary>
+            <param name="reader"></param>
+            <param name="skip"></param>
+            <param name="take"></param>
+            <param name="closeAtFinal"></param>
+            <returns></returns>
+        </member>
         <member name="T:Mst.Dexter.Extensions.ObjectExtensions.EnumExtensions">
             <summary>
             
@@ -1392,6 +1402,35 @@
             <param name="outputParameters"></param>
             <returns></returns>
         </member>
+        <member name="M:Mst.Dexter.Extensions.DxConnectionOperationExtension.GetDynamicResultSetSkipAndTake(System.Data.IDbConnection,System.String,System.Data.CommandType,System.Data.IDbTransaction,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,System.Object},System.UInt32,System.UInt32)">
+            <summary>
+            
+            </summary>
+            <param name="connection"></param>
+            <param name="sql"></param>
+            <param name="commandType"></param>
+            <param name="transaction"></param>
+            <param name="inputParameters"></param>
+            <param name="outputParameters"></param>
+            <param name="skip"></param>
+            <param name="take"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mst.Dexter.Extensions.DxConnectionOperationExtension.GetListSkipAndTake``1(System.Data.IDbConnection,System.String,System.Data.CommandType,System.Data.IDbTransaction,System.Collections.Generic.Dictionary{System.String,System.Object},System.Collections.Generic.Dictionary{System.String,System.Object},System.UInt32,System.UInt32)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="connection"></param>
+            <param name="sqlText"></param>
+            <param name="commandType"></param>
+            <param name="transaction"></param>
+            <param name="inputParameters"></param>
+            <param name="outputParameters"></param>
+            <param name="skip"></param>
+            <param name="take"></param>
+            <returns></returns>
+        </member>
         <member name="T:Mst.Dexter.Extensions.DxDbCommandHelper">
              <summary>   A dx database command helper. </summary>
             
@@ -1931,6 +1970,14 @@
             
              <returns>   A string. </returns>
         </member>
+        <member name="M:Mst.Dexter.Extensions.StringExtension.RemovewithDictionary(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            
+            </summary>
+            <param name="str"></param>
+            <param name="dictionary"></param>
+            <returns></returns>
+        </member>
         <member name="T:Mst.Dexter.Extensions.TypeExtensions">
              <summary>   A type extensions. </summary>
             
@@ -2087,6 +2134,20 @@
             <param name="type1">First type</param>
             <param name="type2">Second type</param>
             <returns>returns string list</returns>
+        </member>
+        <member name="M:Mst.Dexter.Extensions.TypeExtensions.IsAnonymousType(System.Type)">
+            <summary>
+            check type is anonymous
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mst.Dexter.Extensions.TypeExtensions.CheckIfAnonymousType(System.Type)">
+            <summary>
+            check type is anonymous
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
         </member>
         <member name="T:Mst.Dexter.Extensions.TypeHelper">
              <summary>   A type helper. </summary>

@@ -738,5 +738,93 @@
         }
 
         #endregion
+
+        #region [ GetDynamicResultSetSkipAndTake method ]
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="sql"></param>
+        /// <param name="commandType"></param>
+        /// <param name="transaction"></param>
+        /// <param name="inputParameters"></param>
+        /// <param name="outputParameters"></param>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
+        /// <returns></returns>
+        public static List<ExpandoObject> GetDynamicResultSetSkipAndTake(this IDbConnection connection,
+            string sql, CommandType commandType,
+            IDbTransaction transaction = null,
+            Dictionary<string, object> inputParameters = null,
+            Dictionary<string, object> outputParameters = null,
+            uint skip = 0, uint take = 0)
+        {
+            List<ExpandoObject> list = new List<ExpandoObject>();
+
+            using (IDbCommand command = connection.CreateCommand())
+            {
+                command.CommandText = sql;
+                command.CommandType = commandType;
+
+                if (transaction != null)
+                    command.Transaction = transaction;
+
+                DxDbCommandHelper.SetCommandParameters(command, inputParameters, outputParameters);
+
+                using (var reader = command.ExecuteReader())
+                {
+                    try
+                    {
+                        if (outputParameters != null && outputParameters.Count > 0)
+                            outputParameters = (Dictionary<string, object>)DxDbCommandHelper.GetOutParametersOfCommand(command);
+
+                        list = reader.GetDynamicResultSetSkipAndTake(skip: skip, take: take, closeAtFinal: false);
+                    }
+                    catch (Exception e)
+                    {
+                        throw;
+                    }
+                    finally
+                    {
+                        if (reader != null && !reader.IsClosed)
+                            reader.Close();
+                    }
+                }
+            }
+
+            return list;
+        }
+
+        #endregion
+
+        #region [ GetListSkipAndTake method ]
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="connection"></param>
+        /// <param name="sqlText"></param>
+        /// <param name="commandType"></param>
+        /// <param name="transaction"></param>
+        /// <param name="inputParameters"></param>
+        /// <param name="outputParameters"></param>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
+        /// <returns></returns>
+        public static List<T> GetListSkipAndTake<T>(this IDbConnection connection,
+            string sqlText, CommandType commandType = CommandType.Text,
+            IDbTransaction transaction = null,
+            Dictionary<string, object> inputParameters = null,
+            Dictionary<string, object> outputParameters = null,
+            uint skip = 0, uint take = 0) where T : class
+        {
+            var dynList = GetDynamicResultSetSkipAndTake(connection, sqlText, commandType, transaction, inputParameters, outputParameters, skip: skip, take: take);
+            var resultSet = DynamicExtensions.ConvertToList<T>(dynList);
+            return resultSet;
+        }
+
+        #endregion
     }
 }

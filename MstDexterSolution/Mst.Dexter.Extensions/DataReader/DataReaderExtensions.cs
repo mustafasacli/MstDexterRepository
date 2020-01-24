@@ -330,5 +330,51 @@
         }
 
         #endregion [ GetDynamicFromDataReader method ]
+
+        /// <summary>
+        /// Get Expando List with skip and take options.
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="skip"></param>
+        /// <param name="take"></param>
+        /// <param name="closeAtFinal"></param>
+        /// <returns></returns>
+        public static List<ExpandoObject> GetDynamicResultSetSkipAndTake(this IDataReader reader,
+           uint skip = 0, uint take = 0, bool closeAtFinal = false)
+        {
+            if (reader == null)
+                throw new ArgumentNullException(nameof(reader));
+
+            List<ExpandoObject> list = new List<ExpandoObject>();
+
+            if (reader.IsClosed || take == 0)
+                return list;
+
+            try
+            {
+                uint cntr = 0;
+
+                while (reader.Read())
+                {
+                    if (cntr <= skip)
+                        continue;
+
+                    if (cntr > (skip + take))
+                        break;
+
+                    cntr++;
+
+                    ExpandoObject d = GetDynamicFromDataReader(reader);
+                    list.Add(d);
+                }
+            }
+            finally
+            {
+                if (reader != null && closeAtFinal)
+                    reader.Close();
+            }
+
+            return list;
+        }
     }
 }
