@@ -272,8 +272,8 @@
         {
             var resultTask = Task.Factory.StartNew(() =>
             {
-                return DxConnectionOperationExtension.GetMultiDynamicResultSet(connection,
-            sql,
+                return DxConnectionOperationExtension.GetMultiDynamicResultSet(
+            connection, sql,
             commandType,
             transaction,
              inputParameters,
@@ -343,7 +343,7 @@
            string sqlText, CommandType commandType = CommandType.Text,
            IDbTransaction transaction = null,
            Dictionary<string, object> inputParameters = null,
-           Dictionary<string, object> outputParameters = null) where T : class
+           Dictionary<string, object> outputParameters = null) where T : class, new()
         {
             var resultTask = Task.Factory.StartNew(() =>
             {
@@ -418,7 +418,7 @@
            string sqlText, CommandType commandType = CommandType.Text,
            IDbTransaction transaction = null,
            Dictionary<string, object> inputParameters = null,
-           Dictionary<string, object> outputParameters = null) where T : class
+           Dictionary<string, object> outputParameters = null) where T : class, new()
         {
             var resultTask = Task.Factory.StartNew(() =>
             {

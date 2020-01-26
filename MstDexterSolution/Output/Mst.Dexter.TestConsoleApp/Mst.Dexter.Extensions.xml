@@ -1970,6 +1970,14 @@
             
              <returns>   A string. </returns>
         </member>
+        <member name="M:Mst.Dexter.Extensions.StringExtension.RemovewithDictionary(System.String,System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            
+            </summary>
+            <param name="str"></param>
+            <param name="dictionary"></param>
+            <returns></returns>
+        </member>
         <member name="T:Mst.Dexter.Extensions.TypeExtensions">
              <summary>   A type extensions. </summary>
             
@@ -2126,6 +2134,20 @@
             <param name="type1">First type</param>
             <param name="type2">Second type</param>
             <returns>returns string list</returns>
+        </member>
+        <member name="M:Mst.Dexter.Extensions.TypeExtensions.IsAnonymousType(System.Type)">
+            <summary>
+            check type is anonymous
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mst.Dexter.Extensions.TypeExtensions.CheckIfAnonymousType(System.Type)">
+            <summary>
+            check type is anonymous
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
         </member>
         <member name="T:Mst.Dexter.Extensions.TypeHelper">
              <summary>   A type helper. </summary>

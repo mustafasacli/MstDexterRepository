@@ -273,8 +273,7 @@
                     }
                     finally
                     {
-                        if (reader != null && !reader.IsClosed)
-                            reader.Close();
+                        reader.CloseIfNot();
                     }
                 }
             }
@@ -334,8 +333,7 @@
                     }
                     finally
                     {
-                        if (reader != null && !reader.IsClosed)
-                            reader.Close();
+                        reader.CloseIfNot();
                     }
                 }
             }
@@ -389,8 +387,7 @@
                     }
                     finally
                     {
-                        if (reader != null && !reader.IsClosed)
-                            reader.Close();
+                        reader.CloseIfNot();
                     }
                 }
             }
@@ -523,8 +520,7 @@
                 }
                 finally
                 {
-                    if (reader != null && !reader.IsClosed)
-                        reader.Close();
+                    reader.CloseIfNot();
                 }
             }
 
@@ -552,7 +548,7 @@
         public static T First<T>(this IDbConnection connection,
             string sqlText, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
-           params object[] parameters) where T : class
+           params object[] parameters) where T : class, new()
         {
             T instance = null;
 
@@ -610,8 +606,7 @@
                 }
                 finally
                 {
-                    if (reader != null && !reader.IsClosed)
-                        reader.Close();
+                    reader.CloseIfNot();
                 }
             }
 
@@ -639,7 +634,7 @@
         public static T Last<T>(this IDbConnection connection,
             string sqlText, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
-           params object[] parameters) where T : class
+           params object[] parameters) where T : class, new()
         {
             T instance = null;
 
@@ -675,7 +670,7 @@
         public static List<T> GetList<T>(this IDbConnection connection,
             string sqlText, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
-           params object[] parameters) where T : class
+           params object[] parameters) where T : class, new()
         {
             var dynList = GetDynamicResultSet(connection, sqlText, commandType, transaction, parameters);
             var resultSet = DynamicExtensions.ConvertToList<T>(dynList);

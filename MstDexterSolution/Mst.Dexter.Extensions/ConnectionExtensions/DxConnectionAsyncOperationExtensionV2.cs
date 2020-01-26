@@ -327,7 +327,7 @@
         public static Task<T> FirstAsync<T>(this IDbConnection connection,
            string sqlText, CommandType commandType = CommandType.Text,
            IDbTransaction transaction = null,
-           params object[] parameters) where T : class
+           params object[] parameters) where T : class, new()
         {
             var resultTask = Task.Factory.StartNew(() =>
             {
@@ -396,7 +396,7 @@
         public static Task<T> LastAsync<T>(this IDbConnection connection,
            string sqlText, CommandType commandType = CommandType.Text,
            IDbTransaction transaction = null,
-           params object[] parameters) where T : class
+           params object[] parameters) where T : class, new()
         {
             var resultTask = Task.Factory.StartNew(() =>
             {
@@ -427,7 +427,7 @@
         public static Task<List<T>> GetListAsync<T>(this IDbConnection connection,
            string sqlText, CommandType commandType = CommandType.Text,
            IDbTransaction transaction = null,
-           params object[] parameters) where T : class
+           params object[] parameters) where T : class, new()
         {
             var resultTask = Task.Factory.StartNew(() =>
             {

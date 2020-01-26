@@ -602,7 +602,7 @@
             string sqlText, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
             Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null) where T : class
+            Dictionary<string, object> outputParameters = null) where T : class, new()
         {
             T instance = null;
 
@@ -692,7 +692,7 @@
             string sqlText, CommandType commandType = CommandType.Text,
             IDbTransaction transaction = null,
             Dictionary<string, object> inputParameters = null,
-            Dictionary<string, object> outputParameters = null) where T : class
+            Dictionary<string, object> outputParameters = null) where T : class, new()
         {
             T instance = null;
 
@@ -787,8 +787,7 @@
                     }
                     finally
                     {
-                        if (reader != null && !reader.IsClosed)
-                            reader.Close();
+                        reader.CloseIfNot();
                     }
                 }
             }
@@ -818,7 +817,7 @@
             IDbTransaction transaction = null,
             Dictionary<string, object> inputParameters = null,
             Dictionary<string, object> outputParameters = null,
-            uint skip = 0, uint take = 0) where T : class
+            uint skip = 0, uint take = 0) where T : class, new()
         {
             var dynList = GetDynamicResultSetSkipAndTake(connection, sqlText, commandType, transaction, inputParameters, outputParameters, skip: skip, take: take);
             var resultSet = DynamicExtensions.ConvertToList<T>(dynList);
