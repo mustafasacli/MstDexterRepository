@@ -40,6 +40,10 @@ namespace Mst.Dexter.Extensions
                 parameter.Direction = outputs.ContainsKey(key.Key) ?
                     ParameterDirection.InputOutput : ParameterDirection.Input;
 
+                    var typ = inputs[key.Key].ToDbType();
+                    if (typ != null)
+                        parameter.DbType = typ.Value;
+
                 command.Parameters.Add(parameter);
             }
 
@@ -50,6 +54,11 @@ namespace Mst.Dexter.Extensions
                     parameter = command.CreateParameter();
                     parameter.ParameterName = key.Key;
                     parameter.Direction = ParameterDirection.Output;
+
+                    var typ = outputs[key.Key].ToDbType();
+                    if (typ != null)
+                        parameter.DbType = typ.Value;
+
                     command.Parameters.Add(parameter);
                 }
             }

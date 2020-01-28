@@ -1,5 +1,6 @@
 ﻿namespace Mst.Dexter.Extensions
 {
+    using Mst.Dexter.Extensions.Objects;
     using System;
     using System.Data;
     using System.Data.Common;
@@ -137,6 +138,75 @@
                 transaction = dbConnection.BeginTransaction();
 
             return transaction;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <returns></returns>
+        public static string GetParameterPrefix(this IDbConnection connection)
+        {
+            var s = string.Empty;
+
+            var connType = connection.GetDbConnectionType();
+            switch (connType)
+            {
+                case DbConnectionTypes.None:
+                    break;
+                case DbConnectionTypes.Oledb:
+                case DbConnectionTypes.Sql:
+                case DbConnectionTypes.VistaDB:
+                case DbConnectionTypes.SQLite:
+                case DbConnectionTypes.SqlDatabase:
+                case DbConnectionTypes.MySql:
+                case DbConnectionTypes.SqlCE:
+                case DbConnectionTypes.DB2:
+                    s = "@";
+                    break;
+
+                case DbConnectionTypes.Oracle:
+                case DbConnectionTypes.PostgreSql:
+                case DbConnectionTypes.FireBird:
+                case DbConnectionTypes.SqlBase:
+                    s = ":";
+                    break;
+
+                case DbConnectionTypes.Synergy:
+                    break;
+
+                case DbConnectionTypes.Odbc:
+                case DbConnectionTypes.SqlOdbc:
+                case DbConnectionTypes.OracleOdbc:
+                case DbConnectionTypes.PostgreSqlOdbc:
+                case DbConnectionTypes.DB2Odbc:
+                case DbConnectionTypes.MySqlOdbc:
+                case DbConnectionTypes.FirebirdOdbc:
+                case DbConnectionTypes.SqlBaseOdbc:
+                case DbConnectionTypes.SynergyOdbc:
+                    //s = "?";
+                    break;
+
+                case DbConnectionTypes.SqlOledb:
+                case DbConnectionTypes.OracleOledb:
+                case DbConnectionTypes.PostgreSqlOledb:
+                case DbConnectionTypes.MySqlOledb:
+                case DbConnectionTypes.FirebirdOledb:
+                case DbConnectionTypes.SynergyOledb:
+                case DbConnectionTypes.SqlBaseOledb:
+                case DbConnectionTypes.DB2Oledb:
+                    s = "@";
+                    break;
+
+                case DbConnectionTypes.NuoDb:
+                    //s = "?.";
+                    break;
+
+                default:
+                    break;
+            }
+
+            return s;
         }
     }
 }

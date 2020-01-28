@@ -4,6 +4,91 @@
         <name>Mst.Dexter.Extensions</name>
     </assembly>
     <members>
+        <member name="T:Mst.Dexter.Extensions.DbConnectionAnonymousOperator">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Mst.Dexter.Extensions.DbConnectionAnonymousOperator.GetParametersFromObject(System.Data.IDbConnection,System.Object)">
+            <summary>
+            Gets parameters from 
+            </summary>
+            <param name="connection"></param>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mst.Dexter.Extensions.DbConnectionAnonymousOperator.QueryExec(System.Data.IDbConnection,System.String,System.Object,System.Data.CommandType,System.Data.IDbTransaction)">
+            <summary>
+            
+            </summary>
+            <param name="connection"></param>
+            <param name="sql"></param>
+            <param name="commandType"></param>
+            <param name="transaction"></param>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mst.Dexter.Extensions.DbConnectionAnonymousOperator.QueryScalar(System.Data.IDbConnection,System.String,System.Object,System.Data.CommandType,System.Data.IDbTransaction)">
+            <summary>
+            
+            </summary>
+            <param name="connection"></param>
+            <param name="sql"></param>
+            <param name="obj"></param>
+            <param name="commandType"></param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mst.Dexter.Extensions.DbConnectionAnonymousOperator.QueryFirst``1(System.Data.IDbConnection,System.String,System.Object,System.Data.CommandType,System.Data.IDbTransaction)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="connection"></param>
+            <param name="sqlText"></param>
+            <param name="obj"></param>
+            <param name="commandType"></param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mst.Dexter.Extensions.DbConnectionAnonymousOperator.QueryLast``1(System.Data.IDbConnection,System.String,System.Object,System.Data.CommandType,System.Data.IDbTransaction)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="connection"></param>
+            <param name="sqlText"></param>
+            <param name="obj"></param>
+            <param name="commandType"></param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mst.Dexter.Extensions.DbConnectionAnonymousOperator.QueryList``1(System.Data.IDbConnection,System.String,System.Object,System.Data.CommandType,System.Data.IDbTransaction)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="connection"></param>
+            <param name="sqlText"></param>
+            <param name="obj"></param>
+            <param name="commandType"></param>
+            <param name="transaction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mst.Dexter.Extensions.DbConnectionAnonymousOperator.QueryListSkipAndTake``1(System.Data.IDbConnection,System.String,System.Object,System.Data.CommandType,System.Data.IDbTransaction,System.UInt32,System.UInt32)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="connection"></param>
+            <param name="sqlText"></param>
+            <param name="obj"></param>
+            <param name="commandType"></param>
+            <param name="transaction"></param>
+            <param name="skip"></param>
+            <param name="take"></param>
+            <returns></returns>
+        </member>
         <member name="T:Mst.Dexter.Extensions.DataExtensions">
              <summary>   Description of DataExtensions. </summary>
             
@@ -302,6 +387,21 @@
             <param name="closeAtFinal"></param>
             <returns></returns>
         </member>
+        <member name="M:Mst.Dexter.Extensions.DbConnectionTypeBuilder.GetDbConnectionType(System.Data.IDbConnection)">
+            <summary>
+            Gets Connection Type
+            </summary>
+            <param name="connection">Connection instance</param>
+            <returns>returns DbConnectionTypes enum.</returns>
+        </member>
+        <member name="M:Mst.Dexter.Extensions.DbConnectionTypeBuilder.GetDbConnectionType``1(``0)">
+            <summary>
+            Gets Connection Type
+            </summary>
+            <typeparam name="T">DbConnection class.</typeparam>
+            <param name="connection">Connection instance</param>
+            <returns>returns DbConnectionTypes enum.</returns>
+        </member>
         <member name="T:Mst.Dexter.Extensions.ObjectExtensions.EnumExtensions">
             <summary>
             
@@ -321,6 +421,135 @@
             <param name="dayOfWeek"></param>
             <param name="culture">culture name</param>
             <returns></returns>
+        </member>
+        <member name="T:Mst.Dexter.Extensions.Objects.DbConnectionTypes">
+             <summary>   Values that represent Database connection types. </summary>
+            
+             <remarks>   Mustafa SAÇLI, 4.05.2019. </remarks>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.None">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.Sql">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.Oracle">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.PostgreSql">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.DB2">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.Odbc">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.Oledb">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.MySql">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.SqlCE">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.FireBird">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.SQLite">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.VistaDB">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.SqlBase">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.SqlOdbc">
+            <summary>   An enum constant representing the Sql odbc option. </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.SqlOledb">
+            <summary>   An enum constant representing the Sql oledb option. </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.OracleOdbc">
+            <summary>   An enum constant representing the Oracle odbc option. </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.OracleOledb">
+            <summary>   An enum constant representing the Oracle oledb option. </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.PostgreSqlOdbc">
+            <summary>   An enum constant representing the PostgreSql odbc option. </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.PostgreSqlOledb">
+            <summary>   An enum constant representing the PostgreSql oledb option. </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.DB2Odbc">
+            <summary>   An enum constant representing the DB2 odbc option. </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.DB2Oledb">
+            <summary>   An enum constant representing the DB2 oledb option. </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.MySqlOdbc">
+            <summary>   An enum constant representing the MySql odbc option. </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.MySqlOledb">
+            <summary>   An enum constant representing the MySql oledb option. </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.FirebirdOdbc">
+            <summary>   An enum constant representing the Firebird odbc option. </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.FirebirdOledb">
+            <summary>   An enum constant representing the Firebird oledb option. </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.SqlBaseOdbc">
+            <summary>   An enum constant representing the SQL base odbc option. </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.SqlBaseOledb">
+            <summary>   An enum constant representing the SQL base oledb option. </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.SynergyOdbc">
+            <summary>   An enum constant representing the synergy ODBC option. </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.SynergyOledb">
+            <summary>   An enum constant representing the synergy oledb option. </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.NuoDb">
+            <summary>
+             An enum constant representing the nuo db= 130 option. http://www.nuodb.com/
+            </summary>
+        </member>
+        <member name="F:Mst.Dexter.Extensions.Objects.DbConnectionTypes.SqlDatabase">
+            <summary>
+             An enum constant representing the SQL database= 131 option. SQLDATABASE.NET,
+             http://sqldatabase.net/
+            </summary>
         </member>
         <member name="T:Mst.Dexter.Extensions.Objects.MstDictionary">
              <summary>   MstDictionary. This class cannot be inherited. </summary>
@@ -971,6 +1200,13 @@
              <param name="isolationLevel">   (Optional) The isolation level. </param>
             
              <returns>   An IDbTransaction. </returns>
+        </member>
+        <member name="M:Mst.Dexter.Extensions.DxConnectionExtension.GetParameterPrefix(System.Data.IDbConnection)">
+            <summary>
+            
+            </summary>
+            <param name="connection"></param>
+            <returns></returns>
         </member>
         <member name="T:Mst.Dexter.Extensions.DxConnectionOperationExtensionV2">
              <summary>   A dx connection operation extension v 2. </summary>
@@ -2013,6 +2249,13 @@
              <param name="type"> The type to act on. </param>
             
              <returns>   Type as a DbType. </returns>
+        </member>
+        <member name="M:Mst.Dexter.Extensions.TypeExtensions.ToDbType(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
         </member>
         <member name="M:Mst.Dexter.Extensions.TypeExtensions.GetColumnsOfTypeAsReverse(System.Type)">
              <summary>   A Type extension method that gets columns of type as reverse. </summary>

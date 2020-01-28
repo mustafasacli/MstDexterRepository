@@ -49,10 +49,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnectionExtensions\DbConnectionAnonymousOperator.cs" />
     <Compile Include="DataExtensions\DataExtension.cs" />
     <Compile Include="DataReader\DataReaderAsyncExtensions.cs" />
     <Compile Include="DataReader\DataReaderExtensions.cs" />
+    <Compile Include="Helpers\DbConnectionTypeBuilder.cs" />
     <Compile Include="ObjectExtensions\EnumExtensions.cs" />
+    <Compile Include="Objects\DbConnectionNames.cs" />
+    <Compile Include="Objects\DbConnectionTypes.cs" />
     <Compile Include="Objects\MstDictionary.cs" />
     <Compile Include="ObjectExtensions\DictionaryExtensions.cs" />
     <Compile Include="ConnectionExtensions\DxConnectionAsyncOperationExtensionV2.cs" />

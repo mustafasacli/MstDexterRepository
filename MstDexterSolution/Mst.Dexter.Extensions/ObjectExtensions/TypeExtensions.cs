@@ -85,10 +85,10 @@
         ///
         /// <returns>   Type as a DbType. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static DbType ToDbType(this Type type)
+        public static DbType? ToDbType(this Type type)
         {
             Type realType = Nullable.GetUnderlyingType(type) ?? type;
-            DbType dbt = DbType.Object;
+            DbType? dbt = null;//DbType.Object;
 
             if (realType.IsEnum)
             {
@@ -123,6 +123,18 @@
             if (realType == typeof(DateTime))
             {
                 dbt = DbType.DateTime;
+                return dbt;
+            }
+
+            if (realType == typeof(DateTimeOffset))
+            {
+                dbt = DbType.DateTimeOffset;
+                return dbt;
+            }
+
+            if (realType == typeof(TimeSpan))
+            {
+                dbt = DbType.Time;
                 return dbt;
             }
 
@@ -197,6 +209,23 @@
                 dbt = DbType.Xml;
                 return dbt;
             }
+
+            return dbt;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public static DbType? ToDbType(this object obj)
+        {
+            DbType? dbt = null;
+
+            if (obj.IsNullOrDbNull())
+                return dbt;
+
+            dbt = obj.GetType().ToDbType();
 
             return dbt;
         }
