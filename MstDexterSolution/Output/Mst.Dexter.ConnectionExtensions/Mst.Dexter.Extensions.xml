@@ -422,11 +422,6 @@
             <param name="culture">culture name</param>
             <returns></returns>
         </member>
-        <member name="T:Mst.Dexter.Extensions.Objects.DbConnectionNames">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:Mst.Dexter.Extensions.Objects.DbConnectionTypes">
              <summary>   Values that represent Database connection types. </summary>
             
@@ -709,7 +704,7 @@
             
              <returns>
              true if the element is successfully removed; otherwise, false.  This method also returns
-             false if <paramref name="item.key.key" /> was not found in the original
+             false if <paramref name="key" /> was not found in the original
              <see cref="T:System.Collections.Generic.IDictionary`2" />.
              </returns>
         </member>

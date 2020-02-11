@@ -70,8 +70,7 @@
                     if (transaction != null)
                         command.Transaction = transaction;
 
-                    var outputs = new Dictionary<string, object>();
-                    DxDbCommandHelper.SetCommandParameters(command, inputs, outputs);
+                    DxDbCommandHelper.SetCommandParameters(command, inputs, outputParameters: null);
 
                     res = command.ExecuteNonQuery();
                 }
@@ -116,8 +115,7 @@
                     if (transaction != null)
                         command.Transaction = transaction;
 
-                    var outputs = new Dictionary<string, object>();
-                    DxDbCommandHelper.SetCommandParameters(command, inputs, outputs);
+                    DxDbCommandHelper.SetCommandParameters(command, inputs, outputParameters: null);
 
                     res = command.ExecuteScalar();
                 }
@@ -154,10 +152,9 @@
             try
             {
                 var inputs = GetParametersFromObject(connection, obj);
-                var outputs = new Dictionary<string, object>();
                 ExpandoObject expando = connection.FirstAsDynamic(
                     sqlText, commandType,
-                    transaction, inputs, outputs);
+                    transaction, inputs, outputParameters: null);
 
                 instance = expando.ConvertTo<T>();
             }
@@ -192,10 +189,9 @@
             try
             {
                 var inputs = GetParametersFromObject(connection, obj);
-                var outputs = new Dictionary<string, object>();
                 ExpandoObject expando = connection.LastAsDynamic(
                     sqlText, commandType,
-                    transaction, inputs, outputs);
+                    transaction, inputs, outputParameters: null);
 
                 instance = expando.ConvertTo<T>();
             }
@@ -226,8 +222,7 @@
             IDbTransaction transaction = null) where T : class, new()
         {
             var inputs = GetParametersFromObject(connection, obj);
-            var outputs = new Dictionary<string, object>();
-            var dynList = connection.GetDynamicResultSet(sqlText, commandType, transaction, inputs, outputs);
+            var dynList = connection.GetDynamicResultSet(sqlText, commandType, transaction, inputs, outputParameters: null);
             var resultSet = DynamicExtensions.ConvertToList<T>(dynList);
             return resultSet;
         }
@@ -254,8 +249,7 @@
             uint skip = 0, uint take = 0) where T : class, new()
         {
             var inputs = GetParametersFromObject(connection, obj);
-            var outputs = new Dictionary<string, object>();
-            var dynList = connection.GetDynamicResultSetSkipAndTake(sqlText, commandType, transaction, inputs, outputs, skip: skip, take: take);
+            var dynList = connection.GetDynamicResultSetSkipAndTake(sqlText, commandType, transaction, inputs, outputParameters: null, skip: skip, take: take);
             var resultSet = DynamicExtensions.ConvertToList<T>(dynList);
             return resultSet;
         }
