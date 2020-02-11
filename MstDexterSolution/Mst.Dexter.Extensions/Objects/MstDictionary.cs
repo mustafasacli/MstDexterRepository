@@ -289,7 +289,7 @@ namespace Mst.Dexter.Extensions.Objects
         ///
         /// <returns>
         /// true if the element is successfully removed; otherwise, false.  This method also returns
-        /// false if <paramref name="key" /> was not found in the original
+        /// false if <paramref name="item.key" /> was not found in the original
         /// <see cref="T:System.Collections.Generic.IDictionary`2" />.
         /// </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
