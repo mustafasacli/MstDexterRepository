@@ -249,7 +249,7 @@
 
             b = connectionType.IsMember(
                 DbConnectionTypes.Sql,
-                /// DbConnectionTypes.VistaDB,
+                // DbConnectionTypes.VistaDB,
                 DbConnectionTypes.MySql,
                 DbConnectionTypes.Oledb,
                 DbConnectionTypes.PostgreSql,
