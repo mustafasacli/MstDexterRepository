@@ -1,7 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\MstDexterSolution",
+    "\\MstDexterSolution\\Mst.Dexter.Extensions",
+    "\\MstDexterSolution\\Mst.Dexter.Extensions\\ConnectionExtensions"
   ],
-  "SelectedNode": "\\LICENSE",
+  "SelectedNode": "\\MstDexterSolution\\Mst.Dexter.Extensions\\ConnectionExtensions\\DxConnectionOperationExtension.cs",
   "PreviewInSolutionExplorer": false
 }
