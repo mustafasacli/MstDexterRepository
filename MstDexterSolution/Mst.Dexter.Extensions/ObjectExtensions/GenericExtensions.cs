@@ -332,5 +332,35 @@
             var b = instance != null && !object.Equals(instance, default(T));
             return b;
         }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="t"></param>
+        /// <param name="propertyName"></param>
+        /// <returns></returns>
+        public static object GetPropertyValue<T>(this T t, string propertyName)
+        {
+            object value = null;
+
+            var p = t.GetType().GetProperty(propertyName);
+            value = p?.GetValue(t, null);
+
+            return value;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="t"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="value"></param>
+        public static void SetPropertyValue<T>(this T t, string propertyName, object value)
+        {
+            var p = typeof(T).GetProperty(propertyName);
+            p?.SetValue(t, value);
+        }
     }
 }

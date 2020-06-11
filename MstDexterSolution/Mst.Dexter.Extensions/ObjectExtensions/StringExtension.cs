@@ -63,7 +63,7 @@
         {
             string result = string.Empty;
 
-            if (s != null)
+            if (!s.IsNullOrEmpty())
             {
                 result = s;
                 result = result.Replace(" ", "");
@@ -229,7 +229,7 @@
 
             chars
                 .ToList()
-                .ForEach(q => str = str.Replace(q, '\0'));
+                .ForEach(q => str = str.Replace(q.ToString(), ""));
 
             return str;
         }
@@ -248,7 +248,7 @@
             if (input.IsNullOrSpace())
                 return input;
 
-            return input.First().ToString().ToUpper() + input.Substring(1);
+            return input.First().ToString().ToUpperInvariant() + input.Substring(1);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -310,6 +310,25 @@
             }
 
             return s;
+        }
+
+        /// <summary>
+        /// The RemoveTurkishChars
+        /// </summary>
+        /// <param name="s">The s<see cref="string"/></param>
+        /// <returns>The <see cref="string"/></returns>
+        public static string RemoveTurkishChars(this string s)
+        {
+            string strResult = string.Format("{0}", s);
+
+            strResult = strResult.Replace("ğ", "g")
+                .Replace("ı", "i").Replace("ç", "c")
+                .Replace("ö", "o").Replace("ü", "u")
+                .Replace("Ğ", "G").Replace("Ç", "C")
+                .Replace("Ö", "O").Replace("Ü", "U")
+                .Replace("İ", "I");
+
+            return strResult;
         }
     }
 }
