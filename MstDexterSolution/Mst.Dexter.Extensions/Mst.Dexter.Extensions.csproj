@@ -50,6 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectionExtensions\DbConnectionAnonymousOperator.cs" />
+    <Compile Include="ConnectionExtensions\DbConnectionAsyncOperator.cs" />
+    <Compile Include="ConnectionExtensions\DbConnectionAsyncOperatorV2.cs" />
+    <Compile Include="ConnectionExtensions\DbConnectionOperationOperator.cs" />
+    <Compile Include="ConnectionExtensions\DbConnectionOperator.cs" />
+    <Compile Include="ConnectionExtensions\DbConnectionOperatorV2.cs" />
     <Compile Include="DataExtensions\DataExtension.cs" />
     <Compile Include="DataReader\DataReaderAsyncExtensions.cs" />
     <Compile Include="DataReader\DataReaderExtensions.cs" />
@@ -59,11 +64,6 @@
     <Compile Include="Objects\DbConnectionTypes.cs" />
     <Compile Include="Objects\MstDictionary.cs" />
     <Compile Include="ObjectExtensions\DictionaryExtensions.cs" />
-    <Compile Include="ConnectionExtensions\DxConnectionAsyncOperationExtensionV2.cs" />
-    <Compile Include="ConnectionExtensions\DxConnectionAsyncOperationExtension.cs" />
-    <Compile Include="ConnectionExtensions\DxConnectionExtension.cs" />
-    <Compile Include="ConnectionExtensions\DxConnectionOperationExtensionV2.cs" />
-    <Compile Include="ConnectionExtensions\DxConnectionOperationExtension.cs" />
     <Compile Include="Helpers\DxDbCommandHelper.cs" />
     <Compile Include="ObjectExtensions\DynamicExtensions.cs" />
     <Compile Include="MapperExtensions\GeneralMapperExtensions.cs" />

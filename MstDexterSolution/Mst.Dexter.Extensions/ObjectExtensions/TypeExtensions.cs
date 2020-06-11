@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data;
@@ -560,6 +561,31 @@
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>   A Type extension method that gets valid properties of type. </summary>
+        ///
+        /// <remarks>   Msacli, 22.04.2019. </remarks>
+        ///
+        /// <param name="type"> The type to act on. </param>
+        ///
+        /// <returns>   An array of property İnformation. </returns>
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
+        public static PropertyInfo[] GetValidPropertiesOfTypeV2(this Type type)
+        {
+            var properties = type.GetProperties();
+
+            properties = properties
+                .Where(p => p.CanWrite && p.CanRead)
+                .Where(p => p.GetCustomAttribute<NotMappedAttribute>() == null)
+                .Where(p => (p.GetCustomAttribute<ReadOnlyAttribute>()?.IsReadOnly).GetValueOrDefault(false) == false)
+                .Where(q => (q.GetCustomAttribute<DatabaseGeneratedAttribute>(inherit: true)?.DatabaseGeneratedOption)
+                .GetValueOrDefault(DatabaseGeneratedOption.None).IsMember(DatabaseGeneratedOption.Computed) == false)
+                .Where(p => IsSimpleTypeV2(p.PropertyType) == true)
+                .ToArray() ?? new PropertyInfo[0];
+
+            return properties;
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   A Type extension method that gets property types of type. </summary>
         ///
         /// <remarks>   Msacli, 22.04.2019. </remarks>
@@ -640,6 +666,45 @@
                 && type.IsGenericType && type.Name.Contains("AnonymousType")
                 && (type.Name.StartsWith("<>") || type.Name.StartsWith("VB$"))
                 && type.Attributes.HasFlag(TypeAttributes.NotPublic);
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="propertyInfo"></param>
+        /// <returns></returns>
+        public static string GetColumnNameOfProperty(this PropertyInfo propertyInfo)
+        {
+            var result = string.Empty;
+
+            if (propertyInfo != null)
+            {
+                var columnAttribute = propertyInfo.GetCustomAttribute<ColumnAttribute>(inherit: true);
+
+                result = columnAttribute?.Name ?? propertyInfo.Name;
+
+                if (string.IsNullOrWhiteSpace(result))
+                    result = propertyInfo.Name;
+
+                result = result.Trim();
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static string[] GetKeysOfType(this Type type)
+        {
+            var propertyInfos = type
+                .GetValidPropertiesOfType()
+                .Where(q => q.GetCustomAttribute<KeyAttribute>(inherit: true) != null)
+                .Select(q => q.Name)
+                .ToArray() ?? new string[] { };
+
+            return propertyInfos;
         }
     }
 

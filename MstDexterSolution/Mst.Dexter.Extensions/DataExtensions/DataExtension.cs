@@ -26,17 +26,17 @@
         /// <typeparam name="T">    T object type. </typeparam>
         /// <param name="datatable">            Datatble object. </param>
         /// <param name="accordingToColumn">    if it is true, returns a List with DataTable Columns else
-        ///                                     returns a List with PropertyInfo of Object. </param>
+        ///                                     returns a List with PropertyInfo of object. </param>
         ///
         /// <returns>   Returns A List of T object. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static List<T> ToList<T>(this DataTable datatable, Boolean accordingToColumn) where T : new()
+        public static List<T> ToList<T>(this DataTable datatable, bool accordingToColumn) where T : new()
         {
             try
             {
                 List<T> liste = new List<T>();
-                Object obj;
-                T item = (T)Activator.CreateInstance(typeof(T)); //new T();
+                object obj;
+                T item = (T)Activator.CreateInstance(typeof(T));
                 if (accordingToColumn == true)
                 {
                     PropertyInfo propInfo = null;
@@ -96,7 +96,7 @@
         ///
         /// <returns>   The page of data table. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static DataTable GetPageOfDataTable(this DataTable dt, Int32 pageNumber, Int32 rowCount)
+        public static DataTable GetPageOfDataTable(this DataTable dt, int pageNumber, int rowCount)
         {
             try
             {
@@ -160,11 +160,11 @@
                     dtCol = new DataColumn(dt.Columns[colName].ColumnName, dt.Columns[colName].DataType);
                     ndt.Columns.Add(dtCol);
                 }
-                List<Object> rowItems = null;
+                List<object> rowItems = null;
                 foreach (DataRow row in dt.Rows)
                 {
-                    rowItems = new List<Object>();
-                    foreach (String colName in columnList)
+                    rowItems = new List<object>();
+                    foreach (string colName in columnList)
                     {
                         rowItems.Add(row[colName]);
                     }
@@ -198,21 +198,23 @@
             {
                 DataTable ndt = new DataTable();
                 DataColumn dtCol = null;
-                foreach (Int32 colNo in columnList)
+                foreach (int colNo in columnList)
                 {
                     dtCol = new DataColumn(dt.Columns[colNo].ColumnName, dt.Columns[colNo].DataType);
                     ndt.Columns.Add(dtCol);
                 }
-                List<Object> rowItems = null;
+
+                List<object> rowItems = null;
                 foreach (DataRow row in dt.Rows)
                 {
-                    rowItems = new List<Object>();
-                    foreach (Int32 colNo in columnList)
+                    rowItems = new List<object>();
+                    foreach (int colNo in columnList)
                     {
                         rowItems.Add(row[colNo]);
                     }
                     ndt.Rows.Add(rowItems.ToArray());
                 }
+
                 return ndt;
             }
             catch (Exception e)
@@ -223,7 +225,7 @@
 
         #endregion [ Get Columns Of DataTable ColumnNumbers ]
 
-        #region [ Get Object With Selected Column ]
+        #region [ Get object With Selected Column ]
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>   Returns a object with given parameters. </summary>
@@ -264,7 +266,7 @@
             return retObj;
         }
 
-        #endregion [ Get Object With Selected Column ]
+        #endregion [ Get object With Selected Column ]
 
         #region [ Export As Excel With Include Columns ]
 
@@ -279,7 +281,7 @@
         /// <param name="fileName">         Filename of the file. </param>
         /// <param name="includeColumns">   A variable-length parameters list containing include columns. </param>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static void ExportAsExcelWithIncludeColumns(this DataTable dt, String fileName, params Object[] includeColumns)
+        public static void ExportAsExcelWithIncludeColumns(this DataTable dt, string fileName, params object[] includeColumns)
         {
             try
             {
@@ -293,7 +295,7 @@
                     {
                         sWriter.AutoFlush = true;
 
-                        foreach (String col in includeColumns)
+                        foreach (string col in includeColumns)
                         {
                             sWriter.Write("{0}\t", col);
                         }
@@ -301,7 +303,7 @@
 
                         foreach (DataRow rw in dt.Rows)
                         {
-                            foreach (String col in includeColumns)
+                            foreach (string col in includeColumns)
                             {
                                 sWriter.Write("{0}\t", rw[col].ToStr().Replace("\n", " "));
                             }
@@ -331,7 +333,7 @@
         /// <param name="fileName">         Filename of the file. </param>
         /// <param name="excludeColumns">   A variable-length parameters list containing exclude columns. </param>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static void ExportAsExcelWithExcludeColumns(this DataTable dt, String fileName, params object[] excludeColumns)
+        public static void ExportAsExcelWithExcludeColumns(this DataTable dt, string fileName, params object[] excludeColumns)
         {
             try
             {
@@ -359,7 +361,7 @@
                 }
                 else
                 {
-                    System.Collections.Generic.List<string> colList = new System.Collections.Generic.List<string>();
+                    List<string> colList = new List<string>();
 
                     foreach (DataColumn col in dt.Columns)
                     {
@@ -514,7 +516,7 @@
         ///
         /// <returns>   A T instance. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static T RowToObject<T>(this DataRow row, DataColumnCollection columns = null)//, PropertyInfo[] props = null)
+        public static T RowToObject<T>(this DataRow row, DataColumnCollection columns = null)
             where T : new()
         {
             if (row == null)
@@ -615,8 +617,8 @@
             {
                 IDictionary<string, object> dict = new ExpandoObject();
                 cols.ForEach(s => dict[s] = row[s] == DBNull.Value ? null : row[s]);
-                ExpandoObject d = dict as ExpandoObject;
-                list.Add(d);
+                ExpandoObject expando = dict as ExpandoObject;
+                list.Add(expando);
             }
 
             return list;

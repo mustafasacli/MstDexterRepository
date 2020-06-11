@@ -364,14 +364,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static bool IsNullOrEmpty(this string str)
         {
-            if (str == null)
-            {
-                return true;
-            }
-            else
-            {
-                return str.Length == 0;
-            }
+            return string.IsNullOrEmpty(str);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -385,12 +378,7 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static bool IsNullOrSpace(this string str)
         {
-            if (str != null)
-            {
-                return str.Replace(" ", "").Length == 0;
-            }
-
-            return true;
+            return string.IsNullOrWhiteSpace(str);
         }
 
         /// <summary>
