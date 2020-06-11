@@ -422,6 +422,13 @@
             <param name="culture">culture name</param>
             <returns></returns>
         </member>
+        <member name="M:Mst.Dexter.Extensions.ObjectExtensions.XmlExtension.GetNodesAsDynamic(System.Xml.XmlNodeList)">
+            <summary>
+            Get xml nodes as expando object list.
+            </summary>
+            <param name="nodeList"></param>
+            <returns>expando object list</returns>
+        </member>
         <member name="T:Mst.Dexter.Extensions.Objects.DbConnectionTypes">
              <summary>   Values that represent Database connection types. </summary>
             
