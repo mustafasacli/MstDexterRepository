@@ -60,6 +60,7 @@
     <Compile Include="DataReader\DataReaderExtensions.cs" />
     <Compile Include="Helpers\DbConnectionTypeBuilder.cs" />
     <Compile Include="ObjectExtensions\EnumExtensions.cs" />
+    <Compile Include="ObjectExtensions\XmlExtension.cs" />
     <Compile Include="Objects\DbConnectionNames.cs" />
     <Compile Include="Objects\DbConnectionTypes.cs" />
     <Compile Include="Objects\MstDictionary.cs" />
