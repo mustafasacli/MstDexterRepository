@@ -56,8 +56,8 @@
     <Compile Include="ConnectionExtensions\DbConnectionOperator.cs" />
     <Compile Include="ConnectionExtensions\DbConnectionOperatorV2.cs" />
     <Compile Include="DataExtensions\DataExtension.cs" />
-    <Compile Include="DataReader\DataReaderAsyncExtensions.cs" />
-    <Compile Include="DataReader\DataReaderExtensions.cs" />
+    <Compile Include="DataReader\DataReaderAsyncOperator.cs" />
+    <Compile Include="DataReader\DataReaderOperator.cs" />
     <Compile Include="Helpers\DbConnectionTypeBuilder.cs" />
     <Compile Include="ObjectExtensions\EnumExtensions.cs" />
     <Compile Include="ObjectExtensions\XmlExtension.cs" />

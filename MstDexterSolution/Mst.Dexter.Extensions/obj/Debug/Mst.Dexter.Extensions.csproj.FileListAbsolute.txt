@@ -1,2 +1,0 @@
-E:\Projects\Git_Projects\MstDexterRepository\MstDexterSolution\Mst.Dexter.Extensions\obj\Debug\Mst.Dexter.Extensions.csprojAssemblyReference.cache
-E:\Projects\Git_Projects\MstDexterRepository\MstDexterSolution\Mst.Dexter.Extensions\obj\Debug\Mst.Dexter.Extensions.csproj.CoreCompileInputs.cache
