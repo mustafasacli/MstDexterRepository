@@ -14,6 +14,12 @@ namespace Mst.Dexter.TestConsoleApp
     {
         static void Main(string[] args)
         {
+            string p1 = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly()/*.GetExecutingAssembly()*/.Location);
+            Console.WriteLine("p1 = " + p1);
+            p1 = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            Console.WriteLine("p1 = " + p1);
+            p1 = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().CodeBase);
+            Console.WriteLine("p1 = " + p1);
             DateTime? dt = null;
             DateTime? dt2 = DateTime.Now;
             DateTime dt3 = default(DateTime);

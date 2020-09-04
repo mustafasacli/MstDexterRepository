@@ -2,6 +2,8 @@
 {
     using System;
     using System.Xml;
+    using System.Reflection;
+    using System.IO;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>   A dx configuration configuraton helper. </summary>
@@ -10,11 +12,34 @@
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     internal static class DxCfgConfiguratonHelper
     {
-        private static object syncObj = new object();
+        private static readonly object syncObj = new object();
         private static XmlNode mainNode = null;
 
-        private static object syncObj2 = new object();
+        private static readonly object syncObj2 = new object();
         private static XmlNode settingNode = null;
+
+        private static readonly object docSyncObj = new object();
+        private static XmlDocument mainDocument = null;
+
+        internal static XmlNode MainDocument
+        {
+            get
+            {
+                if (mainDocument == null)
+                {
+                    lock (docSyncObj)
+                    {
+                        if (mainDocument == null)
+                        {
+                            mainDocument = new XmlDocument();
+                            mainDocument.Load(Path.Combine(DllPath, AppCfgValues.ConfigFile));
+                        }
+                    }
+                }
+
+                return mainDocument;
+            }
+        }
 
         /// <summary>
         /// Get Connection Main Node.
@@ -28,10 +53,7 @@
                 {
                     if (mainNode == null)
                     {
-                        XmlDocument doc = new XmlDocument();
-                        doc.Load(AppCfgValues.ConfigFile);
-
-                        mainNode = doc.SelectSingleNode(AppCfgValues.ConfigMainNodeName);
+                        mainNode = MainDocument.SelectSingleNode(AppCfgValues.ConfigMainNodeName);
                     }
                 }
             }
@@ -51,10 +73,7 @@
                 {
                     if (settingNode == null)
                     {
-                        XmlDocument doc = new XmlDocument();
-                        doc.Load(AppCfgValues.ConfigFile);
-
-                        settingNode = doc.SelectSingleNode(AppCfgValues.ConfigSettingNodesName);
+                        settingNode = MainDocument.SelectSingleNode(AppCfgValues.ConfigSettingNodesName);
                     }
                 }
             }
@@ -159,6 +178,21 @@
                 b = s == AppCfgValues.One;
 
                 return b;
+            }
+        }
+
+        internal static string DllPath
+        {
+            get
+            {
+                //Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                string assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
+                if (assemblyFolder.ToLowerInvariant().StartsWith("file:"))
+                {
+                    assemblyFolder = assemblyFolder.Substring(5);
+                    assemblyFolder = assemblyFolder.TrimStart('\\');
+                }
+                return assemblyFolder;
             }
         }
     }
