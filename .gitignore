@@ -1,8 +1,0 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
-
-/MstDexterSolution/.vs/MstDexterSolution/v16/.suo
-/MstDexterSolution/Mst.Dexter.Extensions/obj/Debug/Mst.Dexter.Extensions.csprojAssemblyReference.cache
-/MstDexterSolution/Mst.Dexter.Extensions/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
-/MstDexterSolution/Mst.Dexter.Extensions/obj/Debug/.NETFramework,Version=v4.5.AssemblyAttributes.cs
