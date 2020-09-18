@@ -30,10 +30,10 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static bool IsMember<T>(this T t, params T[] tArr)
         {
-            if (t == null)
-                throw new ArgumentNullException(nameof(t));
-
             bool r = false;
+
+            if (t == null)
+                return r;
 
             foreach (var item in tArr)
             {
@@ -61,11 +61,15 @@
         ////////////////////////////////////////////////////////////////////////////////////////////////////
         public static bool IsDifferent<T>(this T t1, T t2)
         {
-            if (true)
+            if (t1 == null && t2 == null) return false;
+
+            if (t1 != null && t2 != null)
             {
+                var result = !t1.Equals(t2);
+                return result;
             }
 
-            return false;
+            return true;
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////
