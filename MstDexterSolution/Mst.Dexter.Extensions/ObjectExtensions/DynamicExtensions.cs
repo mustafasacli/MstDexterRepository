@@ -6,6 +6,7 @@
     using System.Dynamic;
     using System.Linq;
     using System.Reflection;
+    using System.Text;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>   A dynamic extensions. </summary>
@@ -147,6 +148,8 @@
             IDictionary<string, object> dict;
             T instance;
             string col;
+            StringBuilder builder = new StringBuilder();
+            string message = "";
 
             foreach (var dyn in dynList)
             {
@@ -161,8 +164,38 @@
                     col = null;
                     col = columns[prp.Name];
                     if (dict.ContainsKey(col))
-                        prp.SetValue(instance, dict[col].GetValueWithCheckDbNull());
+                    {
+                        var value = dict[col].GetValueWithCheckDbNull();
+                        try
+                        {
+                            prp.SetValue(instance, value);
+                        }
+                        catch (Exception e)
+                        {
+                            builder.Append("Exception Message: ").AppendLine(e.Message);
+                            if (value.IsNullOrDbNull())
+                            { builder.AppendLine("Value is null"); }
+                            else
+                            {
+                                builder.Append("Value: ");
+                                builder.AppendLine(value.ToStr());
+
+                                builder.Append("Value Type: ");
+                                builder.AppendLine((Nullable.GetUnderlyingType(value?.GetType()) ?? value?.GetType())?.Name ?? "");
+                            }
+
+                            builder.Append("Property Name: ");
+                            builder.AppendLine(prp.Name);
+                            builder.Append("Property Type: ");
+                            builder.AppendLine((Nullable.GetUnderlyingType(prp.PropertyType) ?? prp.PropertyType).Name);
+                            builder.AppendLine("--------------------------------------------------------");
+                        }
+                    }
                 }
+
+                message = builder.ToString();
+                if (message.IsNullOrSpace() == false)
+                    throw new Exception(message);
 
                 list.Add(instance);
             }

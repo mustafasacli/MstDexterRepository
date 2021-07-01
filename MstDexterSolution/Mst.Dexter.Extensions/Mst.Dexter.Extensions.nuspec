@@ -2,13 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
     <metadata>
         <id>Mst.Dexter.Extensions.dll</id>
-        <version>1.10.0.0</version>
+        <version>1.11.0.0</version>
         <authors>mustafa sacli</authors>
         <owners>mustafa sacli</owners>
         <projectUrl>http://github.com/mustafasacli/MstDexterRepository</projectUrl>
         <license type="expression">Apache-2.0</license>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <releaseNotes>GenericExtensions bugs fixed.</releaseNotes>
+        <releaseNotes>DynamicExtensions reflection errors will be thrown in one exception.</releaseNotes>
         <description>Supports IDbConnection operations.</description>
         <copyright>Copyright ©2019 Msacli Corporation</copyright>
         <tags>IDbConnection Dapper DbConnection Extensions</tags>
