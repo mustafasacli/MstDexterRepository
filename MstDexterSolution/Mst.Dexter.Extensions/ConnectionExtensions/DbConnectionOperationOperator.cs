@@ -612,7 +612,7 @@
                     connection, sqlText, commandType,
                     transaction, inputParameters, outputParameters);
 
-                instance = DynamicExtensions.ConvertTo<T>(expando);
+                instance = DynamicExtensions.ConvertToInstance<T>(expando);
             }
             catch (Exception e)
             {
@@ -702,7 +702,7 @@
                     connection, sqlText, commandType,
                     transaction, inputParameters, outputParameters);
 
-                instance = DynamicExtensions.ConvertTo<T>(expando);
+                instance = DynamicExtensions.ConvertToInstance<T>(expando);
             }
             catch (Exception e)
             {

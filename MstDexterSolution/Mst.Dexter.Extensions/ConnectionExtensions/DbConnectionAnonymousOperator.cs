@@ -156,7 +156,7 @@
                     sqlText, commandType,
                     transaction, inputs, outputParameters: null);
 
-                instance = expando.ConvertTo<T>();
+                instance = expando.ConvertToInstance<T>();
             }
             catch (Exception e)
             {
@@ -193,7 +193,7 @@
                     sqlText, commandType,
                     transaction, inputs, outputParameters: null);
 
-                instance = expando.ConvertTo<T>();
+                instance = expando.ConvertToInstance<T>();
             }
             catch (Exception e)
             {

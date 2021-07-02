@@ -1,13 +1,13 @@
-﻿namespace Mst.Dexter.Extensions
-{
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Dynamic;
-    using System.Linq;
-    using System.Reflection;
-    using System.Text;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Dynamic;
+using System.Linq;
+using System.Reflection;
+using System.Text;
 
+namespace Mst.Dexter.Extensions
+{
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>   A dynamic extensions. </summary>
     ///
@@ -15,187 +15,158 @@
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     public static class DynamicExtensions
     {
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   An ExpandoObject extension method that convert to. </summary>
-        ///
-        /// <remarks>   Msacli, 22.04.2019. </remarks>
-        ///
-        /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
-        ///                                             null. </exception>
-        ///
-        /// <typeparam name="T">    Generic type parameter. </typeparam>
-        /// <param name="dyn">  The dyn to act on. </param>
-        ///
-        /// <returns>   to converted. </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static T ConvertTo<T>(this ExpandoObject dyn) where T : class
+        /// <summary>
+        /// Convert dynamic object to new T object instance.
+        /// </summary>
+        /// <typeparam name="T">Generic type parameter. .</typeparam>
+        /// <param name="expandoObject">The dyn to act on. .</param>
+        /// <returns>to converted. .</returns>
+        public static T ConvertToInstance<T>(this ExpandoObject expandoObject) where T : class
         {
-            if (dyn == null)
+            if (expandoObject == null)
             {
-                throw new ArgumentNullException(nameof(dyn));
+                throw new ArgumentNullException(nameof(expandoObject));
             }
 
             T instance = null;
 
-            IDictionary<string, object> dict = dyn;
+            IDictionary<string, object> values = expandoObject;
 
-            if ((dict?.Count).GetValueOrDefault(0) < 1)
+            if ((values?.Count).GetValueOrDefault(0) < 1)
                 return instance;
 
             IDictionary<string, string> columns = new Dictionary<string, string>();
 
             {
                 var cols = typeof(T).GetColumnsOfType(includeNotMappedProperties: true) ?? new Dictionary<string, string>();
-                cols.Where(q => dict.ContainsKey(q.Value)).ToList().ForEach(q => columns[q.Key] = q.Value);
+                cols.Where(q => values.ContainsKey(q.Value)).ToList().ForEach(q => columns[q.Key] = q.Value);
             }
 
             instance = Activator.CreateInstance<T>();
-            PropertyInfo[] pInfos = typeof(T).GetValidPropertiesOfType(includeNotMappedProperties: true);
+            PropertyInfo[] properties = typeof(T).GetValidPropertiesOfType(includeNotMappedProperties: true);
 
-            pInfos = pInfos
+            properties = properties
                 .Where(q => columns.Keys.Contains(q.Name) == true)
                 .ToArray();
 
-            foreach (var prp in pInfos)
-            {
-                prp.SetValue(instance, dict[columns[prp.Name]].GetValueWithCheckDbNull());
-            }
+            SetPropertyValues(ref instance, properties, values, columns);
 
             return instance;
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   An ExpandoObject extension method that converts a dyn to a v 2. </summary>
-        ///
-        /// <remarks>   Msacli, 22.04.2019. </remarks>
-        ///
-        /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
-        ///                                             null. </exception>
-        ///
-        /// <typeparam name="T">    Generic type parameter. </typeparam>
-        /// <param name="dyn">  The dyn to act on. </param>
-        ///
-        /// <returns>   The given data converted to a v 2. </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static T ConvertToV2<T>(this ExpandoObject dyn) where T : class
+        /// <summary>
+        /// Convert dynamic object to new T object instance.
+        /// </summary>
+        /// <typeparam name="T">Generic type parameter. .</typeparam>
+        /// <param name="dynamicObject">The dyn to act on. .</param>
+        /// <returns>to converted. .</returns>
+        public static T ConvertTo<T>(dynamic dynamicObject) where T : class
         {
-            if (dyn == null)
+            if (dynamicObject == null)
             {
-                throw new ArgumentNullException(nameof(dyn));
+                throw new ArgumentNullException(nameof(dynamicObject));
+            }
+
+            T instance = null;
+
+            IDictionary<string, object> values = (dynamicObject as ExpandoObject);
+
+            if ((values?.Count).GetValueOrDefault(0) < 1)
+                return instance;
+
+            IDictionary<string, string> columns = new Dictionary<string, string>();
+
+            {
+                var cols = typeof(T).GetColumnsOfType(includeNotMappedProperties: true) ?? new Dictionary<string, string>();
+                cols.Where(q => values.ContainsKey(q.Value)).ToList().ForEach(q => columns[q.Key] = q.Value);
+            }
+
+            instance = Activator.CreateInstance<T>();
+            PropertyInfo[] properties = typeof(T).GetValidPropertiesOfType(includeNotMappedProperties: true);
+
+            properties = properties
+                .Where(q => columns.Keys.Contains(q.Name) == true)
+                .ToArray();
+
+            SetPropertyValues(ref instance, properties, values, columns);
+
+            return instance;
+        }
+
+        /// <summary>
+        /// Convert dynamic object to new T object instance.
+        /// </summary>
+        /// <typeparam name="T">Generic type parameter. .</typeparam>
+        /// <param name="expandoObject">The dyn to act on. .</param>
+        /// <returns>The given data converted to a v 2. .</returns>
+        public static T ConvertToV2<T>(this ExpandoObject expandoObject) where T : class
+        {
+            if (expandoObject == null)
+            {
+                throw new ArgumentNullException(nameof(expandoObject));
             }
 
             IDictionary<string, string> columns = typeof(T).GetColumnsOfType(includeNotMappedProperties: true);
 
             T instance = null;
 
-            IDictionary<string, object> dict = dyn;
+            IDictionary<string, object> values = expandoObject;
 
-            if ((dict?.Count).GetValueOrDefault(0) < 1)
+            if ((values?.Count).GetValueOrDefault(0) < 1)
                 return instance;
 
             instance = Activator.CreateInstance<T>();
-            PropertyInfo[] pInfos = typeof(T).GetValidPropertiesOfType(includeNotMappedProperties: true);
+            PropertyInfo[] properties = typeof(T).GetValidPropertiesOfType(includeNotMappedProperties: true);
 
-            pInfos = pInfos
+            properties = properties
                 .Where(q => columns.Keys.Contains(q.Name) == true)
                 .ToArray();
 
-            foreach (var prp in pInfos)
-            {
-                prp.SetValue(instance, dict[columns[prp.Name]].GetValueWithCheckDbNull());
-            }
+            SetPropertyValues(ref instance, properties, values, columns);
 
             return instance;
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
         /// <summary>
         /// A List&lt;ExpandoObject&gt; extension method that converts a dynList to a list.
         /// </summary>
-        ///
-        /// <remarks>   Msacli, 22.04.2019. </remarks>
-        ///
-        /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
-        ///                                             null. </exception>
-        ///
-        /// <typeparam name="T">    Generic type parameter. </typeparam>
-        /// <param name="dynList">  The dynList to act on. </param>
-        ///
-        /// <returns>   The given data converted to a list. </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static List<T> ConvertToList<T>(this List<ExpandoObject> dynList) where T : class
+        /// <typeparam name="T">Generic type parameter. .</typeparam>
+        /// <param name="expandoObjectList">The dynList to act on. .</param>
+        /// <returns>The given data converted to a list. .</returns>
+        public static List<T> ConvertToList<T>(this List<ExpandoObject> expandoObjectList) where T : class
         {
-            if (dynList == null)
-            {
-                throw new ArgumentNullException(nameof(dynList));
-            }
+            if (expandoObjectList == null)
+                throw new ArgumentNullException(nameof(expandoObjectList));
 
             List<T> list = new List<T>();
 
-            if (dynList.Count < 1)
+            if (expandoObjectList.Count < 1)
                 return list;
 
-            IDictionary<string, string> columns = typeof(T).GetColumnsOfType(includeNotMappedProperties: true);
+            var type = typeof(T);
 
-            PropertyInfo[] pInfos = typeof(T).GetValidPropertiesOfType(includeNotMappedProperties: true);
-            pInfos = pInfos
+            IDictionary<string, string> columns = type.GetColumnsOfType(includeNotMappedProperties: true);
+
+            PropertyInfo[] properties = type.GetValidPropertiesOfType(includeNotMappedProperties: true);
+            properties = properties
                 .Where(q => columns.Keys.Contains(q.Name) == true)
                 .ToArray() ?? new PropertyInfo[0];
 
-            if (pInfos.Length < 1)
+            if (properties.Length < 1)
                 return list;
 
-            IDictionary<string, object> dict;
+            IDictionary<string, object> values;
             T instance;
-            string col;
-            StringBuilder builder = new StringBuilder();
-            string message = "";
 
-            foreach (var dyn in dynList)
+            foreach (var expandoObject in expandoObjectList)
             {
-                dict = dyn;
-                if ((dict?.Count).GetValueOrDefault(0) < 1)
+                values = expandoObject;
+                if ((values?.Count).GetValueOrDefault(0) < 1)
                     continue;
 
                 instance = Activator.CreateInstance<T>();
 
-                foreach (var prp in pInfos)
-                {
-                    col = null;
-                    col = columns[prp.Name];
-                    if (dict.ContainsKey(col))
-                    {
-                        var value = dict[col].GetValueWithCheckDbNull();
-                        try
-                        {
-                            prp.SetValue(instance, value);
-                        }
-                        catch (Exception e)
-                        {
-                            builder.Append("Exception Message: ").AppendLine(e.Message);
-                            if (value.IsNullOrDbNull())
-                            { builder.AppendLine("Value is null"); }
-                            else
-                            {
-                                builder.Append("Value: ");
-                                builder.AppendLine(value.ToStr());
-
-                                builder.Append("Value Type: ");
-                                builder.AppendLine((Nullable.GetUnderlyingType(value?.GetType()) ?? value?.GetType())?.Name ?? "");
-                            }
-
-                            builder.Append("Property Name: ");
-                            builder.AppendLine(prp.Name);
-                            builder.Append("Property Type: ");
-                            builder.AppendLine((Nullable.GetUnderlyingType(prp.PropertyType) ?? prp.PropertyType).Name);
-                            builder.AppendLine("--------------------------------------------------------");
-                        }
-                    }
-                }
-
-                message = builder.ToString();
-                if (message.IsNullOrSpace() == false)
-                    throw new Exception(message);
+                SetPropertyValues(ref instance, properties, values, columns);
 
                 list.Add(instance);
             }
@@ -203,28 +174,21 @@
             return list;
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   An ExpandoObject extension method that gets a value. </summary>
-        ///
-        /// <remarks>   Msacli, 22.04.2019. </remarks>
-        ///
-        /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
-        ///                                             null. </exception>
-        ///
-        /// <param name="expandoObj">   The expandoObj to act on. </param>
-        /// <param name="key">          The key. </param>
-        ///
-        /// <returns>   The value. </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static object GetValue(this ExpandoObject expandoObj, string key)
+        /// <summary>
+        /// Gets Value from expandoobject with given key.
+        /// </summary>
+        /// <param name="expandoObject">The expandoObject to act on. .</param>
+        /// <param name="key">The key. .</param>
+        /// <returns>The value. .</returns>
+        public static object GetValue(this ExpandoObject expandoObject, string key)
         {
-            if (expandoObj == null)
-                throw new ArgumentNullException(nameof(expandoObj));
+            if (expandoObject == null)
+                throw new ArgumentNullException(nameof(expandoObject));
 
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentNullException(nameof(key));
 
-            var dictionary = (expandoObj as IDictionary<string, object>)
+            var dictionary = (expandoObject as IDictionary<string, object>)
                 ?? new Dictionary<string, object>();
 
             object result = null;
@@ -238,29 +202,22 @@
             return result;
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        /// <summary>   An ExpandoObject extension method that sets a value. </summary>
-        ///
-        /// <remarks>   Msacli, 22.04.2019. </remarks>
-        ///
-        /// <exception cref="ArgumentNullException">    Thrown when one or more required arguments are
-        ///                                             null. </exception>
-        ///
-        /// <param name="expandoObj">   The expandoObj to act on. </param>
-        /// <param name="key">          The key. </param>
-        /// <param name="value">        The value. </param>
-        ///
-        /// <returns>   True if it succeeds, false if it fails. </returns>
-        ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static bool SetValue(this ExpandoObject expandoObj, string key, object value)
+        /// <summary>
+        /// Set the value of expando object instance with given parameters.
+        /// </summary>
+        /// <param name="expandoObject">The expandoObject to act on. .</param>
+        /// <param name="key">The key. .</param>
+        /// <param name="value">The value. .</param>
+        /// <returns>True if it succeeds, false if it fails. .</returns>
+        public static bool SetValue(this ExpandoObject expandoObject, string key, object value)
         {
-            if (expandoObj == null)
-                throw new ArgumentNullException(nameof(expandoObj));
+            if (expandoObject == null)
+                throw new ArgumentNullException(nameof(expandoObject));
 
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentNullException(nameof(key));
 
-            var dictionary = (expandoObj as IDictionary<string, object>)
+            var dictionary = (expandoObject as IDictionary<string, object>)
                 ?? new Dictionary<string, object>();
 
             var result = false;
@@ -269,11 +226,109 @@
             if (dictionary.Count > 0 && dictionary.ContainsKey(key))
             {
                 dictionary[key] = value.GetValueWithCheckDbNull();
-                expandoObj = dictionary as ExpandoObject;
+                expandoObject = dictionary as ExpandoObject;
                 result = true;
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// A List&lt;ExpandoObject&gt; extension method that converts a dynList to a list.
+        /// </summary>
+        /// <typeparam name="T">Generic type parameter. .</typeparam>
+        /// <param name="dynamicObjectList">The dynList to act on. .</param>
+        /// <returns>The given data converted to a list. .</returns>
+        public static List<T> ConvertToList<T>(this List<dynamic> dynamicObjectList) where T : class
+        {
+            if (dynamicObjectList == null)
+                throw new ArgumentNullException(nameof(dynamicObjectList));
+
+            List<T> list = new List<T>();
+
+            if (dynamicObjectList.Count < 1)
+                return list;
+
+            var type = typeof(T);
+
+            IDictionary<string, string> columns = type.GetColumnsOfType(includeNotMappedProperties: true);
+
+            PropertyInfo[] properties = type.GetValidPropertiesOfType(includeNotMappedProperties: true);
+            properties = properties
+                .Where(q => columns.Keys.Contains(q.Name) == true)
+                .ToArray() ?? new PropertyInfo[0];
+
+            if (properties.Length < 1)
+                return list;
+
+            IDictionary<string, object> values;
+            T instance;
+
+            foreach (var dynamicObject in dynamicObjectList)
+            {
+                values = (dynamicObject as ExpandoObject);
+                if ((values?.Count).GetValueOrDefault(0) < 1)
+                    continue;
+
+                instance = Activator.CreateInstance<T>();
+
+                SetPropertyValues(ref instance, properties, values, columns);
+
+                list.Add(instance);
+            }
+
+            return list;
+        }
+
+        internal static void SetPropertyValues<T>(ref T instance, PropertyInfo[] properties, IDictionary<string, object> keyValues, IDictionary<string, string> columnPropertyMappings)
+        {
+            var hasErrorThrowned = false;
+            StringBuilder builder = new StringBuilder();
+
+            properties = properties ?? new PropertyInfo[0];
+
+            foreach (var property in properties)
+            {
+                var columnName = columnPropertyMappings[property.Name];
+                if (keyValues.ContainsKey(columnName))
+                {
+                    var value = keyValues[columnName].GetValueWithCheckDbNull();
+                    try
+                    {
+                        property.SetValue(instance, value);
+                    }
+                    //catch(ArgumentException age)
+                    //{ }
+                    catch (Exception e)
+                    {
+                        hasErrorThrowned = true;
+                        builder.Append("Exception-Message: ").AppendLine(e.Message);
+                        if (value.IsNullOrDbNull())
+                        { builder.AppendLine("Value is null"); }
+                        else
+                        {
+                            builder.Append("Value: ");
+                            builder.AppendLine(value.ToStr());
+
+                            builder.Append("Value Type: ");
+                            builder.AppendLine((Nullable.GetUnderlyingType(value?.GetType()) ?? value?.GetType())?.Name ?? "");
+                        }
+
+                        builder.Append("Property Name: ");
+                        builder.AppendLine(property.Name);
+                        builder.Append("Property Type: ");
+                        builder.AppendLine((Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType).Name);
+                        builder.AppendLine("****************************************");
+                    }
+                }
+            }
+
+            if (hasErrorThrowned)
+            {
+                string message = builder.ToString();
+                if (message.IsNullOrSpace() == false)
+                    throw new Exception(message);
+            }
         }
 
         /// <summary>
