@@ -717,7 +717,7 @@
         #region [ GetList method ]
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="connection"></param>
         /// <param name="sqlText"></param>
@@ -742,7 +742,7 @@
         #region [ GetDynamicResultSetSkipAndTake method ]
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="connection"></param>
         /// <param name="sql"></param>
@@ -800,7 +800,7 @@
         #region [ GetListSkipAndTake method ]
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="connection"></param>

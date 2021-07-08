@@ -3,6 +3,7 @@ namespace Mst.Dexter.Extensions
     using System.Collections.Generic;
     using System.Data;
     using System;
+    using Mst.Dexter.Extensions.Objects;
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>   A dx database command helper. </summary>
@@ -29,6 +30,10 @@ namespace Mst.Dexter.Extensions
 
             Dictionary<string, object> outputs =
                 outputParameters ?? new Dictionary<string, object>();
+
+            if (inputs.Count > 0 || outputs.Count > 0)
+            { SetOracleCommandBindByName(command); }
+
             IDbDataParameter parameter;
 
             foreach (var key in inputs)
@@ -40,9 +45,9 @@ namespace Mst.Dexter.Extensions
                 parameter.Direction = outputs.ContainsKey(key.Key) ?
                     ParameterDirection.InputOutput : ParameterDirection.Input;
 
-                    var typ = inputs[key.Key].ToDbType();
-                    if (typ != null)
-                        parameter.DbType = typ.Value;
+                var typ = inputs[key.Key].ToDbType();
+                if (typ != null)
+                    parameter.DbType = typ.Value;
 
                 command.Parameters.Add(parameter);
             }
@@ -115,6 +120,22 @@ namespace Mst.Dexter.Extensions
             }
 
             return outputParameters;
+        }
+
+        /// <summary>
+        /// Set OracleCommand BindByName with given value.
+        /// </summary>
+        /// <param name="dbCommand">Db command</param>
+        /// <param name="bindByName">BindByName property value.</param>
+        public static void SetOracleCommandBindByName(IDbCommand dbCommand, bool bindByName = true)
+        {
+            if (dbCommand == null) return;
+
+            if (dbCommand.Connection.GetDbConnectionType() == DbConnectionTypes.Oracle)
+            {
+                var setted = dbCommand.SetPropertyValue("BindByName", bindByName);
+                if (!setted) Console.WriteLine("Oracle Command has no BindByName");
+            }
         }
     }
 }

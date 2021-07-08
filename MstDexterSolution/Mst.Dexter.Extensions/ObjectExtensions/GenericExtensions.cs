@@ -361,10 +361,20 @@
         /// <param name="t"></param>
         /// <param name="propertyName"></param>
         /// <param name="value"></param>
-        public static void SetPropertyValue<T>(this T t, string propertyName, object value)
+        public static bool SetPropertyValue<T>(this T t, string propertyName, object value)
         {
+            bool result = false;
+
+            if (propertyName.IsNullOrSpace()) return result;
+
             var p = typeof(T).GetProperty(propertyName);
-            p?.SetValue(t, value);
+            if (p != null)
+            {
+                p.SetValue(t, value);
+                result = true;
+            }
+
+            return result;
         }
     }
 }
